@@ -1,0 +1,21 @@
+@use '../../styles/hElpers/' as *;
+@use '../../styles/variables' as *;
+
+.container {
+    padding: rem(36) rem(54);
+}
+
+h3 {
+    color: rgba(0, 0, 0, 1)!important;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: rem(76);
+}
+
+p, strong, ol, a {
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 1)!important;
+}

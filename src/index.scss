@@ -1,0 +1,97 @@
+@use './styles/hElpers/functions' as *;
+@use './styles/variables' as *;
+
+/* Глобальный reset */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/* Корень и страница */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%; 
+  min-height: 100svh;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+  background-size: cover;
+  background-position: center;
+  color: #333;
+}
+
+
+h1, h2, h3 {
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+/* Подключение шрифтов */
+@font-face {
+  font-family:"Roboto";
+  src:url("../src/assets/fonts/Roboto-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face {
+  font-family:"Roboto";
+  src:url("../src/assets/fonts/Roboto-Medium.woff2") format("woff2");
+  font-weight:500;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face {
+  font-family:"Roboto";
+  src:url("../src/assets/fonts/Roboto-Bold.woff2") format("woff2");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+}
+
+:root {
+  --font-sans: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold:   700;
+}
+
+//ТИПОВЫЕ СТИЛИ
+h1 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: 40px;
+  color: var(--color-blue-text);
+}
+
+h2 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: fluid(24, 20);
+  line-height: var(--lh-tight);
+  margin: 0 0 rem(20);
+  color: var(--color-blue-text);
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: fluid(20, 18);
+  line-height: var(--lh-normal);
+  margin: 0 0 rem(16);
+  color: var(--color-blue-text);
+}
+
+p {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: rem(16);
+  line-height: var(--lh-normal);
+  margin: 0 0 rem(12);
+  color: #333;
+}

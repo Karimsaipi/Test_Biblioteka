@@ -1,0 +1,53 @@
+// body {
+//   margin: 0;
+//   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//   background-color: #f9f9f9;
+//   color: #333;
+// }
+
+// header {
+//   background-color: #282c34;
+//   color: white;
+//   padding: 1rem 2rem;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// main {
+//   padding: 2rem;
+// }
+
+// h1, h2, h3 {
+//   color: #222;
+//   margin-bottom: 1rem;
+// }
+
+.gradientBackground {
+  background-image: linear-gradient(to right, rgba(210, 219, 223, 0.93) 0%, rgba(79, 113, 138, 0.727) 100%), url(../src/assets/images/mainBackPicture.jpg);
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// .pagesButtons {
+//   display: flex; 
+//   gap: 0.5rem; 
+//   margin: 1rem;
+// }
+
+// .navbar {
+//   height: 50px;
+//   width: 100vw;
+//   padding: 1rem;
+//   background-color: lightgray;
+// }
+
+// .navbar__links {
+//   margin-left: auto;
+// }

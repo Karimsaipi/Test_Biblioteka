@@ -1,0 +1,37 @@
+@use 'helpers' as *;
+
+:root {
+    --color-light: #FFFFFF;
+
+    --color-blue-button: rgba(7, 84, 151, 1);
+    --color-blue-text: rgba(7, 84, 151, 0.81);
+    --color-blue-checkboxLine: rgba(4, 136, 253, 1);
+    --color-pink-checkboxLine: rgba(255, 60, 130, 1);
+
+    --color-gray-button: rgba(246, 246, 246, 1);
+    --color-gray-input: rgba(193, 202, 210, 1);
+
+    --color-black-text: rgba(0, 0, 0, 1);
+
+  
+
+    --gradient: linear-gradient(
+        45deg,
+        var(--color-dark-15) 64%,
+        var(--color-accent) 136%
+    );
+
+    --shadow: 0 0 0 #{rem(0)} #191919;
+
+
+    --container-width: #{rem(1600)};
+    --container-padding-x: #{rem(16)};
+
+    --transition-duration: 0.2s;
+
+    --100vw: calc(100vw - var(--scrollbar-width));
+
+    @include laptop {
+        --container-width: #{rem(1280)};
+    }
+}

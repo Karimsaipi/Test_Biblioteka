@@ -1,0 +1,79 @@
+@use "../../styles/helpers/functions" as *;
+@use "../../styles/variables" as *;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: rem(48);
+  padding: 0 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  border: 1px solid var(--color-gray-input);
+  border-radius: 6px;
+  outline: none;
+  background: transparent;
+
+  //скрываем дд.мм.гг..
+  &::-webkit-datetime-edit,
+  &::-webkit-datetime-edit-text,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-year-field {
+    color: transparent; 
+  }
+
+  &:focus {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--color-blue-checkboxLine);
+
+    //показываем дд... 
+    &::-webkit-datetime-edit,
+    &::-webkit-datetime-edit-text,
+    &::-webkit-datetime-edit-month-field,
+    &::-webkit-datetime-edit-day-field,
+    &::-webkit-datetime-edit-year-field {
+      color: var(--color-blue-checkboxLine);
+    }
+
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.6);
+  }
+
+  &.error {
+    border: none;
+    border-bottom: var(--borderInputError);
+    color: var(--color-pink-checkboxLine);
+  }
+}
+
+.label {
+  position: absolute;
+  left: rem(14);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-input);
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.labelActive {
+  top: -8px;
+  font-size: 12px;
+  color: var(--color-blue-checkboxLine);
+}
+
+/* ошибка */
+.labelError {
+  color: var(--color-pink-checkboxLine);
+}
+

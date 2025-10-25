@@ -1,0 +1,15 @@
+@use '../../styles/hElpers/' as *;
+@use '../../styles/variables' as *;
+
+
+.card {
+  width: 100%;
+  height: rem(747);
+  max-width: rem(512);
+  border-radius: rem(20);
+  background: var(--color-light);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
