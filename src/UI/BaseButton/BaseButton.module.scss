@@ -34,3 +34,13 @@
     background-color: var(--color-pink-checkboxLine);
   }
 }
+
+//Красная RED 
+.red {
+  background-color: var(--color-pink-checkboxLine);
+  color: var(--color-light);
+  
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
