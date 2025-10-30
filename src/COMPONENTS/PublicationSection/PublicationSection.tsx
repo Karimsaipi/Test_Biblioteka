@@ -4,6 +4,7 @@ import { fetchPublications } from "../../API/publications";
 
 // import BookCard from "../BookCard/BookCard"; 
 import styles from "./Publication.module.scss";
+import BookCard from "../BookCard/BookCard";
 
 interface PublicationsSectionProps {
   title: string;
@@ -37,15 +38,14 @@ export default function PublicationsSection({
       <h2 className={styles.heading}>{title}</h2>
 
       {loading ? (
-        <div className={styles.placeholder}>Загружаю…</div>
+        <div className={styles.placeholder}>Загрузка</div>
       ) : (
         <div className={styles.grid}>
-          {/* {items.map((pub) => (
-            // <BookCard key={pub.id} book={pub} />
-          ))} */}  ТУт остановился
-
+          {items.map((pub) => (
+            <BookCard key={pub.id} book={pub} />
+          ))}   
           {!items.length && (
-            <div className={styles.placeholder}>Пусто</div>
+            <div className={styles.placeholder}>Ошибка загрузки</div>
           )}
         </div>
       )}
