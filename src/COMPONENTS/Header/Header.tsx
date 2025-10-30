@@ -28,14 +28,6 @@ export default function Header({ onProfileClick }: HeaderProps) {
     [q, navigate]
   );
 
-  // навигация справа — мемоизированные коллбеки
-  const goLibrary = useCallback(() => navigate("/library"), [navigate]);
-  const goBookmarks = useCallback(() => navigate("/bookmarks"), [navigate]);
-  const goFeedback = useCallback(() => navigate("/feedback"), [navigate]);
-  const openProfile = useCallback(() => {
-    if (typeof onProfileClick === "function") onProfileClick();
-  }, [onProfileClick]);
-
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -114,7 +106,7 @@ export default function Header({ onProfileClick }: HeaderProps) {
             icon={penIcon}
             alt="Форма обратной связи"
             title="Форма обратной связи"
-            onClick={goFeedback}
+            onClick={() => navigate("/feedback")}
           />
           <IconButton 
             style={{ width: 64, height: 64 }}
