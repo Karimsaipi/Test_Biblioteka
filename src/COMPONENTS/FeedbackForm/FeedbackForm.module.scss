@@ -2,7 +2,7 @@
 @use '../../styles/variables' as *;
 
 .container {
-  padding: rem(36) rem(54);
+  padding: rem(36) rem(0);
   display: flex;
   flex-direction: column;
   align-items: center;

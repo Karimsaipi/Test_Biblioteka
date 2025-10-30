@@ -10,7 +10,7 @@ export default function MainLayout() {
 
   const [openProfile, setOpenProfile] = React.useState(false);
 
-  // Чтобы модалка не «зависала» при смене страницы
+  
   React.useEffect(() => setOpenProfile(false), [pathname]);
 
   return (
@@ -30,4 +30,6 @@ export default function MainLayout() {
     </>
   );
 }
+
+
 

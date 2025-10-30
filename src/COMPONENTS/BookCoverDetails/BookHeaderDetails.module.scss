@@ -1,0 +1,38 @@
+@use '../../styles/hElpers/' as *;
+@use '../../styles/variables' as *;
+
+
+// .wrapper {
+//     padding: rem(74) rem(80) rem(150) rem(100);
+// }
+
+.coverBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: rem(352);
+}
+
+.coverButtons {
+    background-color: rgb(black, 0.7);
+    display: flex;
+    gap: 30px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.h3 {
+    justify-content: space-between;
+}
+
+.authors {
+    font-family: 'Roboto';
+    font-size: 20px;
+    font-weight: 500;
+    color: rgb(#1F2235, 0.9)
+}
+
+

@@ -1,3 +1,6 @@
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
+
 .section {
     padding-top: 47px;
 }
@@ -7,4 +10,12 @@
     font-weight: 500;
     font-style: Medium;
     font-size: 24px;
+    color: black;
+}
+
+.placeholder {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
 }

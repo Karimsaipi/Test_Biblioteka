@@ -43,10 +43,10 @@ export enum PublicationsSortOrder {
 }
 
 export interface IPublicationsFilterRequest {
-  type?: PublicationType[];  // типы[]
-  authors?: number[];        // массив id авторов
-  subjects?: number[];       // массив id предметов
-  tags?: number[];           // массив id тегов
+  type?: PublicationType[];  
+  authors?: number[];        
+  subjects?: number[];       
+  tags?: number[];           
 
   page: number;
   pageSize: number;

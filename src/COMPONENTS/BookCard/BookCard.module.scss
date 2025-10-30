@@ -1,0 +1,39 @@
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
+
+.card{
+    width: 315px;
+    height: 151px;
+    color: var(--color-light);
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.authors {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    color: rgb(black, 0.7);
+}
+
+.title {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    color: rgb(black, 0.7);
+}
+
+.year {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 12px;
+    color: #484343;
+}
