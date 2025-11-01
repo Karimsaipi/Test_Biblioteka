@@ -6,14 +6,14 @@ import styles from './Main.module.scss'
 export default function Main() {
   const popular: IPublicationsFilterRequest = {
     page: 1,
-    pageSize: 10,
+    pageSize: 7,
     sortBy: PublicationsSortBy.CREATION_DATE,
     sortOrder: PublicationsSortOrder.DESC,
   }
 
   const viewed: IPublicationsFilterRequest = {
     page: 1,
-    pageSize: 10,
+    pageSize: 7,
     sortBy: PublicationsSortBy.CREATION_DATE,
     sortOrder: PublicationsSortOrder.DESC,
   }

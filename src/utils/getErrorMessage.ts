@@ -11,7 +11,6 @@ export function getErrorMessage(err: unknown, fallback = "Ошибка") {
     return err.message || fallback;
   }
 
-  // не axios
   if (isServerError(err)) {
     return err.message;
   }

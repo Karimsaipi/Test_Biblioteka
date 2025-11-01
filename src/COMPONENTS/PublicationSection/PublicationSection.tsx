@@ -19,6 +19,10 @@ export default function PublicationsSection({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+  console.log("requestParams", requestParams);
+}, [requestParams]);
+
+  useEffect(() => {
     setLoading(true);
 
     fetchPublications(requestParams)
@@ -31,7 +35,7 @@ export default function PublicationsSection({
       .finally(() => {
         setLoading(false);
       });
-  }, [requestParams]);
+  }, [JSON.stringify(requestParams)]);
 
   return (
     <section className={styles.section}>
@@ -45,7 +49,7 @@ export default function PublicationsSection({
             <BookCard key={pub.id} book={pub} />
           ))}   
           {!items.length && (
-            <div className={styles.placeholder}>Ошибка загрузки</div>
+            <div className={styles.placeholder}>Ничего не найдено</div>
           )}
         </div>
       )}

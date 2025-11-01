@@ -3,7 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
-const { platform } = require('os');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 require('dotenv').config();
@@ -13,7 +12,7 @@ module.exports = (env) => {
     mode: env.mode ?? 'development',
     entry: {
       index: path.resolve(__dirname, 'src', 'index.tsx'),
-     },
+    },
     output: {
       path: path.resolve(__dirname, 'build'),
       filename: '[name].[contenthash].js',
@@ -23,12 +22,13 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: path.resolve(__dirname, 'public', 'index.html'),
-        chunks: ['index'], // подключаем только index.ts
+        chunks: ['index'],
       }),
       new webpack.ProgressPlugin(),
       new MiniCssExtractPlugin(),
-      new webpack.DefinePlugin({__PLATFORM__: JSON.stringify(process.env.PLATFORM || 'desktop'),
-        'process.env.API_URL': JSON.stringify(process.env.API_URL || ''), 
+      new webpack.DefinePlugin({
+        __PLATFORM__: JSON.stringify(process.env.PLATFORM || 'desktop'),
+        'process.env.API_URL': JSON.stringify(process.env.API_URL || ''),
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       }),
       new ForkTsCheckerWebpackPlugin(),
@@ -44,7 +44,7 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 modules: {
-                  localIdentName: '[name]__[local]__[hash:base64:5]', 
+                  localIdentName: '[name]__[local]__[hash:base64:5]',
                 },
                 esModule: false,
               },
@@ -70,8 +70,15 @@ module.exports = (env) => {
           ],
         },
         {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+        },
+        {
+          test: /\.(woff2?|ttf|eot|otf)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'fonts/[name][hash][ext][query]',
+          },
         },
       ],
     },
@@ -81,11 +88,26 @@ module.exports = (env) => {
     devtool: 'inline-source-map',
     devServer: {
       historyApiFallback: true,
-      port: env.port ?? 3000,
+      port: env.port ?? 3001, // фронт на 3001
+      host: "0.0.0.0",     
+      allowedHosts: "all", 
       open: true,
       hot: true,
+      proxy: [
+        {
+          context: ['/publications'],
+          target: 'http://192.168.68.106:3000',
+          changeOrigin: true,
+        },
+        {
+          context: ['/account'],
+          target: 'http://192.168.68.106:3000', 
+          changeOrigin: true,
+        },
+      ],
     },
   };
 };
 
-console.log("WEBPACK DIR:", __dirname);
+console.log('WEBPACK DIR:', __dirname);
+``

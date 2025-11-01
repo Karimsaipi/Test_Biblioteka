@@ -8,6 +8,11 @@ export async function signIn(body: ISignInPayload):Promise<IAuthResponse> {
 }
 
 //Post/Зарегистрироваться
-export async function signUp(body: IRegisterPayload):Promise<void> {
-    await api.post("/account/sign-up", body)
+export async function signUp(body: IRegisterPayload): Promise<IAuthResponse> {
+  try {
+    const { data } = await api.post<IAuthResponse>("/account/sign-up", body);
+    return data;
+  } catch (err: any) {
+    throw err.response?.data ?? err;
+  }
 }

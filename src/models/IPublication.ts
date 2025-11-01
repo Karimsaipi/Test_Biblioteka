@@ -20,7 +20,7 @@ export interface IPublication {
     title: string;
     review: string;
 
-    author: IAuthor[];
+    authors: IAuthor[];
     subjects: ISubject[];
     tags: ITag[];
 

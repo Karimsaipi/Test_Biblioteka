@@ -6,6 +6,7 @@ import Main from '../PAGES/Main/Main';
 import MainLayout from '../LAYOUT/MainLayout';
 import Copyright from '../PAGES/Copyright/Copyright';
 import Feedback from '../PAGES/FeedBack/Feedback';
+import BookDetails from '../PAGES/BookDetails/BookDetails';
 
 export interface RouteType {
   path: string;
@@ -24,6 +25,7 @@ export const privateRoutes: RouteType[] = [
   { path: '/', element: <Main /> },
   { path: '/copyright', element: <Copyright /> },
   { path: '/feedback', element: <Feedback /> },
+  { path: '/publications/:id', element: <BookDetails /> }
 ];
 
 // функции для рендеринга

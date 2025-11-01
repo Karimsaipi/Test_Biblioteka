@@ -19,3 +19,9 @@
     font-style: Medium;
     font-size: 18px;
 }
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}

@@ -5,8 +5,15 @@ import MySelect from "../../UI/Select/MySelect";
 import styles from "./RegistrationForm.module.scss";
 import MyButton from "../../UI/BaseButton/BaseButton";
 import DateInput from "../../UI/DateInput/DateInput";
+import { useNavigate } from "react-router-dom";
+import { buildPayload } from "../../utils/formMap";
+import { signUp } from "../../API/auth";
+import { getErrorMessage } from "../../utils/getErrorMessage";
+
 
 export default function RegistrationForm() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     login: "",
@@ -20,6 +27,8 @@ export default function RegistrationForm() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     field: keyof typeof formData,
@@ -28,15 +37,15 @@ export default function RegistrationForm() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{6,}$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_-]).{6,}$/;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // создаём пустой объект ошибок
+    setServerError(null);
+    
     const newErrors: Record<string, string> = {};
 
-    // проходимся по всем полям формы
+    // проход по всем полям формы
     for (const key in formData) {
       if (!formData[key as keyof typeof formData]) {
         newErrors[key] = "error";
@@ -44,27 +53,36 @@ export default function RegistrationForm() {
     }
 
     if (formData.email && !formData.email.includes("@")) {
-      newErrors.email = "error";
+      newErrors.email = "Невалидный майл";
     }
 
-    // проверка что пароль удолетворяет
     if (formData.password && !passwordRegex.test(formData.password)) {
-      newErrors.password = "error";
+      newErrors.password = "Пароль: 1 заглавная, 1 цифра, 1 спецсимвол, минимум 6 символов";
     }
 
-    // проверяем, что пароли совпадают
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "error";
+      newErrors.confirmPassword = "Пароли не совпадают";
     }
 
-    // обновляем состояние ошибок
     setErrors(newErrors);
-
-    // если есть хотя бы одна ошибка — просто выходим
     if (Object.keys(newErrors).length > 0) return;
 
-    // иначе можно отправить данные
-    console.log("✅ Все поля заполнены:", formData);
+    const base = buildPayload(formData);
+    const payload = {
+      ...base,
+      password: formData.password,
+    };
+
+     try {
+      setLoading(true);
+      await signUp(payload); // нам не важно, что вернул бэк — просто создали
+      navigate("/login", { replace: true });
+    } catch (err) {
+      setServerError(getErrorMessage(err, "Не удалось зарегистрироваться"));
+    } finally {
+      setLoading(false);
+    }
+
   };
   return (
     <div className={styles.card}>
