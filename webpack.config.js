@@ -96,12 +96,12 @@ module.exports = (env) => {
       proxy: [
         {
           context: ['/publications'],
-          target: 'http://192.168.68.106:3000',
+          target: 'http://192.168.68.100:3000',
           changeOrigin: true,
         },
         {
           context: ['/account'],
-          target: 'http://192.168.68.106:3000', 
+          target: 'http://192.168.68.100:3000', 
           changeOrigin: true,
         },
       ],

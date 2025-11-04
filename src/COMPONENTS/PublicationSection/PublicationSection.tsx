@@ -2,57 +2,52 @@ import React, { useEffect, useState } from "react";
 import { IPublication, IPublicationsFilterRequest } from "../../models/IPublication";
 import { fetchPublications } from "../../API/publications";
 
-// import BookCard from "../BookCard/BookCard"; 
+// import BookCard from "../BookCard/BookCard";
 import styles from "./Publication.module.scss";
 import BookCard from "../BookCard/BookCard";
 
 interface PublicationsSectionProps {
-  title: string;
-  requestParams: IPublicationsFilterRequest;
+    title: string;
+    requestParams: IPublicationsFilterRequest;
 }
 
-export default function PublicationsSection({
-  title,
-  requestParams,
-}: PublicationsSectionProps) {
-  const [items, setItems] = useState<IPublication[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function PublicationsSection({ title, requestParams }: PublicationsSectionProps) {
+    const [items, setItems] = useState<IPublication[]>([]);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-  console.log("requestParams", requestParams);
-}, [requestParams]);
+    useEffect(() => {
+        console.log("requestParams", requestParams);
+    }, [requestParams]);
 
-  useEffect(() => {
-    setLoading(true);
+    useEffect(() => {
+        setLoading(true);
 
-    fetchPublications(requestParams)
-      .then((data) => {
-        setItems(data.items || []);
-      })
-      .catch(() => {
-        setItems([]); 
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [JSON.stringify(requestParams)]);
+        fetchPublications(requestParams)
+            .then((data) => {
+                setItems(data.items || []);
+            })
+            .catch(() => {
+                setItems([]);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [JSON.stringify(requestParams)]);
 
-  return (
-    <section className={styles.section}>
-      <h2 className={styles.heading}>{title}</h2>
+    return (
+        <section className={styles.section}>
+            <h2 className={styles.heading}>{title}</h2>
 
-      {loading ? (
-        <div className={styles.placeholder}>Загрузка</div>
-      ) : (
-        <div className={styles.grid}>
-          {items.map((pub) => (
-            <BookCard key={pub.id} book={pub} />
-          ))}   
-          {!items.length && (
-            <div className={styles.placeholder}>Ничего не найдено</div>
-          )}
-        </div>
-      )}
-    </section>
-  );
+            {loading ? (
+                <div className={styles.placeholder}>Загрузка</div>
+            ) : (
+                <div className={styles.grid}>
+                    {items.map((pub) => (
+                        <BookCard key={pub.id} book={pub} />
+                    ))}
+                    {!items.length && <div className={styles.placeholder}>Ничего не найдено</div>}
+                </div>
+            )}
+        </section>
+    );
 }
