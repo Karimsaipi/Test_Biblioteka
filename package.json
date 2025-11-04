@@ -19,7 +19,9 @@
   },
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "format": "prettier . -w",
+    "format:check": "prettier . -c"
   },
   "eslintConfig": {
     "extends": [

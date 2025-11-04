@@ -1,8 +1,11 @@
 import axios from "axios";
+import { isServerError } from "../models/IServerError";
+import { getErrorMessage } from "./error";
 
 export const api = axios.create({
   baseURL: "/",
   headers: { "Content-Type": "application/json" },
+  timeout: 30000,
   paramsSerializer: (params) => {
     const search = new URLSearchParams();
 
@@ -32,3 +35,15 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+let pushError: ((msg: string) => void) | null = null;
+export const bindAxiosNotifier = (fn: (msg: string) => void) => { pushError = fn; };
+
+// глобальная обработка ошибок: любой фейл → текст из getErrorMessage → тост
+api.interceptors.response.use(
+  (r) => r,
+  (e) => {
+    pushError?.(getErrorMessage(e, "Ошибка"));
+    return Promise.reject(e);
+  }
+);
