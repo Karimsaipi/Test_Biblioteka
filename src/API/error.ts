@@ -17,16 +17,13 @@ export function getErrorMessage(err: unknown, fallback = "Ошибка"): string
         // Строковый ответ бэка
         if (typeof data === "string" && data.trim()) return data;
 
-        // Популярные поля
         if (data && typeof data === "object") {
             const d: any = data;
             if (typeof d.message === "string") return d.message;
             if (typeof d.error === "string") return d.error;
-            if (typeof d.detail === "string") return d.detail; // RFC7807
-            if (typeof d.title === "string") return d.title; // RFC7807
         }
 
-        // Дефолты по статусу
+        // статусу если херня
         if (status === 401) return "Не авторизован";
         if (status === 403) return "Доступ запрещён";
         if (status === 404) return "Ресурс не найден";

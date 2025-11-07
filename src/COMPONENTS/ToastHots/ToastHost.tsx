@@ -9,7 +9,7 @@ export default function ToastHost() {
 
     useEffect(() => {
         if (!visible) return;
-        const t = setTimeout(() => dispatch(hide()), type === "error" ? 4000 : 2000);
+        const t = setTimeout(() => dispatch(hide()), type === "error" ? 5000 : 3500);
         return () => clearTimeout(t);
     }, [visible, type, dispatch]);
 

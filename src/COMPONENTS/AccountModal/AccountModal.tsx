@@ -6,12 +6,15 @@ import DateInput from "../../UI/DateInput/DateInput";
 import GenderSwitch from "../../UI/Checkbox/GenderSwitch";
 import MySelect from "../../UI/Select/MySelect";
 
-import { useAuth } from "../../context/authContext";
+// import { useAuth } from "../../context/authContext";
 import { editAccount } from "../../API/account";
-import { Gender } from "../../models/IUser";
+import type { Gender, IUser } from "../../models/IUser";
 import type { IAccountEditPayload } from "../../models/IAccountEdit";
 import pencilPng from "../../assets/icons/penModalClick.png";
-import { getErrorMessage } from "../../API/error";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { show } from "../../store/notifySlice";
+import { logout, setUser } from "../../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     open: boolean;
@@ -19,11 +22,11 @@ type Props = {
 };
 
 export default function AccountModal({ open, onClose }: Props) {
-    const { user, setUser, logout } = useAuth();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const user = useAppSelector((s) => s.auth.user);
 
     const [form, setForm] = useState(() => makeFormState(user));
-
-    const [loading, setLoading] = useState(false); //блочит кнопку сохранить
     const [err, setErr] = useState<string | null>(null);
 
     useEffect(() => {
@@ -40,25 +43,30 @@ export default function AccountModal({ open, onClose }: Props) {
     //сохраняем данные
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        setLoading(true);
         setErr(null);
 
         try {
             const payload = buildPayload(form);
-            const { user: updated } = await editAccount(payload);
-            setUser(updated);
+            await editAccount(payload);
+            const { career, post, ...rest } = payload;
+          
+            const updatedUser: IUser = {
+                ...user,
+                ...rest,
+            } as IUser;
+            dispatch(setUser(updatedUser));
+            dispatch(show({ type: "success", message: "Данные обновлены" }));
+
             onClose();
-        } catch (error: any) {
-            setErr(getErrorMessage(error, "Не удалось сохранить профиль"));
+        } catch {
         } finally {
-            setLoading(false);
         }
     };
 
     const onExit = () => {
-        logout();
+        dispatch(logout());
         onClose();
+        navigate("/login", { replace: true });
     };
 
     if (!open) return null;
@@ -146,9 +154,6 @@ export default function AccountModal({ open, onClose }: Props) {
                         />
                     </div>
 
-                    {/* Ошибка, если была */}
-                    {err && <div className={styles.error}>{err}</div>}
-
                     <div className={styles.actions}>
                         <MyButton type="submit" className={styles.btn}>
                             Сохранить
@@ -168,15 +173,20 @@ export default function AccountModal({ open, onClose }: Props) {
     );
 }
 
+function normalizeDate(value?: string | null): string {//хуярим дату норм
+    if (!value) return "";
+    if (value.includes("T")) return value.slice(0, 10);
+    return value;
+}
+
 // ФУНКЦИИ
-function makeFormState(user: ReturnType<typeof useAuth>["user"]) {
+function makeFormState(user: IUser | null) { 
     return {
         name: user?.name ?? "",
         login: user?.login ?? "",
         email: user?.email ?? "",
-        birthDate: user?.birthDate ?? "",
-        gender:
-            (user?.gender ?? Gender.Male) === Gender.Male ? ("male" as const) : ("female" as const),
+        birthDate: normalizeDate(user?.birthDate),
+        gender: (user?.gender ?? "male") as Gender,
         occupation: user?.career?.[0]?.value ?? "",
         position: user?.post?.[0]?.value ?? "",
     };
@@ -188,7 +198,7 @@ function buildPayload(form: ReturnType<typeof makeFormState>): IAccountEditPaylo
         name: form.name.trim(),
         login: form.login.trim(),
         email: form.email.trim(),
-        gender: form.gender === "male" ? Gender.Male : Gender.Female,
+        gender: form.gender,
         birthDate: form.birthDate,
         career: form.occupation.trim(),
         post: form.position.trim(),

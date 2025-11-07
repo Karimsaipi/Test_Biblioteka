@@ -10,6 +10,7 @@ import { buildPayload } from "../../utils/formMap";
 import { signUp } from "../../API/auth";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/notifySlice";
+import { setCredentials } from "../../store/authSlice";
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function RegistrationForm() {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_-]).{6,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    //ЗАПРОС С ПРОВЕРКОЙ
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -72,13 +74,16 @@ export default function RegistrationForm() {
 
         try {
             setLoading(true);
-            await signUp(payload); // нам не важно, что вернул бэк — просто создали
+            const data = await signUp(payload); // нам не важно, что вернул бэк- создали
+            dispatch(setCredentials(data));
             dispatch(show({ type: "success", message: "Успешная регистрация" }));
             navigate("/login", { replace: true });
+        } catch {
         } finally {
             setLoading(false);
         }
     };
+    //разметка
     return (
         <div className={styles.card}>
             <h1 className={styles.title}>Регистрация</h1>

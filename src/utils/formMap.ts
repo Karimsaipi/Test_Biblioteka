@@ -1,5 +1,5 @@
 import { IAccountEditPayload } from "../models/IAccountEdit";
-import { Gender } from "../models/IUser";
+import type { Gender } from "../models/IUser";
 
 export function makeFormState(user: any) {
   return {
@@ -7,8 +7,7 @@ export function makeFormState(user: any) {
     login: user?.login ?? "",
     email: user?.email ?? "",
     birthDate: user?.birthDate ?? "",
-    gender:
-      (user?.gender ?? Gender.Male) === Gender.Male ? "male" : "female",
+    gender: (user?.gender ?? "male") as Gender,
     occupation: Array.isArray(user?.career)
       ? user?.career[0]?.value ?? ""
       : user?.career ?? "",
@@ -31,7 +30,7 @@ export function buildPayload(form: {
     name: form.name.trim(),
     login: form.login.trim(),
     email: form.email.trim(),
-    gender: form.gender === "male" ? Gender.Male : Gender.Female,
+    gender: form.gender,
     birthDate: form.birthDate,
     career: form.occupation.trim(),
     post: form.position.trim(),

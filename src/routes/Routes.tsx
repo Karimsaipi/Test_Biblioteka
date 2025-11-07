@@ -17,15 +17,16 @@ export interface RouteType {
 export const routes: RouteType[] = [
   { path: '/login', element: <Login /> },
   { path: '/register', element: <Register /> },
-  { path: '*', element: <Navigate to="/login" replace /> },
+  // { path: '*', element: <Navigate to="/login" replace /> },
+  { path: '/copyright', element: <Copyright /> },
 ];
 
 // приватные маршруты (только страницы, без layout)
 export const privateRoutes: RouteType[] = [
   { path: '/', element: <Main /> },
-  { path: '/copyright', element: <Copyright /> },
   { path: '/feedback', element: <Feedback /> },
-  { path: '/publications/:id', element: <BookDetails /> }
+  { path: '/publications/:id', element: <BookDetails /> },
+  { path: '/copyright', element: <Copyright /> },
 ];
 
 // функции для рендеринга
