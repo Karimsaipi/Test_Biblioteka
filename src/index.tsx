@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./context/authContext";
+// import { AuthProvider } from "./context/authContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { bindAxiosNotifier } from "./API/axios";
@@ -15,11 +15,11 @@ bindAxiosNotifier((msg) => store.dispatch(error(msg)));
 
 root.render(
     <Provider store={store}>
-        <AuthProvider>
+        {/* <AuthProvider> */}
             <BrowserRouter>
                 <App />
                 <ToastHost />
             </BrowserRouter>
-        </AuthProvider>
+        {/* </AuthProvider> */}
     </Provider>,
 );

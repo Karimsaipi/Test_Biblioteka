@@ -32,16 +32,6 @@ export async function fetchPublications(
         validateStatus: (s) => s >= 200 && s < 400,
     });
 
-    // // если бэк сказал 304 — вернём пустой, но ПРАВИЛЬНОЙ формы объект
-    // if (res.status === 304 || !res.data) {
-    //   return {
-    //     items: [],
-    //     page: params.page ?? 1,
-    //     pageSize: params.pageSize ?? 10,
-    //     total: 0,
-    //   };
-    // }
-
     const data = res.data as {
         data?: IPublication[];
         totalCount?: number;

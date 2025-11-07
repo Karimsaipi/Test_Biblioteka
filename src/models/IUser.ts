@@ -1,11 +1,8 @@
-export enum Gender {
-  Male = 0,
-  Female = 1,
-}
+export type Gender = "male" | "female";
 
 export type LabeledItem = { id: number; value: string };
 
-export interface IUser {
+export interface IUser {//Юзер.
   role: number;
   login: string;
   name: string;
@@ -19,10 +16,7 @@ export interface IUser {
   token?: string;
 }
 
-export interface AuthResponse {
-  user: IUser;
-  token: string;
-}
+
 
 
 

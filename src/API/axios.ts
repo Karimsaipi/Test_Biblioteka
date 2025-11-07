@@ -39,11 +39,14 @@ api.interceptors.request.use((config) => {
 let pushError: ((msg: string) => void) | null = null;
 export const bindAxiosNotifier = (fn: (msg: string) => void) => { pushError = fn; };
 
-// глобальная обработка ошибок: любой фейл → текст из getErrorMessage → тост
+//любая ошибка → текст из getErrorMessage идет в тост
 api.interceptors.response.use(
   (r) => r,
   (e) => {
-    pushError?.(getErrorMessage(e, "Ошибка"));
+    console.log("[AXIOS ERROR]", e?.response?.status, e?.response?.data);
+    const msg = getErrorMessage(e, "Ошибка");
+    console.log("[TOAST MSG]", msg);
+    pushError?.(msg);
     return Promise.reject(e);
   }
 );

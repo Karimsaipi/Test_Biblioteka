@@ -2,60 +2,106 @@ import React, { useState } from "react";
 import styles from "../FeedbackForm/FeedbackForm.module.scss";
 import MyInput from "../../UI/Input/MyInput";
 import MyButton from "../../UI/BaseButton/BaseButton";
+import MySelect from "../../UI/Select/MySelect";
+import { feedbackCreate } from "../../API/feedback";
+import { useAppDispatch } from "../../store/hooks";
+import { show } from "../../store/notifySlice";
+import { Theme } from "../../models/IFeedback";
 
 export default function FeedbackForm() {
-  const [themeMessage, setThemeMessage] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+    const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+    const [formData, setFormData] = useState({
+        theme: Theme["Авторские права"],
+        userName: "",
+        email: "",
+        message: "",
+    });
 
-  return (
-    <section className={styles.container}>
-      <h3>Форма обратной связи</h3>
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <span className={styles.labelLeft}>Тема сообщения</span>
-        <MyInput
-          label="Тема сообщения"
-          value={themeMessage}
-          onChange={(e) => setThemeMessage(e.target.value)}
-          className={styles.hideInnerLabel} 
-        />
+    const handleChange = (field: keyof typeof formData, value: string) => {
+        setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
-        <span className={styles.labelLeft}>Ваше имя</span>
-        <MyInput
-          label="Ваше имя"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={styles.hideInnerLabel}
-        />
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        <span className={styles.labelLeft}>Ваш e-mail</span>
-        <MyInput
-          label="Ваш e-mail"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.hideInnerLabel}
-        />
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-        <span className={styles.labelLeft}>Сообщение</span>
-        <MyInput
-          label="Сообщение"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className={`${styles.lastInput} ${styles.hideInnerLabel}`}
-        />
+        const newErrors: Record<string, string> = {};
 
-        <MyButton variant="primary" type="submit" className={styles.button}>
-          Отправить
-        </MyButton>
-      </form>
-    </section>
-  );
+        for (const key in formData) {
+            if (key === "theme") continue;
+            if (!formData[key as keyof typeof formData]) {
+                newErrors[key] = "error";
+            }
+        }
+
+        if (formData.email && !emailRegex.test(formData.email)) {
+            newErrors.email = "fgfg";
+        }
+
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length > 0) return;
+
+        try {
+            await feedbackCreate(formData);
+            dispatch(show({ type: "success", message: "Успешная отправка" }));
+        } catch {
+        } finally {
+        }
+    };
+
+    return (
+        <section className={styles.container}>
+            <h3>Форма обратной связи</h3>
+
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <span className={styles.labelLeft}>Тема сообщения</span>
+                <MySelect
+                    label=""
+                    value={formData.theme.toString()}
+                    onChange={(e) => handleChange("theme", e.target.value)}
+                    options={[
+                        { value: "Rights", label: "Авторские права" },
+                        { value: "Error", label: "Ошибка на сайте" },
+                        { value: "Smth", label: "Другое" },
+                    ]}
+                />
+
+                <span className={styles.labelLeft}>Ваше имя</span>
+                <MyInput
+                    label="Ваше имя"
+                    value={formData.userName}
+                    onChange={(e) => handleChange("userName", e.target.value)}
+                    className={styles.hideInnerLabel}
+                    error={errors.name}
+                />
+
+                <span className={styles.labelLeft}>Ваш e-mail</span>
+                <MyInput
+                    label="Ваш e-mail"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    className={styles.hideInnerLabel}
+                    error={errors.email}
+                />
+
+                <span className={styles.labelLeft}>Сообщение</span>
+                <MyInput
+                    label="Сообщение"
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    className={`${styles.lastInput} ${styles.hideInnerLabel}`}
+                    error={errors.message}
+                />
+
+                <MyButton variant="primary" type="submit" className={styles.button}>
+                    Отправить
+                </MyButton>
+            </form>
+        </section>
+    );
 }
-

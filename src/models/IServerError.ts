@@ -1,6 +1,7 @@
-export interface IServerError {
-  code: string;
+export interface IServerError { //пример ошибки от бэка
+  code: string | number;
   name: string;
+  error: string;
   message: string;
 }
 
