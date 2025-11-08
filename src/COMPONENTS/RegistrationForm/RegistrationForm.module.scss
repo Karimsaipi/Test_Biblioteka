@@ -1,59 +1,62 @@
-@use '../../styles/hElpers/' as *;
-@use '../../styles/variables' as *;
-
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
 
 .card {
-  width: 100%;
-  height: rem(387);
-  max-width: rem(693);
-  padding: 0px 30px;
-  border-radius: rem(20);
-  background: var(--color-light);
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
+    width: 100%;
+    height: rem(387);
+    max-width: rem(693);
+    padding: 0px 30px;
+    border-radius: rem(20);
+    background: var(--color-light);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
 }
 
 .title {
-  margin-top: rem(15);
-  margin-bottom: rem(13);
-  align-self: flex-start;
+    margin-top: rem(15);
+    margin-bottom: rem(13);
+    align-self: flex-start;
 }
 
 .form {
-  width: 100%;
-  max-width: rem(631);
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: rem(43);
-  margin-bottom: rem(31);
+    width: 100%;
+    max-width: rem(631);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(43);
+    margin-bottom: rem(31);
 }
 
 .left {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: rem(9);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(9);
 }
 
 .right {
-  display: flex;
-  flex-direction: column;
-  gap: rem(9);
+    display: flex;
+    flex-direction: column;
+    gap: rem(9);
 }
 
 .button {
-  width: rem(193) !important;
-  height: rem(39);
-  margin-top: 9px;
-  font-weight: 500 !important;
-  align-self: flex-end;
+    width: rem(193) !important;
+    height: rem(39);
+    margin-top: 9px;
+    font-weight: 500 !important;
+    align-self: flex-end;
 }
 
-@media(max-width: 430px) {
-  .form {
-    gap: rem(20);
-  }
+@media (max-width: 430px) {
+    .card {
+        padding: 0px 16px;
+    }
+
+    .form {
+        gap: rem(15);
+    }
 }

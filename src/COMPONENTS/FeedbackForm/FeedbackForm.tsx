@@ -76,7 +76,7 @@ export default function FeedbackForm() {
                     value={formData.userName}
                     onChange={(e) => handleChange("userName", e.target.value)}
                     className={styles.hideInnerLabel}
-                    error={errors.name}
+                    error={errors.userName}
                 />
 
                 <span className={styles.labelLeft}>Ваш e-mail</span>

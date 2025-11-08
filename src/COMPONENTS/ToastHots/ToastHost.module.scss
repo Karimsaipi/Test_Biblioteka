@@ -3,18 +3,18 @@
 
 .container {
     position: fixed;
-    top: 16px;
-    right: 16px;
+    top: 30px;
+    right: 30px;
     z-index: 1000;
 }
 .toast {
-    background: #fff;
+    background: var(--color-light);
     padding: 10px 14px;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     max-width: rem(300);
-    border-left: 1px solid var(--color-gray-button);
+    border: 1px solid var(--color-gray-button);
 }
 
 

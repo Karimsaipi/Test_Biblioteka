@@ -1,35 +1,28 @@
-import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import Header from '../COMPONENTS/Header/Header';
-import styles from './MainLayout.module.scss';
-import AccountModal from '../COMPONENTS/AccountModal/AccountModal';
+import React from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "../COMPONENTS/Header/Header";
+import styles from "./MainLayout.module.scss";
+import AccountModal from "../COMPONENTS/AccountModal/AccountModal";
 
 export default function MainLayout() {
-  const { pathname } = useLocation();
-  const hideHeader = pathname === "/login" || pathname === "/register";
+    const { pathname } = useLocation();
+    const hideHeader = pathname === "/login" || pathname === "/register";
 
-  const [openProfile, setOpenProfile] = React.useState(false);
+    const [openProfile, setOpenProfile] = React.useState(false);
 
-  
-  React.useEffect(() => setOpenProfile(false), [pathname]);
+    React.useEffect(() => setOpenProfile(false), [pathname]);
 
-  return (
-    <>
-      {!hideHeader && (
+    return (
         <>
-          <Header onProfileClick={() => setOpenProfile(true)} />
-          <AccountModal
-            open={openProfile}
-            onClose={() => setOpenProfile(false)}
-          />
+            {!hideHeader && (
+                <>
+                    <Header onProfileClick={() => setOpenProfile(true)} />
+                    <AccountModal open={openProfile} onClose={() => setOpenProfile(false)} />
+                </>
+            )}
+            <main className={styles.main}>
+                <Outlet />
+            </main>
         </>
-      )}
-      <main className={styles.main}>
-        <Outlet />
-      </main>
-    </>
-  );
+    );
 }
-
-
-

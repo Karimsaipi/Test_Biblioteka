@@ -13,10 +13,10 @@ export async function fetchPublications(
     params: IPublicationsFilterRequest,
 ): Promise<IPublicationsFilterResponse> {
     const query: Record<string, any> = {
-        page: [params.page],
-        pageSize: [params.pageSize],
-        sortBy: [params.sortBy ?? PublicationsSortBy.CREATION_DATE],
-        sortOrder: [params.sortOrder ?? PublicationsSortOrder.ASC],
+        page: params.page,
+        pageSize: params.pageSize,
+        sortBy: params.sortBy ?? PublicationsSortBy.CREATION_DATE,
+        sortOrder: params.sortOrder ?? PublicationsSortOrder.ASC,
     };
 
     if (params.type?.length) query.type = params.type;

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { IPublication, IPublicationsFilterRequest } from "../../models/IPublication";
+import {
+    IPublication,
+    IPublicationsFilterRequest,
+    IPublicationsFilterResponse,
+} from "../../models/IPublication";
 import { fetchPublications } from "../../API/publications";
 
 // import BookCard from "../BookCard/BookCard";
@@ -9,45 +13,60 @@ import BookCard from "../BookCard/BookCard";
 interface PublicationsSectionProps {
     title: string;
     requestParams: IPublicationsFilterRequest;
+    onChangeTotal?: (total: number) => void;
 }
 
-export default function PublicationsSection({ title, requestParams }: PublicationsSectionProps) {
+export default function PublicationsSection({
+    title,
+    requestParams,
+    onChangeTotal,
+}: PublicationsSectionProps) {
     const [items, setItems] = useState<IPublication[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log("requestParams", requestParams);
-    }, [requestParams]);
+        let cancelled = false;
 
-    useEffect(() => {
-        setLoading(true);
+        const load = async () => {
+            setLoading(true);
+    
+            try {
+                const data: IPublicationsFilterResponse = await fetchPublications(requestParams);
 
-        fetchPublications(requestParams)
-            .then((data) => {
+                if (cancelled) return;
+
                 setItems(data.items || []);
-            })
-            .catch(() => {
+                onChangeTotal?.(data.total || 0);
+            } catch {
+                if (cancelled) return;
                 setItems([]);
-            })
-            .finally(() => {
+                onChangeTotal?.(0);
+            } finally {
+                if (cancelled) return;
                 setLoading(false);
-            });
+            }
+        };
+
+        load();
+
+        return () => {
+            cancelled = true;
+        };
     }, [JSON.stringify(requestParams)]);
+
+    const showEmpty = !loading && items.length === 0;
 
     return (
         <section className={styles.section}>
             <h2 className={styles.heading}>{title}</h2>
 
-            {loading ? (
-                <div className={styles.placeholder}>Загрузка</div>
-            ) : (
-                <div className={styles.grid}>
-                    {items.map((pub) => (
-                        <BookCard key={pub.id} book={pub} />
-                    ))}
-                    {!items.length && <div className={styles.placeholder}>Ничего не найдено</div>}
-                </div>
-            )}
+            <div className={styles.grid}>
+                {showEmpty ? (
+                    <div className={styles.placeholder}>Ничего не найдено</div>
+                ) : (
+                    items.map((pub) => <BookCard key={pub.id} book={pub} />)
+                )}
+            </div>
         </section>
     );
 }

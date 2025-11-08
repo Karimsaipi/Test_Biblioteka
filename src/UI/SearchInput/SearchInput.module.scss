@@ -27,6 +27,12 @@
   outline: none;
   background: var(--color-light);
 
+  &:focus {
+    border-radius: 8px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    border-bottom: 1px solid var(--color-blue-checkboxLine);
+  }
+
   &::placeholder {
     color: rgba(92, 92, 92, 1);
   }

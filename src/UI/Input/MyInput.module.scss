@@ -16,10 +16,11 @@ input {
   border-radius: 8px;
   outline: none;
   background: var(--color-light);
+  cursor: pointer;
 
   &:focus {
-    border: none;
-    border-radius: 0;
+    border-radius: 8px 8px 0 0;
+    border: 0px solid var(--color-blue-checkboxLine);
     border-bottom: 1px solid var(--color-blue-checkboxLine);
   }
 
