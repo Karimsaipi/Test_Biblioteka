@@ -7,6 +7,7 @@ import MainLayout from '../LAYOUT/MainLayout';
 import Copyright from '../PAGES/Copyright/Copyright';
 import Feedback from '../PAGES/FeedBack/Feedback';
 import BookDetails from '../PAGES/BookDetails/BookDetails';
+import AllPublications from '../PAGES/AllBooks/AllPublications';
 
 export interface RouteType {
   path: string;
@@ -19,6 +20,7 @@ export const routes: RouteType[] = [
   { path: '/register', element: <Register /> },
   // { path: '*', element: <Navigate to="/login" replace /> },
   { path: '/copyright', element: <Copyright /> },
+  { path: '/allPublications', element: <AllPublications />}
 ];
 
 // приватные маршруты (только страницы, без layout)
@@ -27,6 +29,7 @@ export const privateRoutes: RouteType[] = [
   { path: '/feedback', element: <Feedback /> },
   { path: '/publications/:id', element: <BookDetails /> },
   { path: '/copyright', element: <Copyright /> },
+  { path: '/allPublicatons', element: <AllPublications />}
 ];
 
 // функции для рендеринга

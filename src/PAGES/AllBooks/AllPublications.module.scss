@@ -1,0 +1,29 @@
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
+
+.main {
+    margin-top: rem(25);
+}
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    gap: 45px;
+    padding-bottom: rem(30);
+}
+
+.pagination {
+    margin-top: rem(80);
+    margin-bottom: rem(10);
+}
+
+@media (max-width: 769px) {
+    .pagination {
+        margin-top: rem(50);
+        margin-bottom: rem(5);
+    }
+    .filters {
+        gap: 20px;
+        padding-bottom: rem(20);
+    }
+}
