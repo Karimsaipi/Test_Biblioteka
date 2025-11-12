@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import BookHeaderDetails from "../../COMPONENTS/BookCoverDetails/BookHeaderDetails";
-import { useParams } from "react-router-dom";
 import { IPublication } from "../../models/IPublication";
 import { fetchPublicationsID } from "../../API/publications";
 
 export default function BookDetails() {
-    const { id } = useParams<{ id: string }>();
-    const [book, setBook] = useState<IPublication | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const [book, setBook] = useState<IPublication | null>(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!id) return;
-        fetchPublicationsID(id)
-            .then(setBook)
-            .catch(() => setBook(null));
-    }, [id]);
+  useEffect(() => {
+    if (!id) return;
+    fetchPublicationsID(id).then(setBook).catch(() => setBook(null));
+  }, [id]);
 
-    if (!book) return <div>Загрузка книги</div>;
-    return <BookHeaderDetails book={book} />;
+  if (!book) return <div style={{ marginTop: 25 }}>Загрузка книги…</div>;
+
+  const filePath = book.filePath ?? "";
+  const title = book.title ?? "book";
+  const ext = (filePath.split(".").pop() ?? "pdf").toLowerCase();
+  const filename = `${title}.${ext}`;
+  const url = `/uploads/${encodeURIComponent(filePath)}`;
+
+  return (
+    <BookHeaderDetails
+      book={book}
+      onRead={() => {
+        if (!filePath) return;
+        window.open(url, "_blank", "noopener,noreferrer");
+      }}
+      onDownload={() => {
+        if (!filePath) return;
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename; 
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }}
+      onTagClick={(tag) =>
+        navigate(`/allPublications?tag=${encodeURIComponent(tag)}`)
+      }
+    />
+  );
 }

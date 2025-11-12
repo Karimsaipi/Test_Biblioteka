@@ -39,7 +39,7 @@ export default function Header({ onProfileClick }: HeaderProps) {
 
           <nav className={styles.nav} aria-label="Главная навигация">
             <NavLink
-              to="/allPublicatons"
+              to="/allPublications"
               className={({ isActive }) =>
                 isActive ? styles.active : undefined
               }
