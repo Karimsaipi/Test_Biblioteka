@@ -12,6 +12,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AllPublications.module.scss";
 import SortSelect from "../../UI/SelectSort/SelectSort";
 import Pagination from "../../UI/Pagination/Pagination";
+import { fetchTags } from "../../API/tags";
+import { useSearchParams } from "react-router-dom";
 
 const PAGE_SIZE = 8;
 
@@ -31,9 +33,14 @@ const typeOptions: SelectOption[] = [
 ];
 
 export default function AllPublications() {
+    const [searchParams] = useSearchParams();
+    const initialTag = searchParams.get("tag") || "";
+
+
     const [typeValue, setTypeValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
     const [subjectValue, setSubjectValue] = useState("");
+    const [tagValue, setTagValue] = useState(initialTag);
 
     // options из отдельных запросов
     const [authorOptions, setAuthorOptions] = useState<SelectOption[]>([]);
@@ -73,7 +80,14 @@ export default function AllPublications() {
             .catch(() => {
                 setSubjectOptions([]);
             });
+
     }, []);
+
+    useEffect(() => {
+        const urlTag = searchParams.get("tag") || "";
+        setTagValue(urlTag);
+        setPage(1);
+    }, [searchParams])
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setTypeValue(e.target.value);
@@ -99,9 +113,9 @@ export default function AllPublications() {
             type: typeValue ? [Number(typeValue) as PublicationType] : [],
             authors: authorValue ? [Number(authorValue)] : [],
             subjects: subjectValue ? [Number(subjectValue)] : [],
-            tags: [],
+            tags: tagValue ? [Number(tagValue)] : [],
         }),
-        [page, sortBy, sortOrder, typeValue, authorValue, subjectValue],
+        [page, sortBy, sortOrder, typeValue, authorValue, subjectValue, tagValue],
     );
 
     const totalPages = PAGE_SIZE > 0 ? Math.ceil(total / PAGE_SIZE) : 0;

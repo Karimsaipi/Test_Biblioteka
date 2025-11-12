@@ -95,33 +95,13 @@ module.exports = (env) => {
             hot: true,
             proxy: [
                 {
-                    context: ["/publications"],
-                    target: "http://192.168.68.104:3000",
-                    changeOrigin: true,
-                },
-                {
-                    context: ["/account"],
-                    target: "http://192.168.68.104:3000",
-                    changeOrigin: true,
-                },
-                {
-                    context: ["/feedbacks"],
-                    target: "http://192.168.68.104:3000",
-                    changeOrigin: true,
-                },
-                {
-                    context: ["/authors"],
-                    target: "http://192.168.68.104:3000",
-                    changeOrigin: true,
-                },
-                {
-                    context: ["/subjects"],
-                    target: "http://192.168.68.104:3000",
+                    context: ["/api"],
+                    target: "http://192.168.68.103:3000",
                     changeOrigin: true,
                 },
                 {
                     context: ["/uploads"],
-                    target: "http://192.168.68.104:3000",
+                    target: "http://192.168.68.103:3000",
                     changeOrigin: true,
                 },
             ],

@@ -7,7 +7,6 @@ import {
 } from "../models/IPublication";
 import { api } from "./axios";
 
-
 //Получить get/publications/filter
 export async function fetchPublications(
     params: IPublicationsFilterRequest,

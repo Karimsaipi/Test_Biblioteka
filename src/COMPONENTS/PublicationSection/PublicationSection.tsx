@@ -29,7 +29,7 @@ export default function PublicationsSection({
 
         const load = async () => {
             setLoading(true);
-    
+
             try {
                 const data: IPublicationsFilterResponse = await fetchPublications(requestParams);
 
