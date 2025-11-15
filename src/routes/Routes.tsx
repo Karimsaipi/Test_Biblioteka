@@ -1,14 +1,16 @@
 import React from "react";
 import { Navigate, Route } from "react-router-dom";
-import Register from "../PAGES/Register/Register";
-import Login from "../PAGES/Login/Login";
-import Main from "../PAGES/Main/Main";
-import MainLayout from "../LAYOUT/MainLayout";
-import Copyright from "../PAGES/Copyright/Copyright";
-import Feedback from "../PAGES/FeedBack/Feedback";
-import BookDetails from "../PAGES/BookDetails/BookDetails";
-import AllPublications from "../PAGES/AllBooks/AllPublications";
-import Tags from "../PAGES/Tags/Tags";
+import Register from "../pages/Register/Register";
+import Login from "../pages/Login/Login";
+import Main from "../pages/Main/Main";
+import MainLayout from "../layout/MainLayout";
+import Copyright from "../pages/Copyright/Copyright";
+import Feedback from "../pages/FeedBack/Feedback";
+import BookDetails from "../pages/BookDetails/BookDetails";
+import AllPublications from "../pages/AllBooks/AllPublications";
+import Tags from "../pages/Tags/Tags";
+import PublicationCreateForm from "../pages/PublicationCreate/PublicationCreateForm";
+import PublicationCreate from "../pages/PublicationCreate/PublicationCreateForm";
 
 export interface RouteType {
     path: string;
@@ -29,6 +31,7 @@ export const routes: RouteType[] = [
 export const privateRoutes: RouteType[] = [
     { path: "/feedback", element: <Feedback /> },
     { path: "/tags", element: <Tags /> },
+    { path: "/create-publication", element: <PublicationCreate /> },
 ];
 
 export const renderRoutes = () =>

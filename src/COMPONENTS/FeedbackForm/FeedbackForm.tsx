@@ -3,7 +3,7 @@ import styles from "../FeedbackForm/FeedbackForm.module.scss";
 import MyInput from "../../UI/Input/MyInput";
 import MyButton from "../../UI/BaseButton/BaseButton";
 import MySelect from "../../UI/Select/MySelect";
-import { feedbackCreate } from "../../API/feedback";
+import { feedbackCreate } from "../../api/feedback";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/notifySlice";
 import { Theme } from "../../models/IFeedback";

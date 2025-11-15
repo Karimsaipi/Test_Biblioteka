@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tags.module.scss";
 import { ITag } from "../../models/ITag";
-import { fetchTags } from "../../API/tags";
+import { fetchTags } from "../../api/tags";
 import SearchInput from "../../UI/SearchInput/SearchInput";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";

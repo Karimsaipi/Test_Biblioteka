@@ -33,31 +33,44 @@ export interface IPublication {
 }
 
 export enum PublicationsSortBy {
-  ALPHABET = 0,      
-  CREATION_DATE = 1, 
+    ALPHABET = 0,
+    CREATION_DATE = 1,
 }
 
 export enum PublicationsSortOrder {
-  ASC = 0,  
-  DESC = 1, 
+    ASC = 0,
+    DESC = 1,
 }
 
 export interface IPublicationsFilterRequest {
-  type?: PublicationType[];  
-  authors?: number[];        
-  subjects?: number[];       
-  tags?: number[];           
+    type?: PublicationType[];
+    authors?: number[];
+    subjects?: number[];
+    tags?: number[];
 
-  page: number;
-  pageSize: number;
+    page: number;
+    pageSize: number;
 
-  sortBy?: PublicationsSortBy;
-  sortOrder?: PublicationsSortOrder;
+    sortBy?: PublicationsSortBy;
+    sortOrder?: PublicationsSortOrder;
 }
 
 export interface IPublicationsFilterResponse {
-  items: IPublication[];
-  page: number;
-  pageSize: number;
-  total: number;
+    items: IPublication[];
+    page: number;
+    pageSize: number;
+    total: number;
 }
+
+export interface ICreatePublicationPayload {
+    type: PublicationType;
+    title: string;
+    review: string;
+    releaseDate: string; 
+    cover: any;
+    authors: any[];
+    subjects: any[];
+    file?: File | null;
+    tags: any[];
+}
+

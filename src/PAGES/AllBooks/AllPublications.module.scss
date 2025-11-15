@@ -14,13 +14,11 @@
 
 .pagination {
     margin-top: rem(80);
-    margin-bottom: rem(10);
 }
 
 @media (max-width: 769px) {
     .pagination {
         margin-top: rem(50);
-        margin-bottom: rem(5);
     }
     .filters {
         gap: 20px;

@@ -31,6 +31,10 @@
     font-style: Medium;
     font-size: 24px;
     color: rgba(0, 62, 120, 1);
+
+    &:hover {
+        color: var(--color-pink-checkboxLine);
+    }
 }
 
 .bullet {

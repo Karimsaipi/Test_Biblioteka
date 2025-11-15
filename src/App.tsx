@@ -3,7 +3,7 @@ import styles from "../src/App.module.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { renderPrivateRoutes, renderRoutes } from "./routes/Routes";
 import { useAppSelector } from "./store/hooks";
-import MainLayout from "./LAYOUT/MainLayout";
+import MainLayout from "./layout/MainLayout";
 
 export default function App(): JSX.Element {
     const isAuth = useAppSelector((state) => state.auth.isAuth);

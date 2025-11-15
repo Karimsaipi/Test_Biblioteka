@@ -5,7 +5,7 @@ import styles from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import MyLink from "../../UI/Link/MyLink";
 // import { useAuth } from "../../context/authContext";
-import { signIn } from "../../API/auth";
+import { signIn } from "../../api/auth";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/notifySlice";
 import { setCredentials } from "../../store/authSlice";
@@ -29,15 +29,15 @@ export default function AuthForm() {
         const newErrors: Record<string, boolean> = {};
         if (!l) newErrors.login = true;
         if (!passwordRegex.test(p)) {
-          newErrors.password = true;
-        } 
+            newErrors.password = true;
+        }
 
         setErrors(newErrors);
         if (Object.keys(newErrors).length > 0) return;
 
         try {
             const data = await signIn({ login: l, password: p });
-            dispatch(setCredentials(data))
+            dispatch(setCredentials(data));
             dispatch(show({ type: "success", message: "Успешная авторизация" }));
             navigate("/", { replace: true });
         } catch {

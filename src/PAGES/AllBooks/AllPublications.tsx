@@ -1,6 +1,5 @@
-import { fetchAuthors } from "../../API/author";
-import { fetchSubjects } from "../../API/subjects";
-import PublicationsSection from "../../COMPONENTS/PublicationSection/PublicationSection";
+import { fetchAuthors } from "../../api/author";
+import { fetchSubjects } from "../../api/subjects";
 import {
     IPublicationsFilterRequest,
     PublicationsSortBy,
@@ -12,8 +11,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AllPublications.module.scss";
 import SortSelect from "../../UI/SelectSort/SelectSort";
 import Pagination from "../../UI/Pagination/Pagination";
-import { fetchTags } from "../../API/tags";
+import { fetchTags } from "../../api/tags";
 import { useSearchParams } from "react-router-dom";
+import PublicationsSection from "../../components/PublicationSection/PublicationSection";
 
 const PAGE_SIZE = 8;
 
@@ -35,7 +35,6 @@ const typeOptions: SelectOption[] = [
 export default function AllPublications() {
     const [searchParams] = useSearchParams();
     const initialTag = searchParams.get("tag") || "";
-
 
     const [typeValue, setTypeValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
@@ -80,14 +79,13 @@ export default function AllPublications() {
             .catch(() => {
                 setSubjectOptions([]);
             });
-
     }, []);
 
     useEffect(() => {
         const urlTag = searchParams.get("tag") || "";
         setTagValue(urlTag);
         setPage(1);
-    }, [searchParams])
+    }, [searchParams]);
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setTypeValue(e.target.value);

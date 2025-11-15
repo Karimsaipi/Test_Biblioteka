@@ -7,7 +7,7 @@ import GenderSwitch from "../../UI/Checkbox/GenderSwitch";
 import MySelect from "../../UI/Select/MySelect";
 
 // import { useAuth } from "../../context/authContext";
-import { editAccount } from "../../API/account";
+import { editAccount } from "../../api/account";
 import type { Gender, IUser } from "../../models/IUser";
 import type { IAccountEditPayload } from "../../models/IAccountEdit";
 import pencilPng from "../../assets/icons/penModalClick.png";
@@ -49,7 +49,7 @@ export default function AccountModal({ open, onClose }: Props) {
             const payload = buildPayload(form);
             await editAccount(payload);
             const { career, post, ...rest } = payload;
-          
+
             const updatedUser: IUser = {
                 ...user,
                 ...rest,
@@ -173,14 +173,15 @@ export default function AccountModal({ open, onClose }: Props) {
     );
 }
 
-function normalizeDate(value?: string | null): string {//хуярим дату норм
+function normalizeDate(value?: string | null): string {
+    //хуярим дату норм
     if (!value) return "";
     if (value.includes("T")) return value.slice(0, 10);
     return value;
 }
 
 // ФУНКЦИИ
-function makeFormState(user: IUser | null) { 
+function makeFormState(user: IUser | null) {
     return {
         name: user?.name ?? "",
         login: user?.login ?? "",

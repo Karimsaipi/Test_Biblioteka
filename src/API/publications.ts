@@ -1,9 +1,11 @@
+import { ICreateCommentPayload } from "../models/IComment";
 import {
     IPublicationsFilterRequest,
     IPublicationsFilterResponse,
     IPublication,
     PublicationsSortBy,
     PublicationsSortOrder,
+    ICreatePublicationPayload,
 } from "../models/IPublication";
 import { api } from "./axios";
 
@@ -53,4 +55,47 @@ export async function fetchPublicationsID(id: number | string): Promise<IPublica
         validateStatus: (s) => s >= 200 && s < 400,
     });
     return res.data as IPublication;
+}
+
+export async function createPublication(payload: ICreatePublicationPayload): Promise<boolean> {
+    const data = new FormData();
+
+    data.append("type", String(payload.type));
+    data.append("title", payload.title);
+    data.append("review", payload.review);
+    data.append("releaseDate", payload.releaseDate);
+
+    if (payload.file) {
+        data.append("file", payload.file); 
+    }
+
+    if (payload.cover) {
+        data.append("cover", payload.cover);
+    }
+
+    if (payload.authors && payload.authors.length > 0) {
+        payload.authors.forEach((id) => {
+            data.append("authors", String(id));
+        });
+    }
+
+    if (payload.subjects && payload.subjects.length > 0) {
+        payload.subjects.forEach((id) => {
+            data.append("subjects", String(id));
+        });
+    }
+
+    if (payload.tags && payload.tags.length > 0) {
+        payload.tags.forEach((id) => {
+            data.append("tags", String(id));
+        });
+    }
+
+    const response = await api.post(`/publications/create`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    return response.data;
 }
