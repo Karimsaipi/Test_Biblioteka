@@ -1,5 +1,5 @@
 import React from 'react'
-import FeedbackForm from '../../COMPONENTS/FeedbackForm/FeedbackForm'
+import FeedbackForm from '../../components/FeedbackForm/FeedbackForm'
 
 export default function Feedback() {
   return (

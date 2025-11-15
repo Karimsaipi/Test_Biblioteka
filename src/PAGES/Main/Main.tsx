@@ -1,6 +1,6 @@
 import React from 'react'
 import { IPublicationsFilterRequest, PublicationsSortBy, PublicationsSortOrder } from '../../models/IPublication'
-import PublicationsSection from '../../COMPONENTS/PublicationSection/PublicationSection'
+import PublicationsSection from '../../components/PublicationSection/PublicationSection'
 import styles from './Main.module.scss'
 
 export default function Main() {

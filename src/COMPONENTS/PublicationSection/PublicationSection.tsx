@@ -4,7 +4,7 @@ import {
     IPublicationsFilterRequest,
     IPublicationsFilterResponse,
 } from "../../models/IPublication";
-import { fetchPublications } from "../../API/publications";
+import { fetchPublications } from "../../api/publications";
 
 // import BookCard from "../BookCard/BookCard";
 import styles from "./Publication.module.scss";

@@ -7,7 +7,7 @@ import MyButton from "../../UI/BaseButton/BaseButton";
 import DateInput from "../../UI/DateInput/DateInput";
 import { useNavigate } from "react-router-dom";
 import { buildPayload } from "../../utils/formMap";
-import { signUp } from "../../API/auth";
+import { signUp } from "../../api/auth";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/notifySlice";
 import { setCredentials } from "../../store/authSlice";

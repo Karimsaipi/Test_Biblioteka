@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "../COMPONENTS/Header/Header";
+import Header from "../components/Header/Header";
 import styles from "./MainLayout.module.scss";
-import AccountModal from "../COMPONENTS/AccountModal/AccountModal";
+import AccountModal from "../components/AccountModal/AccountModal";
 
 export default function MainLayout() {
     const { pathname } = useLocation();
