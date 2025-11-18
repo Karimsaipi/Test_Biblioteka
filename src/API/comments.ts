@@ -1,8 +1,8 @@
-import { IComment, ICommentsResponse, ICreateCommentPayload, IGetCommentParams } from "../models/IComment";
+import { IComment, ICommentsResponse, ICreateCommentRequest, IGetCommentParams } from "../models/IComment";
 import { api } from "./axios";
 
 //создать коммент/ post
-export async function createComment(payload: ICreateCommentPayload): Promise<boolean> {
+export async function createComment(payload: ICreateCommentRequest): Promise<boolean> {
     const data = new FormData();
 
     data.append("publicationId", String(payload.publicationId));

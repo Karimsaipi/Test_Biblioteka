@@ -18,7 +18,7 @@ export interface IComment {
     creationDate: string;
 }
 
-export interface ICreateCommentPayload {
+export interface ICreateCommentRequest {
     publicationId: number;
     text: string;
     assets?: File[];

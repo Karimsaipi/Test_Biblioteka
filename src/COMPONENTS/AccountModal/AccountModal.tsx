@@ -9,7 +9,7 @@ import MySelect from "../../UI/Select/MySelect";
 // import { useAuth } from "../../context/authContext";
 import { editAccount } from "../../api/account";
 import type { Gender, IUser } from "../../models/IUser";
-import type { IAccountEditPayload } from "../../models/IAccountEdit";
+import type { IAccountEditRequest } from "../../models/IAccountEdit";
 import pencilPng from "../../assets/icons/penModalClick.png";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { show } from "../../store/notifySlice";
@@ -194,7 +194,7 @@ function makeFormState(user: IUser | null) {
 }
 
 // готовим payload на сервер
-function buildPayload(form: ReturnType<typeof makeFormState>): IAccountEditPayload {
+function buildPayload(form: ReturnType<typeof makeFormState>): IAccountEditRequest {
     return {
         name: form.name.trim(),
         login: form.login.trim(),

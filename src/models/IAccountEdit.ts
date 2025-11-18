@@ -1,6 +1,6 @@
 import { Gender, IUser } from "./IUser";
 
-export interface IAccountEditPayload {
+export interface IAccountEditRequest {
   name: string;
   login: string;
   email: string;

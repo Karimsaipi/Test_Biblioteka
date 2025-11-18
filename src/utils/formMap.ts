@@ -1,4 +1,4 @@
-import { IAccountEditPayload } from "../models/IAccountEdit";
+import { IAccountEditRequest } from "../models/IAccountEdit";
 import type { Gender } from "../models/IUser";
 
 export function makeFormState(user: any) {
@@ -25,7 +25,7 @@ export function buildPayload(form: {
   gender: "male" | "female";
   occupation: string;
   position: string;
-}): IAccountEditPayload {
+}): IAccountEditRequest {
   return {
     name: form.name.trim(),
     login: form.login.trim(),

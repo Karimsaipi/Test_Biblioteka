@@ -9,9 +9,9 @@ import MySelect from "../../UI/Select/MySelect";
 import AssetButton from "../../UI/AssetButton/AssetButton";
 import MyButton from "../../UI/BaseButton/BaseButton";
 
-import { ICreatePublicationPayload, PublicationType } from "../../models/IPublication";
+import { ICreatePublicationRequest, PublicationType } from "../../models/IPublication";
 
-interface FormState extends ICreatePublicationPayload {
+interface FormState extends ICreatePublicationRequest {
     // служебные строки для ввода id через запятую
     authorsInput: string;
     subjectsInput: string;
@@ -234,7 +234,7 @@ function parseIds(value: string): number[] {
         .filter((n) => !Number.isNaN(n));
 }
 
-function buildPublicationPayload(form: FormState): ICreatePublicationPayload {
+function buildPublicationPayload(form: FormState): ICreatePublicationRequest {
     const year = form.releaseDate.trim();
     return {
         type: form.type,

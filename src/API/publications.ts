@@ -1,11 +1,11 @@
-import { ICreateCommentPayload } from "../models/IComment";
+import { ICreateCommentRequest } from "../models/IComment";
 import {
     IPublicationsFilterRequest,
     IPublicationsFilterResponse,
     IPublication,
     PublicationsSortBy,
     PublicationsSortOrder,
-    ICreatePublicationPayload,
+    ICreatePublicationRequest,
 } from "../models/IPublication";
 import { api } from "./axios";
 
@@ -57,7 +57,7 @@ export async function fetchPublicationsID(id: number | string): Promise<IPublica
     return res.data as IPublication;
 }
 
-export async function createPublication(payload: ICreatePublicationPayload): Promise<boolean> {
+export async function createPublication(payload: ICreatePublicationRequest): Promise<boolean> {
     const data = new FormData();
 
     data.append("type", String(payload.type));

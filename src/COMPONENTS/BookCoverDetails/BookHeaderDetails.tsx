@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./BookHeaderDetails.module.scss";
 import { IPublication } from "../../models/IPublication";
 import MyButton from "../../UI/BaseButton/BaseButton";
 import coverPlaceholder from "../../assets/images/bookImage.png";
 import favIconZakl from "../../assets/icons/favICONZACLADKA.svg";
+import { updateFavourite } from "../../api/favourites";
+import { useAppDispatch } from "../../store/hooks";
+import { show } from "../../store/notifySlice";
 
 type BookHeaderProps = {
     book: IPublication;
@@ -17,7 +20,7 @@ function getCoverUrl(coverPath?: string): string {
 
     return `/uploads/${coverPath}`;
 }
-//
+
 export default function BookHeaderDetails({
     book,
     onRead,
@@ -27,6 +30,29 @@ export default function BookHeaderDetails({
     const author = book?.authors?.map((a) => a.name).join(", ");
     const year = new Date(book.releaseDate).getFullYear();
     const coverSrc = getCoverUrl(book.coverPath);
+    const dispatch = useAppDispatch();
+    const [isFavourite, setIsFavourite] = useState<boolean>((book as any).isFavourite ?? false);
+    const [favLoading, setFavLoading] = useState(false);
+
+    const handleFavoriteClick = async () => {
+        if (favLoading) return;
+
+        try {
+            setFavLoading(true);
+            const ok = await updateFavourite(book.id);
+            if (ok) {
+                dispatch(
+                    show({
+                        type: "success",
+                        message: book.isFavourite ? "Удалено из закладок" : "Добавлено в закладки",
+                    }),
+                );
+            }
+        } catch (e) {
+        } finally {
+            setFavLoading(false);
+        }
+    };
 
     return (
         <div className={styles.coverBlock}>
@@ -54,9 +80,9 @@ export default function BookHeaderDetails({
 
             <img
                 src={favIconZakl}
-                alt="В закладки"
-                className={styles.favIcon}
-                // onClick={() => handleFavoriteClick(id)} // твоя логика
+                alt={book.isFavourite ? "Убрать из закладок" : "В закладки"}
+                className={`${styles.favIcon} ${book.isFavourite ? styles.favIconActive : ""}`}
+                onClick={handleFavoriteClick}
             />
             {/* Блок справа с инфой. */}
 

@@ -92,7 +92,7 @@ export default function Header({ onProfileClick }: HeaderProps) {
                         icon={favoriteIcon}
                         alt="Закладки"
                         title="Закладки"
-                        onClick={() => navigate("/bookmarks")}
+                        onClick={() => navigate("/favourites")}
                     />
                     <IconButton
                         icon={penIcon}

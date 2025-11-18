@@ -6,7 +6,6 @@ import {
 } from "../../models/IPublication";
 import { fetchPublications } from "../../api/publications";
 
-// import BookCard from "../BookCard/BookCard";
 import styles from "./Publication.module.scss";
 import BookCard from "../BookCard/BookCard";
 
@@ -14,12 +13,14 @@ interface PublicationsSectionProps {
     title: string;
     requestParams: IPublicationsFilterRequest;
     onChangeTotal?: (total: number) => void;
+    fetcher?: (params: any) => Promise<IPublicationsFilterResponse>;
 }
 
 export default function PublicationsSection({
     title,
     requestParams,
     onChangeTotal,
+    fetcher = fetchPublications, // 👈 по умолчанию обычные публикации
 }: PublicationsSectionProps) {
     const [items, setItems] = useState<IPublication[]>([]);
     const [loading, setLoading] = useState(true);
@@ -31,7 +32,7 @@ export default function PublicationsSection({
             setLoading(true);
 
             try {
-                const data: IPublicationsFilterResponse = await fetchPublications(requestParams);
+                const data: IPublicationsFilterResponse = await fetcher(requestParams); // 👈 тут используем fetcher
 
                 if (cancelled) return;
 
@@ -52,7 +53,7 @@ export default function PublicationsSection({
         return () => {
             cancelled = true;
         };
-    }, [JSON.stringify(requestParams)]);
+    }, [fetcher, JSON.stringify(requestParams)]);
 
     const showEmpty = !loading && items.length === 0;
 

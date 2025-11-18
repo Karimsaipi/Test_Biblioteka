@@ -62,7 +62,7 @@ export interface IPublicationsFilterResponse {
     total: number;
 }
 
-export interface ICreatePublicationPayload {
+export interface ICreatePublicationRequest {
     type: PublicationType;
     title: string;
     review: string;
@@ -74,3 +74,11 @@ export interface ICreatePublicationPayload {
     tags: any[];
 }
 
+export interface IFavouritesGetParams {
+    page: number;
+    pageSize: number;
+}
+
+export interface IFavouritesUpdateParams {
+    id: BigInteger;
+}

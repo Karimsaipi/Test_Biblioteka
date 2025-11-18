@@ -11,6 +11,7 @@ import AllPublications from "../pages/AllBooks/AllPublications";
 import Tags from "../pages/Tags/Tags";
 import PublicationCreateForm from "../pages/PublicationCreate/PublicationCreateForm";
 import PublicationCreate from "../pages/PublicationCreate/PublicationCreateForm";
+import Favourites from "../pages/Favourites/Favourites";
 
 export interface RouteType {
     path: string;
@@ -32,6 +33,7 @@ export const privateRoutes: RouteType[] = [
     { path: "/feedback", element: <Feedback /> },
     { path: "/tags", element: <Tags /> },
     { path: "/create-publication", element: <PublicationCreate /> },
+    { path: "/favourites", element: <Favourites />}
 ];
 
 export const renderRoutes = () =>
