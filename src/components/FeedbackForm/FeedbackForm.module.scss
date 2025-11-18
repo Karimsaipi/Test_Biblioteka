@@ -1,0 +1,97 @@
+@use '../../styles/hElpers/' as *;
+@use '../../styles/variables' as *;
+
+.container {
+  padding: rem(36) rem(0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  align-self: stretch;
+  text-align: left;
+  color: rgba(0, 0, 0, 1)!important;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: rem(89);
+}
+
+/* Две колонки: лейбл | инпут(468px).
+   Центрируем всю сетку по странице. */
+.form {
+  display: grid;
+  grid-template-columns: auto rem(468);
+  column-gap: 35px;
+  row-gap: 36px;
+  align-items: center;
+  justify-content: center;   /* ← центрирует пару колонок целиком */
+}
+
+.labelLeft {
+  text-align: right;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 1)!important;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+/* Кнопка под правой колонкой */
+.button {
+  grid-column: 2;
+  justify-self: start;
+  width: 116px;
+  height: 34px;
+  margin-top: 9px;
+  border-radius: 12px;
+  font-family: Roboto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.lastInput {
+  height: 151px;
+}
+
+
+.hideInnerLabel + label {
+  display: none;
+}
+.hideInnerLabel::placeholder {
+  color: transparent;
+}
+
+
+@media (max-width: 768px) {
+  .form {
+    grid-template-columns: 1fr;   
+    width: rem(300);
+    column-gap: 0;
+  }
+
+  .labelLeft {
+    display: none;                
+  }
+
+  h3 {
+    text-align: center;
+    margin-bottom: rem(50);
+  }
+
+  .hideInnerLabel { grid-column: 1; width: 100%; }
+  .button         { grid-column: 1; justify-self: start; }
+
+
+  .hideInnerLabel + label {
+    display: block;
+  }
+
+  .hideInnerLabel::placeholder {
+    color: var(--color-gray-input);
+    opacity: 1;
+  }
+}
