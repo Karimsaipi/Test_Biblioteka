@@ -66,7 +66,7 @@ export interface ICreatePublicationRequest {
     type: PublicationType;
     title: string;
     review: string;
-    releaseDate: string; 
+    releaseDate: string;
     cover: any;
     authors: any[];
     subjects: any[];
@@ -74,6 +74,7 @@ export interface ICreatePublicationRequest {
     tags: any[];
 }
 
+//Модели для 'Избранных публикаций'
 export interface IFavouritesGetParams {
     page: number;
     pageSize: number;
@@ -81,4 +82,16 @@ export interface IFavouritesGetParams {
 
 export interface IFavouritesUpdateParams {
     id: BigInteger;
+}
+
+export interface IFavouritesApiResponse {
+    totalCount: number;
+    data: IPublication[];
+}
+
+//Модели для поиска публикаций
+
+export interface ISearchApiResponse {
+    totalCount: number;
+    data: IPublication[];
 }

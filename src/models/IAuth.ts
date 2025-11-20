@@ -7,7 +7,7 @@ export interface IRegisterRequest {
     name: string;
     gender: Gender;
     email: string;
-    birthDate: string; // "YYYY-MM-DD"
+    birthDate: string; 
     career: string;
     post: string;
 }

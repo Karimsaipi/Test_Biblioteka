@@ -1,13 +1,13 @@
-
 .gradientBackground {
-  background-image: linear-gradient(to right, rgba(210, 219, 223, 0.93) 0%, rgba(79, 113, 138, 0.727) 100%), url(../src/assets/images/mainBackPicture.jpg);
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;
+    background-image:
+        linear-gradient(to right, rgba(210, 219, 223, 0.93) 0%, rgba(79, 113, 138, 0.727) 100%),
+        url(../src/assets/images/mainBackPicture.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
-

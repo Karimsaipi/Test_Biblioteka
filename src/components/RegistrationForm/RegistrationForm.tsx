@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MyInput from "../../UI/Input/MyInput";
 import GenderSwitch from "../../UI/Checkbox/GenderSwitch";
 import MySelect from "../../UI/Select/MySelect";

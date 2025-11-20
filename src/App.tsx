@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import styles from "../src/App.module.scss";
+import styles from "./App.module.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { renderPrivateRoutes, renderRoutes } from "./routes/Routes";
 import { useAppSelector } from "./store/hooks";

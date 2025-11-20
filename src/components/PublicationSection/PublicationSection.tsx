@@ -5,7 +5,6 @@ import {
     IPublicationsFilterResponse,
 } from "../../models/IPublication";
 import { fetchPublications } from "../../api/publications";
-
 import styles from "./Publication.module.scss";
 import BookCard from "../BookCard/BookCard";
 
@@ -20,7 +19,7 @@ export default function PublicationsSection({
     title,
     requestParams,
     onChangeTotal,
-    fetcher = fetchPublications, // 👈 по умолчанию обычные публикации
+    fetcher = fetchPublications,
 }: PublicationsSectionProps) {
     const [items, setItems] = useState<IPublication[]>([]);
     const [loading, setLoading] = useState(true);
@@ -30,9 +29,8 @@ export default function PublicationsSection({
 
         const load = async () => {
             setLoading(true);
-
             try {
-                const data: IPublicationsFilterResponse = await fetcher(requestParams); // 👈 тут используем fetcher
+                const data: IPublicationsFilterResponse = await fetcher(requestParams);
 
                 if (cancelled) return;
 

@@ -1,57 +1,53 @@
-@use '../../styles/hElpers/' as *;
-@use '../../styles/variables' as *;
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
 
-@use '../../styles/hElpers' as *;
-@use '../../styles/variables' as *;
+@use "../../styles/hElpers" as *;
+@use "../../styles/variables" as *;
 
 .container {
-  padding: rem(36) rem(0);
+    padding: rem(36) rem(0);
 }
 
 .mainText {
-  /* Общие правила для текста внутри блока */
-  font-family: Roboto;
-  font-weight: 500;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 1);
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 1);
 
-  /* Отдельные элементы внутри .mainText */
-  p,
-  strong,
-  ol,
-  a,
-  li {
-    font-family: inherit;
-    font-weight: inherit;
-    font-size: inherit;
-    color: inherit;
-    line-height: 1.4;
-  }
-
-  /* Можно настроить списки */
-  ol {
-    padding-left: 1.25rem;
-  }
-
-  li {
-    margin-bottom: rem(16);
-  }
-
-  a {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    &:hover {
-        color: var(--color-pink-checkboxLine);
+    p,
+    strong,
+    ol,
+    a,
+    li {
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        color: inherit;
+        line-height: 1.4;
     }
-  }
+
+    ol {
+        padding-left: 1.25rem;
+    }
+
+    li {
+        margin-bottom: rem(16);
+    }
+
+    a {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        &:hover {
+            color: var(--color-pink-checkboxLine);
+        }
+    }
 }
 
 .container h3 {
-  color: rgba(0, 0, 0, 1);
-  font-family: Roboto;
-  font-weight: 500;
-  font-size: 24px;
-  margin-bottom: rem(76);
+    color: rgba(0, 0, 0, 1);
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: rem(76);
 }
-

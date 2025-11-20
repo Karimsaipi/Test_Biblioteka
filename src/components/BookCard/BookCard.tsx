@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { IPublication } from "../../models/IPublication";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import style from "./BookCard.module.scss";
 import coverPlaceholder from "../../assets/images/bookImage.png";
 

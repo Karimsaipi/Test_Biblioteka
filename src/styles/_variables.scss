@@ -1,7 +1,7 @@
-@use 'helpers' as *;
+@use "helpers" as *;
 
 :root {
-    --color-light: #FFFFFF;
+    --color-light: #ffffff;
 
     --color-blue-button: rgba(7, 84, 151, 1);
     --color-blue-text: rgba(7, 84, 151, 0.81);
@@ -13,16 +13,9 @@
 
     --color-black-text: rgba(0, 0, 0, 1);
 
-  
-
-    --gradient: linear-gradient(
-        45deg,
-        var(--color-dark-15) 64%,
-        var(--color-accent) 136%
-    );
+    --gradient: linear-gradient(45deg, var(--color-dark-15) 64%, var(--color-accent) 136%);
 
     --shadow: 0 0 0 #{rem(0)} #191919;
-
 
     --container-width: #{rem(1600)};
     --container-padding-x: #{rem(16)};

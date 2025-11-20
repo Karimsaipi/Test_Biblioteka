@@ -6,6 +6,7 @@ import {
     PublicationsSortBy,
     PublicationsSortOrder,
     ICreatePublicationRequest,
+    ISearchApiResponse,
 } from "../models/IPublication";
 import { api } from "./axios";
 
@@ -48,8 +49,7 @@ export async function fetchPublications(
     };
 }
 
-//Получаем конкретн одну публикацию по айди
-
+//Получаем одну публикацию по айди
 export async function fetchPublicationsID(id: number | string): Promise<IPublication> {
     const res = await api.get(`/publications/${id}`, {
         validateStatus: (s) => s >= 200 && s < 400,
@@ -57,6 +57,7 @@ export async function fetchPublicationsID(id: number | string): Promise<IPublica
     return res.data as IPublication;
 }
 
+//Создать публикацию
 export async function createPublication(payload: ICreatePublicationRequest): Promise<boolean> {
     const data = new FormData();
 
@@ -66,7 +67,7 @@ export async function createPublication(payload: ICreatePublicationRequest): Pro
     data.append("releaseDate", payload.releaseDate);
 
     if (payload.file) {
-        data.append("file", payload.file); 
+        data.append("file", payload.file);
     }
 
     if (payload.cover) {
@@ -98,4 +99,18 @@ export async function createPublication(payload: ICreatePublicationRequest): Pro
     });
 
     return response.data;
+}
+
+//Поиск публикации
+export async function searchPublications(substr: string): Promise<IPublication[]> {
+    const query = substr.trim();
+    if (!query) return [];
+
+    const url =
+        "/publications/search" +
+        `?page=1&pageSize=5&substr=${encodeURIComponent(query)}`;
+
+    const { data } = await api.get<ISearchApiResponse>(url);
+
+    return data.data;
 }

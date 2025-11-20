@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { createPublication } from "../../api/publications";
-import { show } from "../../store/notifySlice"; // если путь другой – поправь
+import { show } from "../../store/notifySlice";
 import styles from "./PublicationCreateForm.module.scss";
 
 import MyInput from "../../UI/Input/MyInput";

@@ -15,7 +15,7 @@ export default function AssetButton({
     style,
     size = 22,
     multiple = true,
-    title = 'Добавь файл',
+    title = "Добавь файл",
     accept,
     onFilesSelected,
 }: AssetButtonProps) {

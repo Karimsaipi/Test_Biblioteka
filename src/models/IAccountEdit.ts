@@ -6,8 +6,8 @@ export interface IAccountEditRequest {
   email: string;
   gender: Gender;          
   birthDate: string;
-  career: string;           // по контракту — строка
-  post: string;             // по контракту — строка
+  career: string;           
+  post: string;            
 }
 export interface IAccountEditResponse {
   user: IUser

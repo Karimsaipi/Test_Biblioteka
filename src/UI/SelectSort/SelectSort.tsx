@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import {
-    PublicationsSortBy,
-    PublicationsSortOrder,
-} from "../../models/IPublication";
+import { PublicationsSortBy, PublicationsSortOrder } from "../../models/IPublication";
 import styles from "./SelectSort.module.scss";
-import sortIcon from "../../assets/icons/SortIcon.png"
+import sortIcon from "../../assets/icons/SortIcon.png";
 
 interface SortSelectProps {
     sortBy: PublicationsSortBy;
@@ -29,11 +26,7 @@ export default function SortSelect({ sortBy, sortOrder, onChange }: SortSelectPr
 
     return (
         <div className={styles.wrapper}>
-            <button
-                type="button"
-                className={styles.button}
-                onClick={toggle}
-            >
+            <button type="button" className={styles.button} onClick={toggle}>
                 <img src={sortIcon} alt="Сортировать" className={styles.icon} />
             </button>
 

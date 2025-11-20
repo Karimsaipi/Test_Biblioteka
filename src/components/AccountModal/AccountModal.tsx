@@ -5,8 +5,6 @@ import MyButton from "../../UI/BaseButton/BaseButton";
 import DateInput from "../../UI/DateInput/DateInput";
 import GenderSwitch from "../../UI/Checkbox/GenderSwitch";
 import MySelect from "../../UI/Select/MySelect";
-
-// import { useAuth } from "../../context/authContext";
 import { editAccount } from "../../api/account";
 import type { Gender, IUser } from "../../models/IUser";
 import type { IAccountEditRequest } from "../../models/IAccountEdit";
@@ -25,7 +23,7 @@ export default function AccountModal({ open, onClose }: Props) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const user = useAppSelector((s) => s.auth.user);
-
+    const [isEmailEditing, setIsEmailEditing] = React.useState(false);
     const [form, setForm] = useState(() => makeFormState(user));
     const [err, setErr] = useState<string | null>(null);
 
@@ -56,6 +54,7 @@ export default function AccountModal({ open, onClose }: Props) {
             } as IUser;
             dispatch(setUser(updatedUser));
             dispatch(show({ type: "success", message: "Данные обновлены" }));
+            setIsEmailEditing(false);
 
             onClose();
         } catch {
@@ -100,14 +99,25 @@ export default function AccountModal({ open, onClose }: Props) {
                     {/* Электронная почта */}
                     <span className={styles.label}>Электронная почта</span>
                     <div className={styles.emailRow}>
-                        <div className={styles.emailValue}>{form.email}</div>
+                        <div className={styles.emailField}>
+                            {isEmailEditing ? (
+                                <MyInput
+                                    label=""
+                                    value={form.email}
+                                    onChange={onChange("email")}
+                                    className={styles.hideInnerLabel}
+                                />
+                            ) : (
+                                <div className={styles.emailValue}>{form.email}</div>
+                            )}
+                        </div>
 
                         <button
                             type="button"
                             className={styles.emailEditBtn}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                // модалка вызвать почту
+                                setIsEmailEditing((prev) => !prev);
                             }}
                         >
                             <img
@@ -188,8 +198,8 @@ function makeFormState(user: IUser | null) {
         email: user?.email ?? "",
         birthDate: normalizeDate(user?.birthDate),
         gender: (user?.gender ?? "male") as Gender,
-        occupation: user?.career?.[0]?.value ?? "",
-        position: user?.post?.[0]?.value ?? "",
+        occupation: user?.career ?? "",
+        position: user?.post ?? "",
     };
 }
 

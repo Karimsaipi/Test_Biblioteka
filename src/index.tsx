@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-// import { AuthProvider } from "./context/authContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { bindAxiosNotifier } from "./api/axios";

@@ -11,7 +11,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AllPublications.module.scss";
 import SortSelect from "../../UI/SelectSort/SelectSort";
 import Pagination from "../../UI/Pagination/Pagination";
-import { fetchTags } from "../../api/tags";
 import { useSearchParams } from "react-router-dom";
 import PublicationsSection from "../../components/PublicationSection/PublicationSection";
 
@@ -35,10 +34,11 @@ const typeOptions: SelectOption[] = [
 export default function AllPublications() {
     const [searchParams] = useSearchParams();
     const initialTag = searchParams.get("tag") || "";
+    const initialSubject = searchParams.get("subject") || "";
 
     const [typeValue, setTypeValue] = useState("");
     const [authorValue, setAuthorValue] = useState("");
-    const [subjectValue, setSubjectValue] = useState("");
+    const [subjectValue, setSubjectValue] = useState(initialSubject);
     const [tagValue, setTagValue] = useState(initialTag);
 
     // options из отдельных запросов
@@ -83,7 +83,10 @@ export default function AllPublications() {
 
     useEffect(() => {
         const urlTag = searchParams.get("tag") || "";
+        const urlSubject = searchParams.get("subject") || "";
+
         setTagValue(urlTag);
+        setSubjectValue(urlSubject);
         setPage(1);
     }, [searchParams]);
 

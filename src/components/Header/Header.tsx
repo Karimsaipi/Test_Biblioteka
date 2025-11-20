@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import SearchInput from "../../UI/SearchInput/SearchInput";
@@ -9,6 +9,7 @@ import mainLogo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import penIcon from "../../assets/icons/pen.png";
 import userIcon from "../../assets/icons/userIcon.png";
+import HeaderSearch from "../HeaderSearch/HeaderSearch";
 
 type HeaderProps = {
     onProfileClick?: () => void;
@@ -16,17 +17,6 @@ type HeaderProps = {
 
 export default function Header({ onProfileClick }: HeaderProps) {
     const navigate = useNavigate();
-    const [q, setQ] = useState("");
-
-    const onSubmit = useCallback(
-        (e: React.FormEvent) => {
-            e.preventDefault();
-            const v = q.trim();
-            if (!v) return;
-            navigate(`/search?q=${encodeURIComponent(v)}`);
-        },
-        [q, navigate],
-    );
 
     return (
         <header className={styles.header}>
@@ -66,19 +56,7 @@ export default function Header({ onProfileClick }: HeaderProps) {
                 </div>
 
                 {/* Поиск */}
-                <form
-                    className={styles.search}
-                    onSubmit={onSubmit}
-                    role="search"
-                    aria-label="Поиск по книгам"
-                >
-                    <SearchInput
-                        value={q}
-                        onChange={(e) => setQ(e.target.value)}
-                        placeholder=""
-                        iconSrc={searchIcon}
-                    />
-                </form>
+                <HeaderSearch />
 
                 {/* Иконки справа */}
                 <div className={styles.right}>

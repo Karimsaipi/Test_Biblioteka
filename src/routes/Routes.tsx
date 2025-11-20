@@ -1,17 +1,16 @@
 import React from "react";
-import { Navigate, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import Main from "../pages/Main/Main";
-import MainLayout from "../layout/MainLayout";
 import Copyright from "../pages/Copyright/Copyright";
 import Feedback from "../pages/FeedBack/Feedback";
 import BookDetails from "../pages/BookDetails/BookDetails";
 import AllPublications from "../pages/AllBooks/AllPublications";
 import Tags from "../pages/Tags/Tags";
-import PublicationCreateForm from "../pages/PublicationCreate/PublicationCreateForm";
 import PublicationCreate from "../pages/PublicationCreate/PublicationCreateForm";
 import Favourites from "../pages/Favourites/Favourites";
+import Subjects from "../pages/Subjects/Subjects";
 
 export interface RouteType {
     path: string;
@@ -32,8 +31,9 @@ export const routes: RouteType[] = [
 export const privateRoutes: RouteType[] = [
     { path: "/feedback", element: <Feedback /> },
     { path: "/tags", element: <Tags /> },
+    { path: "/subjects", element: <Subjects /> },
     { path: "/create-publication", element: <PublicationCreate /> },
-    { path: "/favourites", element: <Favourites />}
+    { path: "/favourites", element: <Favourites /> },
 ];
 
 export const renderRoutes = () =>

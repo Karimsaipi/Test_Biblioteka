@@ -1,6 +1,7 @@
 import axios from "axios";
-import { isServerError } from "../models/IServerError";
 import { getErrorMessage } from "./error";
+import { store } from "../store/store";
+import { logout } from "../store/authSlice";
 
 export const api = axios.create({
     baseURL: "/api",
@@ -47,9 +48,9 @@ api.interceptors.response.use(
     (e) => {
         const status = e?.response?.status;
 
-        // обработка 401 централизованно
         if (status === 401) {
-            localStorage.removeItem("token");
+            store.dispatch(logout());
+            window.location.href = "/login";
         }
         console.log("[AXIOS ERROR]", e?.response?.status, e?.response?.data);
         const msg = getErrorMessage(e, "Ошибка");

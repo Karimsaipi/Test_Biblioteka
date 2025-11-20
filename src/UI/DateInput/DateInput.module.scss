@@ -54,13 +54,13 @@
 }
 
 .input.hasValue {
-  &::-webkit-datetime-edit,
-  &::-webkit-datetime-edit-text,
-  &::-webkit-datetime-edit-month-field,
-  &::-webkit-datetime-edit-day-field,
-  &::-webkit-datetime-edit-year-field {
-    color: var(--color-black-text);
-  }
+    &::-webkit-datetime-edit,
+    &::-webkit-datetime-edit-text,
+    &::-webkit-datetime-edit-month-field,
+    &::-webkit-datetime-edit-day-field,
+    &::-webkit-datetime-edit-year-field {
+        color: var(--color-black-text);
+    }
 }
 
 .label {

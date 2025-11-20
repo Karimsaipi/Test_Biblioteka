@@ -45,6 +45,13 @@
     flex-direction: row;
     align-items: flex-start;
     gap: rem(30);
+    max-width: 270px;
+    width: 100%;
+}
+
+.emailField {
+    flex: 1;
+    min-width: 0;
 }
 
 .emailValue {
@@ -54,11 +61,12 @@
     font-size: rem(16);
     line-height: 1.4;
     padding: rem(9) rem(12);
-    width: 250px;
     height: rem(48);
     display: flex;
     align-items: center;
-    margin-top: -5px;
+    text-overflow: ellipsis;
+    width: 100%; 
+    box-sizing: border-box;
 }
 
 .emailEditBtn {
@@ -66,6 +74,7 @@
     width: 36px;
     height: 28px;
     border: none;
+    background-color: transparent;
 }
 
 .buttonPswrd {

@@ -1,29 +1,26 @@
-import React from 'react'
-import { IPublicationsFilterRequest, PublicationsSortBy, PublicationsSortOrder } from '../../models/IPublication'
-import PublicationsSection from '../../components/PublicationSection/PublicationSection'
-import styles from './Main.module.scss'
+import React from "react";
+import { useAppSelector } from "../../store/hooks";
+import styles from "./Main.module.scss";
 
 export default function Main() {
-  const popular: IPublicationsFilterRequest = {
-    page: 1,
-    pageSize: 7,
-    sortBy: PublicationsSortBy.CREATION_DATE,
-    sortOrder: PublicationsSortOrder.DESC,
-  }
+    const user = useAppSelector((s) => s.auth.user);
+    const displayName = user?.name || user?.login || "друг";
 
-  const viewed: IPublicationsFilterRequest = {
-    page: 1,
-    pageSize: 7,
-    sortBy: PublicationsSortBy.CREATION_DATE,
-    sortOrder: PublicationsSortOrder.DESC,
-  }
-
-  return (
-    <div className={styles.page}>
-      <div className={styles.content}>
-        <PublicationsSection title="Популярное" requestParams={popular} />
-        <PublicationsSection title="Просмотренное" requestParams={viewed} />
-      </div>
-    </div>
-  )
+    return (
+        <div className={styles.page}>
+            <div className={styles.content}>
+                <section className={styles.hero}>
+                    <h1 className={styles.title}>Привет, {displayName} 👋</h1>
+                    <p className={styles.subtitle}>
+                        Добро пожаловать в электронный портал DigitalBooks.
+                    </p>
+                    <p className={styles.text}>
+                        Используй навигацию сверху, чтобы перейти к публикациям, избранному или
+                        другим разделам. Здесь будут собраны твои книги, избранные материалы и новые
+                        публикации.
+                    </p>
+                </section>
+            </div>
+        </div>
+    );
 }
