@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { createPublication } from "../../api/publications";
 import { show } from "../../store/notifySlice";
@@ -10,13 +10,25 @@ import AssetButton from "../../UI/AssetButton/AssetButton";
 import MyButton from "../../UI/BaseButton/BaseButton";
 
 import { ICreatePublicationRequest, PublicationType } from "../../models/IPublication";
+import { ITag } from "../../models/ITag";
+import { IAuthor } from "../../models/IAuthor";
+import { ISubject } from "../../models/ISubject";
+import { fetchAuthors } from "../../api/author";
+import { fetchTags } from "../../api/tags";
+import { fetchSubjects } from "../../api/subjects";
 
-interface FormState extends ICreatePublicationRequest {
-    // служебные строки для ввода id через запятую
-    authorsInput: string;
-    subjectsInput: string;
-    tagsInput: string;
+type RefItem = { id: number | null; name: string };
+
+interface FormState {
+    type: PublicationType;
+    title: string;
+    review: string;
+    releaseDate: string;
+    cover: File | null;
     file: File | null;
+    authors: RefItem[];
+    subjects: RefItem[];
+    tags: RefItem[];
 }
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -35,12 +47,26 @@ export default function PublicationCreateForm() {
         authors: [],
         subjects: [],
         tags: [],
-        authorsInput: "",
-        subjectsInput: "",
-        tagsInput: "",
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
+    const [allSubjects, setAllSubjects] = useState<ISubject[]>([]);
+    const [allAuthors, setAllAuthors] = useState<IAuthor[]>([]);
+    const [allTags, setAllTags] = useState<ITag[]>([]);
+
+    useEffect(() => {
+        fetchAuthors()
+            .then((authors) => setAllAuthors(authors))
+            .catch(() => setAllAuthors([]));
+
+        fetchSubjects()
+            .then((subjects) => setAllSubjects(subjects))
+            .catch(() => setAllSubjects([]));
+
+        fetchTags()
+            .then((tags) => setAllTags(tags))
+            .catch(() => setAllTags([]));
+    }, []);
 
     // --- helpers ---
 
@@ -66,22 +92,102 @@ export default function PublicationCreateForm() {
         setFormData((prev) => ({ ...prev, file }));
     };
 
+    // универсальное добавление/удаление
+    const addItem = (field: "authors" | "subjects" | "tags", item: RefItem) => {
+        setFormData((prev) => {
+            const current = prev[field];
+            // не дублируем по имени
+            if (current.some((x) => x.name.toLowerCase() === item.name.toLowerCase())) {
+                return prev;
+            }
+            return {
+                ...prev,
+                [field]: [...current, item],
+            };
+        });
+    };
+
+    const removeItem = (field: "authors" | "subjects" | "tags", name: string) => {
+        setFormData((prev) => ({
+            ...prev,
+            [field]: prev[field].filter((x) => x.name !== name),
+        }));
+    };
+
+    // --- селект АВТОРОВ ---
+    const handleAuthorSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value;
+        if (!val) return;
+
+        if (val === "__new__") {
+            const name = window.prompt("Введите имя автора");
+            if (name && name.trim()) {
+                addItem("authors", { id: null, name: name.trim() });
+            }
+            e.target.value = "";
+            return;
+        }
+
+        const id = Number(val);
+        const author = allAuthors.find((a) => a.id === id);
+        if (author) {
+            addItem("authors", { id: author.id, name: author.name });
+        }
+        e.target.value = "";
+    };
+
+    // --- селект ТЕГОВ ---
+    const handleTagSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value;
+        if (!val) return;
+
+        if (val === "__new__") {
+            const name = window.prompt("Введите название тега");
+            if (name && name.trim()) {
+                addItem("tags", { id: null, name: name.trim() });
+            }
+            e.target.value = "";
+            return;
+        }
+
+        const id = Number(val);
+        const tag = allTags.find((t) => t.id === id);
+        if (tag) {
+            addItem("tags", { id: tag.id, name: tag.name });
+        }
+        e.target.value = "";
+    };
+
+    // --- селект ПРЕДМЕТОВ ---
+    const handleSubjectSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const val = e.target.value;
+        if (!val) return;
+
+        if (val === "__new__") {
+            const name = window.prompt("Введите название предмета");
+            if (name && name.trim()) {
+                addItem("subjects", { id: null, name: name.trim() });
+            }
+            e.target.value = "";
+            return;
+        }
+
+        const id = Number(val);
+        const subj = allSubjects.find((s) => s.id === id);
+        if (subj) {
+            addItem("subjects", { id: subj.id, name: subj.name });
+        }
+        e.target.value = "";
+    };
+
     // --- валидация ---
 
     const validate = (): boolean => {
         const newErrors: FormErrors = {};
 
-        if (!formData.title.trim()) {
-            newErrors.title = "error";
-        }
-
-        if (!formData.review.trim()) {
-            newErrors.review = "error";
-        }
-
-        if (!formData.releaseDate.trim()) {
-            newErrors.releaseDate = "error";
-        }
+        if (!formData.title.trim()) newErrors.title = "error";
+        if (!formData.review.trim()) newErrors.review = "error";
+        if (!formData.releaseDate.trim()) newErrors.releaseDate = "error";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -91,7 +197,6 @@ export default function PublicationCreateForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (!validate()) return;
 
         try {
@@ -101,7 +206,6 @@ export default function PublicationCreateForm() {
             await createPublication(payload);
 
             dispatch(show({ type: "success", message: "Отправлена на рассмотрение" }));
-            // при желании можно сделать reset формы
         } catch (err) {
             console.error("Ошибка создания публикации:", err);
         } finally {
@@ -140,13 +244,45 @@ export default function PublicationCreateForm() {
                         error={errors.title}
                     />
 
-                    <span className={styles.label}>Автор</span>
-                    <MyInput
-                        label=""
-                        value={formData.authorsInput}
-                        onChange={handleTextChange("authorsInput")}
-                        error={errors.authorsInput}
-                    />
+                    {/* АВТОРЫ */}
+                    <span className={styles.label}>Автор(ы)</span>
+                    <div className={styles.multiField}>
+                        <div className={styles.chipsRow}>
+                            {formData.authors.map((a) => (
+                                <button
+                                    key={`author-${a.id ?? a.name}`}
+                                    type="button"
+                                    className={styles.chip}
+                                    onClick={() => removeItem("authors", a.name)}
+                                >
+                                    <span className={styles.chipText}>{a.name}</span>
+                                    <span className={styles.chipRemove}>×</span>
+                                </button>
+                            ))}
+                        </div>
+
+                        <MySelect
+                            label=""
+                            value=""
+                            onChange={handleAuthorSelectChange}
+                            options={[
+                                ...allAuthors
+                                    .filter(
+                                        (a) =>
+                                            !formData.authors.some(
+                                                (x) =>
+                                                    x.id === a.id ||
+                                                    x.name.toLowerCase() === a.name.toLowerCase(),
+                                            ),
+                                    )
+                                    .map((a) => ({
+                                        value: String(a.id),
+                                        label: a.name,
+                                    })),
+                                { value: "__new__", label: "+ Добавить нового автора" },
+                            ]}
+                        />
+                    </div>
 
                     <span className={styles.label}>Год</span>
                     <MyInput
@@ -182,21 +318,85 @@ export default function PublicationCreateForm() {
 
                 {/* Правая колонка */}
                 <div className={styles.right}>
+                    {/* ТЕГИ */}
                     <span className={styles.label}>Теги</span>
-                    <MyInput
-                        label="#..."
-                        value={formData.tagsInput}
-                        onChange={handleTextChange("tagsInput")}
-                        error={errors.tagsInput}
-                    />
+                    <div className={styles.multiField}>
+                        <div className={styles.chipsRow}>
+                            {formData.tags.map((t) => (
+                                <button
+                                    key={`tag-${t.id ?? t.name}`}
+                                    type="button"
+                                    className={styles.chip}
+                                    onClick={() => removeItem("tags", t.name)}
+                                >
+                                    <span className={styles.chipText}>{t.name}</span>
+                                    <span className={styles.chipRemove}>×</span>
+                                </button>
+                            ))}
+                        </div>
 
+                        <MySelect
+                            label=""
+                            value=""
+                            onChange={handleTagSelectChange}
+                            options={[
+                                ...allTags
+                                    .filter(
+                                        (t) =>
+                                            !formData.tags.some(
+                                                (x) =>
+                                                    x.id === t.id ||
+                                                    x.name.toLowerCase() === t.name.toLowerCase(),
+                                            ),
+                                    )
+                                    .map((t) => ({
+                                        value: String(t.id),
+                                        label: t.name,
+                                    })),
+                                { value: "__new__", label: "+ Добавить новый тег" },
+                            ]}
+                        />
+                    </div>
+
+                    {/* ПРЕДМЕТЫ */}
                     <span className={styles.label}>Предметы</span>
-                    <MyInput
-                        label=""
-                        value={formData.subjectsInput}
-                        onChange={handleTextChange("subjectsInput")}
-                        error={errors.subjectsInput}
-                    />
+                    <div className={styles.multiField}>
+                        <div className={styles.chipsRow}>
+                            {formData.subjects.map((s) => (
+                                <button
+                                    key={`subject-${s.id ?? s.name}`}
+                                    type="button"
+                                    className={styles.chip}
+                                    onClick={() => removeItem("subjects", s.name)}
+                                >
+                                    <span className={styles.chipText}>{s.name}</span>
+                                    <span className={styles.chipRemove}>×</span>
+                                </button>
+                            ))}
+                        </div>
+
+                        <MySelect
+                            label=""
+                            value=""
+                            onChange={handleSubjectSelectChange}
+                            options={[
+                                ...allSubjects
+                                    .filter(
+                                        (s) =>
+                                            !formData.subjects.some(
+                                                (x) =>
+                                                    x.id === s.id ||
+                                                    x.name.toLowerCase() === s.name.toLowerCase(),
+                                            ),
+                                    )
+                                    .map((s) => ({
+                                        value: String(s.id),
+                                        label: s.name,
+                                    })),
+                                { value: "__new__", label: "+ Добавить новый предмет" },
+                            ]}
+                        />
+                    </div>
 
                     <span className={styles.label}>О книге</span>
                     <MyInput
@@ -225,17 +425,9 @@ export default function PublicationCreateForm() {
     );
 }
 
-function parseIds(value: string): number[] {
-    return value
-        .split(",")
-        .map((v) => v.trim())
-        .filter(Boolean)
-        .map((v) => Number(v))
-        .filter((n) => !Number.isNaN(n));
-}
-
 function buildPublicationPayload(form: FormState): ICreatePublicationRequest {
     const year = form.releaseDate.trim();
+
     return {
         type: form.type,
         title: form.title.trim(),
@@ -243,8 +435,9 @@ function buildPublicationPayload(form: FormState): ICreatePublicationRequest {
         releaseDate: year ? `${year}-01-01` : "",
         cover: form.cover,
         file: form.file,
-        authors: parseIds(form.authorsInput),
-        subjects: parseIds(form.subjectsInput),
-        tags: parseIds(form.tagsInput),
+        authors: form.authors,   
+        subjects: form.subjects, 
+        tags: form.tags,         
     };
 }
+

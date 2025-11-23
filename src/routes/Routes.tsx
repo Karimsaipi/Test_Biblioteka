@@ -8,7 +8,7 @@ import Feedback from "../pages/FeedBack/Feedback";
 import BookDetails from "../pages/BookDetails/BookDetails";
 import AllPublications from "../pages/AllBooks/AllPublications";
 import Tags from "../pages/Tags/Tags";
-import PublicationCreate from "../pages/PublicationCreate/PublicationCreateForm";
+import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
 import Favourites from "../pages/Favourites/Favourites";
 import Subjects from "../pages/Subjects/Subjects";
 

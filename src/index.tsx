@@ -8,6 +8,7 @@ import { store } from "./store/store";
 import { bindAxiosNotifier } from "./api/axios";
 import { error } from "./store/notifySlice";
 import ToastHost from "./components/ToastHots/ToastHost";
+import { useAppDispatch } from "./store/hooks";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 bindAxiosNotifier((msg) => store.dispatch(error(msg)));

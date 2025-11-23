@@ -66,40 +66,21 @@ export async function createPublication(payload: ICreatePublicationRequest): Pro
     data.append("review", payload.review);
     data.append("releaseDate", payload.releaseDate);
 
-    if (payload.file) {
-        data.append("file", payload.file);
-    }
+    if (payload.file) data.append("file", payload.file);
+    if (payload.cover) data.append("cover", payload.cover);
 
-    if (payload.cover) {
-        data.append("cover", payload.cover);
-    }
-
-    if (payload.authors && payload.authors.length > 0) {
-        payload.authors.forEach((id) => {
-            data.append("authors", String(id));
-        });
-    }
-
-    if (payload.subjects && payload.subjects.length > 0) {
-        payload.subjects.forEach((id) => {
-            data.append("subjects", String(id));
-        });
-    }
-
-    if (payload.tags && payload.tags.length > 0) {
-        payload.tags.forEach((id) => {
-            data.append("tags", String(id));
-        });
-    }
+    // Шлём в виде JSON
+    data.append("authors", JSON.stringify(payload.authors));
+    data.append("subjects", JSON.stringify(payload.subjects));
+    data.append("tags", JSON.stringify(payload.tags));
 
     const response = await api.post(`/publications/create`, data, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
     });
 
     return response.data;
 }
+
 
 //Поиск публикации
 export async function searchPublications(substr: string): Promise<IPublication[]> {
