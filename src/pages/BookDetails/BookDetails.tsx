@@ -4,8 +4,11 @@ import BookHeaderDetails from "../../components/BookCoverDetails/BookHeaderDetai
 import { IPublication } from "../../models/IPublication";
 import { fetchPublicationsID } from "../../api/publications";
 import CommentBlockPost from "../../components/CommentBlockPost/CommentBlockPost";
+import { useAppDispatch } from "../../store/hooks";
+import { setLastOpenedt } from "../../store/lastOpenedSlice";
 
 export default function BookDetails() {
+    const dispatch = useAppDispatch();
     const { id } = useParams<{ id: string }>();
     const [book, setBook] = useState<IPublication | null>(null);
     const navigate = useNavigate();
@@ -15,7 +18,8 @@ export default function BookDetails() {
         fetchPublicationsID(id)
             .then(setBook)
             .catch(() => setBook(null));
-    }, [id]);
+        dispatch(setLastOpenedt(Number(id)));
+    }, [id, dispatch]);
 
     if (!book) return <div style={{ marginTop: 25 }}>Загрузка книги…</div>;
 

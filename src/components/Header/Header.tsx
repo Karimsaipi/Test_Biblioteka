@@ -13,9 +13,10 @@ import HeaderSearch from "../HeaderSearch/HeaderSearch";
 
 type HeaderProps = {
     onProfileClick?: () => void;
+    onBookClick?: () => void;
 };
 
-export default function Header({ onProfileClick }: HeaderProps) {
+export default function Header({ onProfileClick, onBookClick }: HeaderProps) {
     const navigate = useNavigate();
 
     return (
@@ -62,9 +63,9 @@ export default function Header({ onProfileClick }: HeaderProps) {
                 <div className={styles.right}>
                     <IconButton
                         icon={bookIcon}
-                        alt="Библиотека"
-                        title="Библиотека"
-                        onClick={() => navigate("/library")}
+                        alt="Последняя книга"
+                        title="Последняя книга"
+                        onClick={onBookClick}
                     />
                     <IconButton
                         icon={favoriteIcon}

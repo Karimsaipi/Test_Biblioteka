@@ -12,6 +12,7 @@ export default function MainLayout() {
 
     const [openProfile, setOpenProfile] = React.useState(false);
     const user = useAppSelector((s) => s.auth.user);
+    const lastOpenedId = useAppSelector((s) => s.lastOpened.publicationId);
 
     React.useEffect(() => setOpenProfile(false), [pathname]);
 
@@ -23,11 +24,19 @@ export default function MainLayout() {
         setOpenProfile(true);
     };
 
+    const handleBookClick = () => {
+        if (lastOpenedId) {
+            navigate(`/publications/${lastOpenedId}`);
+        } else {
+            navigate(`/allPublications`);
+        }
+    };
+
     return (
         <>
             {!hideHeader && (
                 <>
-                    <Header onProfileClick={handleProfileClick} />
+                    <Header onProfileClick={handleProfileClick} onBookClick={handleBookClick} />
                     <AccountModal open={openProfile} onClose={() => setOpenProfile(false)} />
                 </>
             )}

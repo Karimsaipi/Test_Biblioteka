@@ -1,12 +1,18 @@
-import React, { JSX } from "react";
+import React, { JSX, useEffect } from "react";
 import styles from "./App.module.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { renderPrivateRoutes, renderRoutes } from "./routes/Routes";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import MainLayout from "./layout/MainLayout";
+import { restoreLastOpened } from "./store/lastOpenedSlice";
 
 export default function App(): JSX.Element {
     const isAuth = useAppSelector((state) => state.auth.isAuth);
+
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(restoreLastOpened());
+    }, [dispatch]);
 
     return (
         <div className={styles.gradientBackground}>
