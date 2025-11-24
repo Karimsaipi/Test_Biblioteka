@@ -3,8 +3,8 @@
 
 .container {
     position: fixed;
-    top: 30px;
-    right: 30px;
+    top: 40px;
+    right: 40px;
     z-index: 1000;
 }
 .toast {
@@ -14,7 +14,10 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     max-width: rem(300);
-    border: 1px solid var(--color-gray-button);
+    border: 1px solid var( --color-black-text);
+    font-family: 'Roboto';
+    font-size: 20px;
+    color:  var(--color-black-text);
 }
 
 

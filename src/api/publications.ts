@@ -14,9 +14,12 @@ import { api } from "./axios";
 export async function fetchPublications(
     params: IPublicationsFilterRequest,
 ): Promise<IPublicationsFilterResponse> {
+    const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
+    const pageSize = Number.isFinite(Number(params.pageSize)) ? Number(params.pageSize) : 8;
+
     const query: Record<string, any> = {
-        page: params.page,
-        pageSize: params.pageSize,
+        page: page,
+        pageSize: pageSize,
         sortBy: params.sortBy ?? PublicationsSortBy.CREATION_DATE,
         sortOrder: params.sortOrder ?? PublicationsSortOrder.ASC,
     };
@@ -81,15 +84,12 @@ export async function createPublication(payload: ICreatePublicationRequest): Pro
     return response.data;
 }
 
-
 //Поиск публикации
 export async function searchPublications(substr: string): Promise<IPublication[]> {
     const query = substr.trim();
     if (!query) return [];
 
-    const url =
-        "/publications/search" +
-        `?page=1&pageSize=5&substr=${encodeURIComponent(query)}`;
+    const url = "/publications/search" + `?page=1&pageSize=5&substr=${encodeURIComponent(query)}`;
 
     const { data } = await api.get<ISearchApiResponse>(url);
 

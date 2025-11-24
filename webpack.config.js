@@ -16,6 +16,7 @@ module.exports = (env) => {
         output: {
             path: path.resolve(__dirname, "build"),
             filename: "[name].[contenthash].js",
+            publicPath: '/', 
         },
         plugins: [
             new CleanWebpackPlugin(),
@@ -23,6 +24,7 @@ module.exports = (env) => {
                 filename: "index.html",
                 template: path.resolve(__dirname, "public", "index.html"),
                 chunks: ["index"],
+                publicPath: '/', 
             }),
             new webpack.ProgressPlugin(),
             new MiniCssExtractPlugin(),
@@ -39,7 +41,10 @@ module.exports = (env) => {
                 {
                     test: /\.module\.s[ac]ss$/i,
                     use: [
-                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: { publicPath: '/' }, 
+                        },
                         {
                             loader: "css-loader",
                             options: {
@@ -96,12 +101,12 @@ module.exports = (env) => {
             proxy: [
                 {
                     context: ["/api"],
-                    target: "http://192.168.68.107:3000",
+                    target: "http://192.168.68.103:3000",
                     changeOrigin: true,
                 },
                 {
                     context: ["/uploads"],
-                    target: "http://192.168.68.107:3000",
+                    target: "http://192.168.68.103:3000",
                     changeOrigin: true,
                 },
             ],

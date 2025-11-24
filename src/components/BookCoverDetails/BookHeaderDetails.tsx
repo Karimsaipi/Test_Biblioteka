@@ -12,6 +12,7 @@ type BookHeaderProps = {
     book: IPublication;
     onRead?: (book: IPublication) => void;
     onDownload?: (book: IPublication) => void;
+    onSubjectClick?: (subjectName: string) => void;
     onTagClick?: (tagName: string) => void;
 };
 
@@ -25,6 +26,7 @@ export default function BookHeaderDetails({
     book,
     onRead,
     onDownload,
+    onSubjectClick,
     onTagClick,
 }: BookHeaderProps) {
     const author = book?.authors?.map((a) => a.name).join(", ");
@@ -41,10 +43,11 @@ export default function BookHeaderDetails({
             setFavLoading(true);
             const ok = await updateFavourite(book.id);
             if (ok) {
+                setIsFavourite((prev) => !prev);
                 dispatch(
                     show({
                         type: "success",
-                        message: book.isFavourite ? "Удалено из закладок" : "Добавлено в закладки",
+                        message: isFavourite ? "Удалено из закладок" : "Добавлено в закладки",
                     }),
                 );
             }
@@ -81,11 +84,11 @@ export default function BookHeaderDetails({
             <img
                 src={favIconZakl}
                 alt={book.isFavourite ? "Убрать из закладок" : "В закладки"}
-                className={`${styles.favIcon} ${book.isFavourite ? styles.favIconActive : ""}`}
+                className={`${styles.favIcon} ${isFavourite ? styles.favIconActive : ""}`}
                 onClick={handleFavoriteClick}
             />
-            {/* Блок справа с инфой. */}
 
+            {/* Блок справа с инфой. */}
             <div className={styles.info}>
                 <div className={styles.titleRow}>
                     <div className={styles.title}>{book?.title || "Без названия"}</div>
@@ -98,10 +101,15 @@ export default function BookHeaderDetails({
 
                 {book.subjects && book.subjects.length > 0 && (
                     <div className={styles.subjects}>
-                        {book.subjects.map((s, index) => (
-                            <span key={s.id} className={styles.subjectChip}>
+                        {book.subjects.map((s) => (
+                            <button
+                                key={s.id}
+                                type="button"
+                                className={styles.subjectChip}
+                                onClick={() => onSubjectClick && onSubjectClick(String(s.id))}
+                            >
                                 {s.name}
-                            </span>
+                            </button>
                         ))}
                     </div>
                 )}
@@ -113,7 +121,7 @@ export default function BookHeaderDetails({
                                 key={t.id}
                                 type="button"
                                 className={styles.tag}
-                                onClick={() => onTagClick && onTagClick(t.name)}
+                                onClick={() => onTagClick && onTagClick(String(t.id))}
                             >
                                 {t.name}
                             </a>

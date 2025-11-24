@@ -25,13 +25,15 @@ export const routes: RouteType[] = [
     { path: "/publications/:id", element: <BookDetails /> },
     { path: "/allPublications", element: <AllPublications /> },
     { path: "/copyright", element: <Copyright /> },
+    { path: "/tags", element: <Tags /> },
+    { path: "/subjects", element: <Subjects /> },
 ];
 
 // приватные маршруты (только страницы, без layout)
 export const privateRoutes: RouteType[] = [
     { path: "/feedback", element: <Feedback /> },
-    { path: "/tags", element: <Tags /> },
-    { path: "/subjects", element: <Subjects /> },
+    // { path: "/tags", element: <Tags /> },
+    // { path: "/subjects", element: <Subjects /> },
     { path: "/create-publication", element: <PublicationCreate /> },
     { path: "/favourites", element: <Favourites /> },
 ];

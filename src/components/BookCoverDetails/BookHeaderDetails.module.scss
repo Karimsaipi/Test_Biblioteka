@@ -39,7 +39,7 @@
 }
 
 .favIconActive {
-    opacity: 1; 
+    opacity: 1;
 }
 
 .coverButtons {
@@ -106,24 +106,37 @@
 }
 
 .subjects {
-    background-color: red;
-    border-radius: 8px;
-    max-width: 200px;
-    width: auto;
-    height: auto;
-    text-align: center;
-    margin-bottom: 26px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
+    margin-bottom: 26px;
     flex-wrap: wrap;
+    margin-top: 150px;
 }
 
 .subjectChip {
+    border: none;
+    border-radius: 8px;
+    padding: 4px 18px;
     font-family: "Roboto";
     font-size: 14px;
-    color: black;
-    padding: 6px 12px;
+    cursor: pointer;
+    color: #000;
+    background-color: rgba(235, 193, 43, 1);
+    width: 200px;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:nth-child(2n) {
+        background-color: rgba(235, 55, 43, 1);
+    }
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }
 
 .tag {
@@ -179,19 +192,24 @@
 }
 
 @media (max-width: 440px) {
-    .coverBlock { 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        gap: 20px; 
+    .coverBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
     }
 
     .coverImg {
         height: 300px;
     }
 
-    .favIcon {
-        width: 20px;
-        height: 20px;
+    .subjects {
+        margin-top: 0px;
     }
+
+    .favIcon {
+        align-self: center;
+    }
+
 }

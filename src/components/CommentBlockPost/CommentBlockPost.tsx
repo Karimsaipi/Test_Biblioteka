@@ -11,36 +11,58 @@ interface CommentBlockProps {
     publicationId: number;
 }
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 4;
 
 export default function CommentBlockPost({ publicationId }: CommentBlockProps) {
     const dispatch = useAppDispatch();
     const [comments, setComments] = useState<IComment[]>([]);
-    // const [hasMore, setHasMore] = useState(true);
+    const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const [sending, setSending] = useState(false);
     const [text, setText] = useState("");
     const [files, setFiles] = useState<File[]>([]);
+    const [page, setPage] = useState(1);
 
-    const loadComments = async () => {
+    const loadComments = async (pageToLoad: number, append: boolean) => {
         try {
             setLoading(true);
 
             const res: ICommentsResponse = await getComment(publicationId, {
-                page: 1,
+                page: pageToLoad,
                 pageSize: PAGE_SIZE,
             });
-            setComments(res.data);
+           
+            const newComments = res.data ?? [];
+
+            setComments((prev) => (append ? [...prev, ...newComments] : newComments));
+
+            if ((res as any).totalCount != null) {
+                const totalCount = Number((res as any).totalCount) || 0;
+                setHasMore(pageToLoad * PAGE_SIZE < totalCount);
+            } else {
+                setHasMore(newComments.length === PAGE_SIZE);
+            }
         } catch {
+            setHasMore(false);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        loadComments();
+        setComments([]);
+        setPage(1);
+        setHasMore(true);
+        loadComments(1, false);
     }, [publicationId]);
+
+    const handleLoadMore = () => {
+        if (loading || !hasMore) return;
+        const nextPage = page + 1;
+        setPage(nextPage);
+        loadComments(nextPage, true);
+    };
 
     const handleSend = async () => {
         const trimmed = text.trim();
@@ -54,6 +76,10 @@ export default function CommentBlockPost({ publicationId }: CommentBlockProps) {
                 assets: files,
             });
             dispatch(show({ type: "success", message: "Комментарий отправлен" }));
+            setText("");
+            setFiles([]);
+            setPage(1);
+            loadComments(1, false);
         } catch (error) {
         } finally {
             setSending(false);
@@ -116,6 +142,13 @@ export default function CommentBlockPost({ publicationId }: CommentBlockProps) {
                 {comments.map((comment) => (
                     <CommentItem key={comment.id} comment={comment} />
                 ))}
+
+                {/* "Показать ещё" */}
+                {hasMore && !loading && comments.length > 0 && (
+                    <button type="button" className={styles.loadMore} onClick={handleLoadMore}>
+                        Показать ещё
+                    </button>
+                )}
             </div>
         </section>
     );

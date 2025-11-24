@@ -46,6 +46,7 @@ export default function BookDetails() {
                     a.click();
                     a.remove();
                 }}
+                onSubjectClick={(subject) => navigate(`/allPublications?subject=${encodeURIComponent(subject)}`)}
                 onTagClick={(tag) => navigate(`/allPublications?tag=${encodeURIComponent(tag)}`)}
             />
             <CommentBlockPost publicationId={book.id} />
