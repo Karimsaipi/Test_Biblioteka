@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tags.module.scss";
 import { ITag } from "../../models/ITag";
-import { fetchTags } from "../../api/tags";
+import { getTags } from "../../api/tags";
 import SearchInput from "../../UI/SearchInput/SearchInput";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ export default function Tags({ onChangeTotal }: TagsProps) {
         const load = async () => {
             setLoading(true);
             try {
-                const data = await fetchTags();
+                const data = await getTags();
                 if (cancelled) return;
                 setItems(data || []);
                 onChangeTotal?.(data?.length || 0);

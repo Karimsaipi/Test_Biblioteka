@@ -13,9 +13,10 @@ import { ICreatePublicationRequest, PublicationType } from "../../models/IPublic
 import { ITag } from "../../models/ITag";
 import { IAuthor } from "../../models/IAuthor";
 import { ISubject } from "../../models/ISubject";
-import { fetchAuthors } from "../../api/author";
-import { fetchTags } from "../../api/tags";
-import { fetchSubjects } from "../../api/subjects";
+import { createAuthor, deleteAuthor, getAuthors } from "../../api/author";
+import { createTag, deleteTag, getTags } from "../../api/tags";
+import { createSubject, deleteSubject, getSubjects } from "../../api/subjects";
+import SelectSearchAdd from "../../UI/SelectSearchedAdd/SelectSearchedAdd";
 
 type RefItem = { id: number | null; name: string };
 
@@ -33,10 +34,14 @@ interface FormState {
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
+const norm = (s: unknown) =>
+    String(s ?? "")
+        .trim()
+        .toLowerCase();
+
 export default function PublicationCreateForm() {
     const dispatch = useAppDispatch();
 
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState<FormState>({
         type: PublicationType.книга,
         title: "",
@@ -55,136 +60,70 @@ export default function PublicationCreateForm() {
     const [allTags, setAllTags] = useState<ITag[]>([]);
 
     useEffect(() => {
-        fetchAuthors()
-            .then((authors) => setAllAuthors(authors))
-            .catch(() => setAllAuthors([]));
+        const safe = async <T,>(p: Promise<T>, fallback: T): Promise<T> => {
+            try {
+                return await p;
+            } catch {
+                return fallback;
+            }
+        };
 
-        fetchSubjects()
-            .then((subjects) => setAllSubjects(subjects))
-            .catch(() => setAllSubjects([]));
+        (async () => {
+            const [authors, subjects, tags] = await Promise.all([
+                safe(getAuthors(), [] as IAuthor[]),
+                safe(getSubjects(), [] as ISubject[]),
+                safe(getTags(), [] as ITag[]),
+            ]);
 
-        fetchTags()
-            .then((tags) => setAllTags(tags))
-            .catch(() => setAllTags([]));
+            setAllAuthors(authors);
+            setAllSubjects(subjects);
+            setAllTags(tags);
+        })();
     }, []);
-
-    // --- helpers ---
 
     const handleTextChange =
         (field: keyof FormState) =>
         (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            const value = e.target.value;
-            setFormData((prev) => ({ ...prev, [field]: value }));
+            setFormData((prev) => ({ ...prev, [field]: e.target.value }));
         };
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = Number(e.target.value) as PublicationType;
-        setFormData((prev) => ({ ...prev, type: value }));
+        setFormData((prev) => ({ ...prev, type: Number(e.target.value) as PublicationType }));
     };
 
     const handleCoverSelected = (files: FileList) => {
-        const file = files[0] ?? null;
-        setFormData((prev) => ({ ...prev, cover: file }));
+        setFormData((prev) => ({ ...prev, cover: files[0] ?? null }));
     };
 
     const handleFileSelected = (files: FileList) => {
-        const file = files[0] ?? null;
-        setFormData((prev) => ({ ...prev, file }));
+        setFormData((prev) => ({ ...prev, file: files[0] ?? null }));
     };
 
-    // универсальное добавление/удаление
     const addItem = (field: "authors" | "subjects" | "tags", item: RefItem) => {
+        const name = (item.name ?? "").trim();
+        if (!name) return;
+
         setFormData((prev) => {
             const current = prev[field];
-            // не дублируем по имени
-            if (current.some((x) => x.name.toLowerCase() === item.name.toLowerCase())) {
-                return prev;
-            }
-            return {
-                ...prev,
-                [field]: [...current, item],
-            };
+            const key = norm(name);
+
+            if (item.id != null && current.some((x) => x.id === item.id)) return prev;
+            if (current.some((x) => norm(x.name) === key)) return prev;
+
+            return { ...prev, [field]: [...current, { id: item.id ?? null, name }] };
         });
     };
 
     const removeItem = (field: "authors" | "subjects" | "tags", name: string) => {
+        const key = norm(name);
         setFormData((prev) => ({
             ...prev,
-            [field]: prev[field].filter((x) => x.name !== name),
+            [field]: prev[field].filter((x) => norm(x.name) !== key),
         }));
     };
 
-    // --- селект АВТОРОВ ---
-    const handleAuthorSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const val = e.target.value;
-        if (!val) return;
-
-        if (val === "__new__") {
-            const name = window.prompt("Введите имя автора");
-            if (name && name.trim()) {
-                addItem("authors", { id: null, name: name.trim() });
-            }
-            e.target.value = "";
-            return;
-        }
-
-        const id = Number(val);
-        const author = allAuthors.find((a) => a.id === id);
-        if (author) {
-            addItem("authors", { id: author.id, name: author.name });
-        }
-        e.target.value = "";
-    };
-
-    // --- селект ТЕГОВ ---
-    const handleTagSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const val = e.target.value;
-        if (!val) return;
-
-        if (val === "__new__") {
-            const name = window.prompt("Введите название тега");
-            if (name && name.trim()) {
-                addItem("tags", { id: null, name: name.trim() });
-            }
-            e.target.value = "";
-            return;
-        }
-
-        const id = Number(val);
-        const tag = allTags.find((t) => t.id === id);
-        if (tag) {
-            addItem("tags", { id: tag.id, name: tag.name });
-        }
-        e.target.value = "";
-    };
-
-    // --- селект ПРЕДМЕТОВ ---
-    const handleSubjectSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const val = e.target.value;
-        if (!val) return;
-
-        if (val === "__new__") {
-            const name = window.prompt("Введите название предмета");
-            if (name && name.trim()) {
-                addItem("subjects", { id: null, name: name.trim() });
-            }
-            e.target.value = "";
-            return;
-        }
-
-        const id = Number(val);
-        const subj = allSubjects.find((s) => s.id === id);
-        if (subj) {
-            addItem("subjects", { id: subj.id, name: subj.name });
-        }
-        e.target.value = "";
-    };
-
-    // --- валидация ---
-
-    const validate = (): boolean => {
+    const validate = () => {
         const newErrors: FormErrors = {};
-
         if (!formData.title.trim()) newErrors.title = "error";
         if (!formData.review.trim()) newErrors.review = "error";
         if (!formData.releaseDate.trim()) newErrors.releaseDate = "error";
@@ -193,25 +132,50 @@ export default function PublicationCreateForm() {
         return Object.keys(newErrors).length === 0;
     };
 
-    // --- сабмит ---
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        setErrors({});
         if (!validate()) return;
 
         try {
-            setLoading(true);
-
-            const payload = buildPublicationPayload(formData);
-            await createPublication(payload);
-
+            await createPublication(buildPublicationPayload(formData));
             dispatch(show({ type: "success", message: "Отправлена на рассмотрение" }));
-        } catch (err) {
-            console.error("Ошибка создания публикации:", err);
+        } catch {
         } finally {
-            setLoading(false);
         }
     };
+
+    const makeOptions = (arr: RefItem[]) =>
+        (arr ?? []).flatMap((x) => {
+            const label = (x.name ?? "").trim();
+            return label ? [{ value: String(x.id), label }] : [];
+        });
+
+    const pickFromList =
+        (list: RefItem[], field: "authors" | "subjects" | "tags") => (val: string) => {
+            const id = Number(val);
+            const item = list.find((x) => x.id === id);
+            if (!item) return;
+            addItem(field, { id: item.id, name: item.name ?? "" });
+        };
+
+    const createAndAdd =
+        <T extends RefItem>(
+            field: "authors" | "subjects" | "tags",
+            createFn: (name: string) => Promise<T>,
+            setAll: React.Dispatch<React.SetStateAction<T[]>>,
+        ) =>
+        async (name: string) => {
+            const clean = name.trim();
+            if (!clean) return { value: "", label: "" };
+
+            const created = await createFn(clean);
+            setAll((prev) => (prev.some((x) => x.id === created.id) ? prev : [...prev, created]));
+            addItem(field, { id: created.id, name: created.name ?? clean });
+
+            return { value: String(created.id), label: created.name ?? clean };
+        };
 
     return (
         <section className={styles.container}>
@@ -261,26 +225,36 @@ export default function PublicationCreateForm() {
                             ))}
                         </div>
 
-                        <MySelect
-                            label=""
+                        <SelectSearchAdd
                             value=""
-                            onChange={handleAuthorSelectChange}
-                            options={[
-                                ...allAuthors
-                                    .filter(
-                                        (a) =>
-                                            !formData.authors.some(
-                                                (x) =>
-                                                    x.id === a.id ||
-                                                    x.name.toLowerCase() === a.name.toLowerCase(),
-                                            ),
-                                    )
-                                    .map((a) => ({
-                                        value: String(a.id),
-                                        label: a.name,
-                                    })),
-                                { value: "__new__", label: "+ Добавить нового автора" },
-                            ]}
+                            options={makeOptions(allAuthors)}
+                            onChange={pickFromList(allAuthors, "authors")}
+                            onCreate={createAndAdd("authors", createAuthor, setAllAuthors)}
+                            onDelete={async (opt) => {
+                                const id = Number(opt.value);
+                                if (!id) return;
+
+                                try {
+                                    const ok = await deleteAuthor(id);
+                                    if (!ok) {
+                                        dispatch(
+                                            show({
+                                                type: "error",
+                                                message: "Не удалось удалить автора",
+                                            }),
+                                        );
+                                        return;
+                                    }
+
+                                    setAllAuthors((prev) => prev.filter((a) => a.id !== id));
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        authors: prev.authors.filter((a) => a.id !== id),
+                                    }));
+
+                                    dispatch(show({ type: "success", message: "Автор удалён" }));
+                                } catch {}
+                            }}
                         />
                     </div>
 
@@ -335,26 +309,36 @@ export default function PublicationCreateForm() {
                             ))}
                         </div>
 
-                        <MySelect
-                            label=""
+                        <SelectSearchAdd
                             value=""
-                            onChange={handleTagSelectChange}
-                            options={[
-                                ...allTags
-                                    .filter(
-                                        (t) =>
-                                            !formData.tags.some(
-                                                (x) =>
-                                                    x.id === t.id ||
-                                                    x.name.toLowerCase() === t.name.toLowerCase(),
-                                            ),
-                                    )
-                                    .map((t) => ({
-                                        value: String(t.id),
-                                        label: t.name,
-                                    })),
-                                { value: "__new__", label: "+ Добавить новый тег" },
-                            ]}
+                            options={makeOptions(allTags)}
+                            onChange={pickFromList(allTags, "tags")}
+                            onCreate={createAndAdd("tags", createTag, setAllTags)}
+                            onDelete={async (opt) => {
+                                const id = Number(opt.value);
+                                if (!id) return;
+
+                                try {
+                                    const ok = await deleteTag(id);
+                                    if (!ok) {
+                                        dispatch(
+                                            show({
+                                                type: "error",
+                                                message: "Не удалось удалить тег",
+                                            }),
+                                        );
+                                        return;
+                                    }
+
+                                    setAllTags((prev) => prev.filter((t) => t.id !== id));
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        tags: prev.tags.filter((t) => t.id !== id),
+                                    }));
+
+                                    dispatch(show({ type: "success", message: "Тег удалён" }));
+                                } catch {}
+                            }}
                         />
                     </div>
 
@@ -375,26 +359,36 @@ export default function PublicationCreateForm() {
                             ))}
                         </div>
 
-                        <MySelect
-                            label=""
+                        <SelectSearchAdd
                             value=""
-                            onChange={handleSubjectSelectChange}
-                            options={[
-                                ...allSubjects
-                                    .filter(
-                                        (s) =>
-                                            !formData.subjects.some(
-                                                (x) =>
-                                                    x.id === s.id ||
-                                                    x.name.toLowerCase() === s.name.toLowerCase(),
-                                            ),
-                                    )
-                                    .map((s) => ({
-                                        value: String(s.id),
-                                        label: s.name,
-                                    })),
-                                { value: "__new__", label: "+ Добавить новый предмет" },
-                            ]}
+                            options={makeOptions(allSubjects)}
+                            onChange={pickFromList(allSubjects, "subjects")}
+                            onCreate={createAndAdd("subjects", createSubject, setAllSubjects)}
+                            onDelete={async (opt) => {
+                                const id = Number(opt.value);
+                                if (!id) return;
+
+                                try {
+                                    const ok = await deleteSubject(id);
+                                    if (!ok) {
+                                        dispatch(
+                                            show({
+                                                type: "error",
+                                                message: "Не удалось удалить предмет",
+                                            }),
+                                        );
+                                        return;
+                                    }
+
+                                    setAllSubjects((prev) => prev.filter((s) => s.id !== id));
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        subjects: prev.subjects.filter((s) => s.id !== id),
+                                    }));
+
+                                    dispatch(show({ type: "success", message: "Предмет удалён" }));
+                                } catch {}
+                            }}
                         />
                     </div>
 
@@ -412,12 +406,7 @@ export default function PublicationCreateForm() {
                     </span>
                 </div>
 
-                <MyButton
-                    variant="primary"
-                    type="submit"
-                    className={styles.submitButton}
-                    disabled={loading}
-                >
+                <MyButton variant="primary" type="submit" className={styles.submitButton}>
                     Отправить на рассмотрение
                 </MyButton>
             </form>
@@ -435,9 +424,8 @@ function buildPublicationPayload(form: FormState): ICreatePublicationRequest {
         releaseDate: year ? `${year}-01-01` : "",
         cover: form.cover,
         file: form.file,
-        authors: form.authors,   
-        subjects: form.subjects, 
-        tags: form.tags,         
+        authors: form.authors,
+        subjects: form.subjects,
+        tags: form.tags,
     };
 }
-

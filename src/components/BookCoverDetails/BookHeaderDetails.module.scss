@@ -128,6 +128,10 @@
         outline: none;
     }
 
+    &:hover {
+        background-color: var(--color-pink-checkboxLine);
+    }
+
     &:nth-child(2n) {
         background-color: rgba(235, 55, 43, 1);
     }
@@ -145,6 +149,10 @@
     font-size: 14px;
     text-decoration: underline;
     cursor: pointer;
+
+    &:hover {
+        color: var(--color-pink-checkboxLine);
+    }
 }
 
 @media (max-width: 1024px) {
@@ -211,5 +219,4 @@
     .favIcon {
         align-self: center;
     }
-
 }

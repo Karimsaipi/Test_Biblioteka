@@ -4,7 +4,7 @@ import {
     IPublicationsFilterRequest,
     IPublicationsFilterResponse,
 } from "../../models/IPublication";
-import { fetchPublications } from "../../api/publications";
+import { getPublications } from "../../api/publications";
 import styles from "./Publication.module.scss";
 import BookCard from "../BookCard/BookCard";
 
@@ -19,7 +19,7 @@ export default function PublicationsSection({
     title,
     requestParams,
     onChangeTotal,
-    fetcher = fetchPublications,
+    fetcher = getPublications,
 }: PublicationsSectionProps) {
     const [items, setItems] = useState<IPublication[]>([]);
     const [loading, setLoading] = useState(true);

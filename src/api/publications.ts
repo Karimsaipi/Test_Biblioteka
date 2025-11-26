@@ -11,7 +11,7 @@ import {
 import { api } from "./axios";
 
 //Получить get/publications/filter
-export async function fetchPublications(
+export async function getPublications(
     params: IPublicationsFilterRequest,
 ): Promise<IPublicationsFilterResponse> {
     const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
@@ -53,7 +53,7 @@ export async function fetchPublications(
 }
 
 //Получаем одну публикацию по айди
-export async function fetchPublicationsID(id: number | string): Promise<IPublication> {
+export async function getPublicationsID(id: number | string): Promise<IPublication> {
     const res = await api.get(`/publications/${id}`, {
         validateStatus: (s) => s >= 200 && s < 400,
     });

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styles from "./AssetButton.module.scss";
-import clipIcon from "../../assets/icons/clip-svgrepo-com 1.png";
+import clipIcon from "../../assets/icons/clip-svgrepo-com 1.svg";
 
 interface AssetButtonProps {
     style?: any;

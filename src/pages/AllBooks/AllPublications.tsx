@@ -1,5 +1,5 @@
-import { fetchAuthors } from "../../api/author";
-import { fetchSubjects } from "../../api/subjects";
+import { getAuthors } from "../../api/author";
+import { getSubjects } from "../../api/subjects";
 import {
     IPublicationsFilterRequest,
     PublicationsSortBy,
@@ -54,7 +54,7 @@ export default function AllPublications() {
     const resetPage = () => setPage(1);
 
     useEffect(() => {
-        fetchAuthors()
+        getAuthors()
             .then((authors) => {
                 setAuthorOptions(
                     authors.map((a) => ({
@@ -67,7 +67,7 @@ export default function AllPublications() {
                 setAuthorOptions([]);
             });
 
-        fetchSubjects()
+        getSubjects()
             .then((subjects) => {
                 setSubjectOptions(
                     subjects.map((s) => ({

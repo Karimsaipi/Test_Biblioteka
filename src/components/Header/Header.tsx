@@ -1,12 +1,10 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
-import SearchInput from "../../UI/SearchInput/SearchInput";
 import IconButton from "../../UI/IconButton/IconButton";
 import bookIcon from "../../assets/icons/bookIcon.png";
 import favoriteIcon from "../../assets/icons/favoriteIcon.png";
 import mainLogo from "../../assets/images/logo.png";
-import searchIcon from "../../assets/icons/searchIcon.png";
 import penIcon from "../../assets/icons/pen.png";
 import userIcon from "../../assets/icons/userIcon.png";
 import HeaderSearch from "../HeaderSearch/HeaderSearch";

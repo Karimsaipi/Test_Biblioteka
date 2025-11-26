@@ -3,7 +3,7 @@ import styles from "./Subjects.module.scss";
 import SearchInput from "../../UI/SearchInput/SearchInput";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";
-import { fetchSubjects } from "../../api/subjects";
+import { getSubjects } from "../../api/subjects";
 import { ISubject } from "../../models/ISubject";
 
 interface SubjectsProps {
@@ -22,7 +22,7 @@ export default function Subjects({ onChangeTotal }: SubjectsProps) {
         const load = async () => {
             setLoading(true);
             try {
-                const data = await fetchSubjects();
+                const data = await getSubjects();
                 if (cancelled) return;
                 setItems(data || []);
                 onChangeTotal?.(data?.length || 0);

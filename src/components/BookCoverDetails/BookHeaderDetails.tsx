@@ -22,6 +22,11 @@ function getCoverUrl(coverPath?: string): string {
     return `/uploads/${coverPath}`;
 }
 
+function getPdfUrl(book: IPublication) {
+    const path = (book as any).filePath || (book as any).fileUrl;
+    return path ? `/uploads/${path}` : "";
+}
+
 export default function BookHeaderDetails({
     book,
     onRead,
@@ -33,12 +38,12 @@ export default function BookHeaderDetails({
     const year = new Date(book.releaseDate).getFullYear();
     const coverSrc = getCoverUrl(book.coverPath);
     const dispatch = useAppDispatch();
+
     const [isFavourite, setIsFavourite] = useState<boolean>((book as any).isFavourite ?? false);
     const [favLoading, setFavLoading] = useState(false);
 
     const handleFavoriteClick = async () => {
         if (favLoading) return;
-
         try {
             setFavLoading(true);
             const ok = await updateFavourite(book.id);
@@ -57,6 +62,13 @@ export default function BookHeaderDetails({
         }
     };
 
+    const handleReadClick = () => {
+        if (onRead) return onRead(book);
+
+        const url = getPdfUrl(book);
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
+    };
+
     return (
         <div className={styles.coverBlock}>
             {/* Блок слева. Т.е обложка и кнопка под ними */}
@@ -72,7 +84,7 @@ export default function BookHeaderDetails({
                 />
 
                 <div className={styles.coverButtons}>
-                    <MyButton className={styles.button} onClick={() => onRead?.(book)}>
+                    <MyButton className={styles.button} onClick={handleReadClick}>
                         Читать
                     </MyButton>
                     <MyButton className={styles.button} onClick={() => onDownload?.(book)}>

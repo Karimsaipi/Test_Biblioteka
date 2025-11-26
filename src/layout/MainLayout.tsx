@@ -26,12 +26,11 @@ export default function MainLayout() {
 
     const handleBookClick = () => {
         if (lastOpenedId) {
-            navigate(`/publications/${lastOpenedId}`);
+            navigate(`/publications/${lastOpenedId}`, { state: { openReader: true } });
         } else {
             navigate(`/allPublications`);
         }
     };
-
     return (
         <>
             {!hideHeader && (

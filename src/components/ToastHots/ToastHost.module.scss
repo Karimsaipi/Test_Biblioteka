@@ -3,21 +3,35 @@
 
 .container {
     position: fixed;
-    top: 40px;
-    right: 40px;
+    top: 30px;
+    right: 50px;
     z-index: 1000;
 }
 .toast {
     background: var(--color-light);
     padding: 10px 14px;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 6px 5px rgba(40, 106, 205, 0.25);
     cursor: pointer;
     max-width: rem(300);
-    border: 1px solid var( --color-black-text);
     font-family: 'Roboto';
-    font-size: 20px;
-    color:  var(--color-black-text);
+    font-size: 22px;
+    color:  var(--color-blue-text);
 }
 
+@media(max-width: 768px) {
+    .toast {
+        font-size: 20px;
+    }
+}
 
+@media(max-width: 440px) {
+    .container {
+        top: 20px;
+        right: 20px;
+    }
+
+    .toast {
+        font-size: 18px;
+    }
+}

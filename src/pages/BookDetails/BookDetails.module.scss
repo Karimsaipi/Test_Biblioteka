@@ -1,0 +1,46 @@
+@use "../../styles/hElpers/" as *;
+@use "../../styles/variables" as *;
+
+.wrapper {
+    position: fixed;
+    inset: 0;
+    background: rgb(black, 0.45);
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+    padding: 16;
+}
+
+.reader {
+    width: min(1000px, 96vw);
+    max-height: 92vh;
+    background-color: rgb(black, 0.7);
+    border-radius: 12px;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    gap: 12;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.title {
+    color: var(--color-light);
+    font-size: 20px;
+    font-family: "Roboto";
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button {
+    width: 100%;
+    padding: 8px 8px;
+    height: 18px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+
