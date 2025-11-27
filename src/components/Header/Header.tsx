@@ -12,9 +12,26 @@ import HeaderSearch from "../HeaderSearch/HeaderSearch";
 type HeaderProps = {
     onProfileClick?: () => void;
     onBookClick?: () => void;
+
+    onSubjectsEnter?: () => void;
+    onSubjectsLeave?: () => void;
+    onTagsEnter?: () => void;
+    onTagsLeave?: () => void;
+
+    subjectsPopover?: React.ReactNode;
+    tagsPopover?: React.ReactNode;
 };
 
-export default function Header({ onProfileClick, onBookClick }: HeaderProps) {
+export default function Header({
+    onProfileClick,
+    onBookClick,
+    onSubjectsEnter,
+    onSubjectsLeave,
+    onTagsEnter,
+    onTagsLeave,
+    subjectsPopover,
+    tagsPopover,
+}: HeaderProps) {
     const navigate = useNavigate();
 
     return (
@@ -23,7 +40,7 @@ export default function Header({ onProfileClick, onBookClick }: HeaderProps) {
                 {/* Лого + нав */}
                 <div className={styles.left}>
                     <NavLink to="/" className={styles.logo} aria-label="На главную">
-                        <img src={mainLogo} alt="DigitalBooks.app"></img>
+                        <img src={mainLogo} alt="DigitalBooks.app" />
                     </NavLink>
 
                     <nav className={styles.nav} aria-label="Главная навигация">
@@ -33,18 +50,37 @@ export default function Header({ onProfileClick, onBookClick }: HeaderProps) {
                         >
                             Вся литература
                         </NavLink>
-                        <NavLink
-                            to="/subjects"
-                            className={({ isActive }) => (isActive ? styles.active : undefined)}
+
+                        {/* Предметы */}
+                        <div
+                            className={styles.navPopoverWrap}
+                            onMouseEnter={onSubjectsEnter}
+                            onMouseLeave={onSubjectsLeave}
                         >
-                            Предметы
-                        </NavLink>
-                        <NavLink
-                            to="/tags"
-                            className={({ isActive }) => (isActive ? styles.active : undefined)}
+                            <NavLink
+                                to="/subjects"
+                                className={({ isActive }) => (isActive ? styles.active : undefined)}
+                            >
+                                Предметы
+                            </NavLink>
+                            {subjectsPopover}
+                        </div>
+
+                        {/* Тэги */}
+                        <div
+                            className={styles.navPopoverWrap}
+                            onMouseEnter={onTagsEnter}
+                            onMouseLeave={onTagsLeave}
                         >
-                            Тэги
-                        </NavLink>
+                            <NavLink
+                                to="/tags"
+                                className={({ isActive }) => (isActive ? styles.active : undefined)}
+                            >
+                                Тэги
+                            </NavLink>
+                            {tagsPopover}
+                        </div>
+
                         <NavLink
                             to="/copyright"
                             className={({ isActive }) => (isActive ? styles.active : undefined)}

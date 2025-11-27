@@ -32,8 +32,6 @@ export const routes: RouteType[] = [
 // приватные маршруты (только страницы, без layout)
 export const privateRoutes: RouteType[] = [
     { path: "/feedback", element: <Feedback /> },
-    // { path: "/tags", element: <Tags /> },
-    // { path: "/subjects", element: <Subjects /> },
     { path: "/create-publication", element: <PublicationCreate /> },
     { path: "/favourites", element: <Favourites /> },
 ];

@@ -15,6 +15,6 @@ export async function createSubject(name: string): Promise<ISubject> {
 
 // удалить предмет, DELETE 
 export async function deleteSubject(id: number): Promise<boolean> {
-  const res = await api.delete(`/subject/delete/${id}`);
+  const res = await api.delete(`/subjects/delete/${id}`);
   return res.data as boolean;
 }
