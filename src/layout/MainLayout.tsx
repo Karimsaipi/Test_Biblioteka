@@ -4,6 +4,10 @@ import Header from "../components/Header/Header";
 import styles from "./MainLayout.module.scss";
 import AccountModal from "../components/AccountModal/AccountModal";
 import { useAppSelector } from "../store/hooks";
+import SubjectsPopover from "../components/HeaderPopover/SubjectsPopover";
+import TagsPopover from "../components/HeaderPopover/TagsPopover";
+
+type Pop = "subjects" | "tags" | null;
 
 export default function MainLayout() {
     const navigate = useNavigate();
@@ -14,7 +18,12 @@ export default function MainLayout() {
     const user = useAppSelector((s) => s.auth.user);
     const lastOpenedId = useAppSelector((s) => s.lastOpened.publicationId);
 
-    React.useEffect(() => setOpenProfile(false), [pathname]);
+    const [openPop, setOpenPop] = React.useState<Pop>(null);
+
+    React.useEffect(() => {
+        setOpenProfile(false);
+        setOpenPop(null);
+    }, [pathname]);
 
     const handleProfileClick = () => {
         if (!user) {
@@ -31,14 +40,36 @@ export default function MainLayout() {
             navigate(`/allPublications`);
         }
     };
+
+    const closePop = () => setOpenPop(null);
+
     return (
         <>
             {!hideHeader && (
                 <>
-                    <Header onProfileClick={handleProfileClick} onBookClick={handleBookClick} />
+                    <Header
+                        onProfileClick={handleProfileClick}
+                        onBookClick={handleBookClick}
+                        onSubjectsEnter={() => setOpenPop("subjects")}
+                        onSubjectsLeave={closePop}
+                        onTagsEnter={() => setOpenPop("tags")}
+                        onTagsLeave={closePop}
+                        subjectsPopover={
+                            <SubjectsPopover
+                                open={openPop === "subjects"}
+                                onClose={closePop}
+                                top={5}
+                            />
+                        }
+                        tagsPopover={
+                            <TagsPopover open={openPop === "tags"} onClose={closePop} top={5} />
+                        }
+                    />
+
                     <AccountModal open={openProfile} onClose={() => setOpenProfile(false)} />
                 </>
             )}
+
             <main className={styles.main}>
                 <Outlet />
             </main>
