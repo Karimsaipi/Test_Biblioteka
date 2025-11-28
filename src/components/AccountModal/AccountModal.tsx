@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./AccountModal.module.scss";
-import BaseInput from "../../UI/BaseInput/BaseInput";
+import BaseInput from "../../ui/BaseInput/BaseInput";
 import BaseButton from "../../UI/BaseButton/BaseButton";
 import DateInput from "../../UI/DateInput/DateInput";
 import GenderSwitch from "../../UI/GenderSwitch/GenderSwitch";

@@ -1,0 +1,33 @@
+@use "../../styles/helpers" as *;
+@use "../../styles/variables" as *;
+
+.link {
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    text-align: center;
+    vertical-align: middle;
+
+    color: var(--color-blue-button);
+    cursor: pointer;
+
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-blue-checkboxLine);
+
+    &:link,
+    &:visited,
+    &:active {
+        color: var(--color-blue-button);
+        text-decoration-color: var(--color-blue-button);
+    }
+
+    // Меняется на розовый при хавер
+    &:hover {
+        color: var(--color-pink-checkboxLine);
+        text-decoration-color: var(--color-pink-checkboxLine);
+    }
+}

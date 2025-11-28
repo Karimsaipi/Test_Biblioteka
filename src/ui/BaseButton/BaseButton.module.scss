@@ -1,0 +1,46 @@
+@use "../../styles/helpers" as *;
+@use "../../styles/variables" as *;
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 6px;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    cursor: pointer;
+    border: none;
+}
+
+// Primary (синяя)
+.primary {
+    background-color: var(--color-blue-button);
+    color: var(--color-light);
+
+    &:hover {
+        background-color: var(--color-pink-checkboxLine);
+    }
+}
+
+// Tertiary (серый фон, синий текст)
+.tertiary {
+    background-color: var(--color-gray-button);
+    color: var(--color-blue-button);
+
+    &:hover {
+        background-color: var(--color-pink-checkboxLine);
+    }
+}
+
+//Красная RED
+.red {
+    background-color: var(--color-pink-checkboxLine);
+    color: var(--color-light);
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+}

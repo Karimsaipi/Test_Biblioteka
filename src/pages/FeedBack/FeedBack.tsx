@@ -1,6 +1,6 @@
 import React from "react";
 import FeedbackForm from "../../components/FeedbackForm/FeedbackForm";
-import styles from "./Feedback.module.scss";
+import styles from "./FeedBack.module.scss";
 
 export default function Feedback() {
     return (
