@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ISubject } from "../../models/ISubject";
 import { getSubjects } from "../../api/subjects";
-import headerStyles from "../Header/Header.module.scss";
+import headerStyles from "./Popovers.module.scss";
 
 type Props = { open: boolean; onClose: () => void; top?: number };
 

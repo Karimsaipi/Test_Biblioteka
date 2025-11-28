@@ -3,7 +3,7 @@ import styles from "./CommentBlockPost.module.scss";
 import { useAppDispatch } from "../../store/hooks";
 import { IComment, ICommentsResponse } from "../../models/IComment";
 import { createComment, getComment } from "../../api/comments";
-import { show } from "../../store/notifySlice";
+import { show } from "../../store/NotifySlice/notifySlice";
 import CommentItem from "../CommentItem/CommentItem";
 import AssetButton from "../../UI/AssetButton/AssetButton";
 
@@ -32,7 +32,7 @@ export default function CommentBlockPost({ publicationId }: CommentBlockProps) {
                 page: pageToLoad,
                 pageSize: PAGE_SIZE,
             });
-           
+
             const newComments = res.data ?? [];
 
             setComments((prev) => (append ? [...prev, ...newComments] : newComments));

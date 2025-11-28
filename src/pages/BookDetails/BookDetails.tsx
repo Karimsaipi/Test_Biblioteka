@@ -5,10 +5,14 @@ import { IPublication } from "../../models/IPublication";
 import { getPublicationsID } from "../../api/publications";
 import CommentBlockPost from "../../components/CommentBlockPost/CommentBlockPost";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setLastOpened, setLastPage, setReaderOpen } from "../../store/lastOpenedSlice";
+import {
+    setLastOpened,
+    setLastPage,
+    setReaderOpen,
+} from "../../store/LastOpenedSlice/lastOpenedSlice";
 import PDFReader from "../../components/PDFReader/PDFReader";
 import styles from "./BookDetails.module.scss";
-import MyButton from "../../UI/BaseButton/BaseButton";
+import BaseButton from "../../UI/BaseButton/BaseButton";
 
 function uploadUrl(path: string) {
     return `/uploads/${encodeURI(path)}`;
@@ -117,22 +121,22 @@ export default function BookDetails() {
                             </div>
 
                             <div style={{ display: "flex", gap: 10 }}>
-                                <MyButton
+                                <BaseButton
                                     className={styles.button}
                                     onClick={() =>
                                         window.open(pdfUrl, "_blank", "noopener,noreferrer")
                                     }
                                 >
                                     Вкладка
-                                </MyButton>
+                                </BaseButton>
 
-                                <MyButton
+                                <BaseButton
                                     className={styles.button}
                                     onClick={closeReader}
                                     aria-label="Закрыть"
                                 >
                                     X
-                                </MyButton>
+                                </BaseButton>
                             </div>
                         </div>
 

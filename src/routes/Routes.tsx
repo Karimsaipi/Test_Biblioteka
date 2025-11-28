@@ -4,20 +4,20 @@ import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import Main from "../pages/Main/Main";
 import Copyright from "../pages/Copyright/Copyright";
-import Feedback from "../pages/FeedBack/Feedback";
 import BookDetails from "../pages/BookDetails/BookDetails";
-import AllPublications from "../pages/AllBooks/AllPublications";
+import AllPublications from "../pages/AllPublications/AllPublications";
 import Tags from "../pages/Tags/Tags";
 import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
 import Favourites from "../pages/Favourites/Favourites";
 import Subjects from "../pages/Subjects/Subjects";
+import Feedback from "../pages/FeedBack/Feedback";
 
 // публичные маршруты
 export const routes: RouteProps[] = [
     { path: "/", element: <Main /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
-    { path: "/publications/:id", element: <BookDetails />, },
+    { path: "/publications/:id", element: <BookDetails /> },
     { path: "/allPublications", element: <AllPublications /> },
     { path: "/copyright", element: <Copyright /> },
     { path: "/tags", element: <Tags /> },

@@ -1,11 +1,11 @@
 import React from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import Header from "../components/Header/Header";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 import styles from "./MainLayout.module.scss";
-import AccountModal from "../components/AccountModal/AccountModal";
-import { useAppSelector } from "../store/hooks";
-import SubjectsPopover from "../components/HeaderPopover/SubjectsPopover";
-import TagsPopover from "../components/HeaderPopover/TagsPopover";
+import AccountModal from "../../components/AccountModal/AccountModal";
+import { useAppSelector } from "../../store/hooks";
+import SubjectsPopover from "../../components/HeaderPopover/SubjectsPopover";
+import TagsPopover from "../../components/HeaderPopover/TagsPopover";
 
 type Pop = "subjects" | "tags" | null;
 
@@ -70,9 +70,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 </>
             )}
 
-            <main className={styles.main}>
-                {props.children}
-            </main>
+            <main className={styles.main}>{props.children}</main>
         </>
     );
 }

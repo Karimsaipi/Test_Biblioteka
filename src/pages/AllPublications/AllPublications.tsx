@@ -1,12 +1,12 @@
 import { getAuthors } from "../../api/author";
 import { getSubjects } from "../../api/subjects";
 import {
-    IPublicationsFilterRequest,
+    IPublicationsFilterReqBody,
     PublicationsSortBy,
     PublicationsSortOrder,
     PublicationType,
 } from "../../models/IPublication";
-import MySelect from "../../UI/Select/MySelect";
+import BaseSelect from "../../UI/BaseSelect/BaseSelect";
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AllPublications.module.scss";
 import SortSelect from "../../UI/SelectSort/SelectSort";
@@ -105,7 +105,7 @@ export default function AllPublications() {
         resetPage();
     };
 
-    const requestParams: IPublicationsFilterRequest = useMemo(
+    const requestParams: IPublicationsFilterReqBody = useMemo(
         () => ({
             page,
             pageSize: PAGE_SIZE,
@@ -125,21 +125,21 @@ export default function AllPublications() {
         <div className={styles.main}>
             {/* Фильтры */}
             <div className={styles.filters}>
-                <MySelect
+                <BaseSelect
                     label="Тип"
                     value={typeValue}
                     onChange={handleTypeChange}
                     options={typeOptions}
                 />
 
-                <MySelect
+                <BaseSelect
                     label="Автор"
                     value={authorValue}
                     onChange={handleAuthorChange}
                     options={authorOptions}
                 />
 
-                <MySelect
+                <BaseSelect
                     label="Предмет"
                     value={subjectValue}
                     onChange={handleSubjectChange}

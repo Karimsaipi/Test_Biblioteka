@@ -1,16 +1,14 @@
 import React from "react";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import styles from "./Register.module.scss";
 
 export default function Register() {
     return (
-        <div
-            style={{
-                minHeight: "100svh",
-                display: "grid",
-                placeItems: "center",
-            }}
-        >
-            <RegistrationForm />
+        <div className={styles.page}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>Регистрация</h1>
+                <RegistrationForm />
+            </div>
         </div>
     );
 }

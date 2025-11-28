@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { hide } from "../../store/notifySlice";
-import styles from "./ToastHost.module.scss";
+import { hide } from "../../store/NotifySlice/notifySlice";
+import styles from "./ToastHot.module.scss";
 
 export default function ToastHost() {
     const dispatch = useAppDispatch();

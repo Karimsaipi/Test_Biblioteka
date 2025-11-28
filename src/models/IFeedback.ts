@@ -4,7 +4,7 @@ export enum Theme {
     'Другое' = 2,
 }
 
-export interface IFeedbackRequest {
+export interface IFeedbackReqBody {
     theme: Theme;
     userName: string;
     email: string;

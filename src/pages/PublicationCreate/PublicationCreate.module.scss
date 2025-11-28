@@ -1,0 +1,18 @@
+@use "../../styles/helpers/" as *;
+@use "../../styles/variables" as *;
+
+.container {
+    padding: rem(24) rem(0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    align-self: stretch;
+    text-align: left;
+    color: rgba(0, 0, 0, 1) !important;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 24px;
+}

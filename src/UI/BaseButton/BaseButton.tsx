@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./BaseButton.module.scss";
 
-type ButtonProps = {
+type BaseButtonProps = {
     children: React.ReactNode;
     variant?: "primary" | "tertiary" | "red";
     disabled?: boolean;
@@ -11,7 +11,7 @@ type ButtonProps = {
     style?: any;
 };
 
-export default function MyButton({
+export default function BaseButton({
     children,
     variant = "primary",
     disabled,
@@ -19,7 +19,7 @@ export default function MyButton({
     onClick,
     className,
     style,
-}: ButtonProps) {
+}: BaseButtonProps) {
     return (
         <button
             type={type}

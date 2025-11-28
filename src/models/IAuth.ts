@@ -1,7 +1,7 @@
 import { Gender, IUser } from "./IUser";
 
 // POST /account/sign-up
-export interface IRegisterRequest {
+export interface IRegisterReqBody {
     login: string;
     password: string;
     name: string;
@@ -13,7 +13,7 @@ export interface IRegisterRequest {
 }
 
 // POST /account/sign-in
-export interface ISignInRequest {
+export interface ISignInReqBody {
     login: string;
     password: string;
 }

@@ -9,7 +9,7 @@ interface CommentItemProps {
 export default function CommentItem({ comment }: CommentItemProps) {
     const firstLetter = comment.author.name?.trim()?.[0]?.toUpperCase() ?? "?";
 
-    const date = new Date(comment.creationDate).toLocaleString("ru-RU", {dateStyle: "short"});
+    const date = new Date(comment.creationDate).toLocaleString("ru-RU", { dateStyle: "short" });
 
     return (
         <div className={styles.comment}>

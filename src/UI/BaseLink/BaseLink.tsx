@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./MyLink.module.scss";
+import styles from "./BaseLink.module.scss";
 
-interface MyLinkProps {
+interface BaseLinkProps {
     to: string;
     children: React.ReactNode;
     style?: React.CSSProperties;
 }
 
-export default function MyLink({ to, children, style }: MyLinkProps) {
+export default function BaseLink({ to, children, style }: BaseLinkProps) {
     return (
         <Link to={to} className={styles.link} style={style}>
             {children}

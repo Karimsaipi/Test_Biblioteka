@@ -1,6 +1,7 @@
 import React from "react";
-import Holders from "../../components/HoldersText/Holders";
+import HoldersText from "../../components/HoldersText/HoldersText";
+
 
 export default function Copyright() {
-    return <Holders />;
+    return <HoldersText />;
 }
