@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
-import IconButton from "../../UI/IconButton/IconButton";
+import IconButton from "../../ui/IconButton/IconButton";
 import bookIcon from "../../assets/icons/bookIcon.png";
 import favoriteIcon from "../../assets/icons/favoriteIcon.png";
 import mainLogo from "../../assets/images/logo.png";

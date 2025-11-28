@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BaseInput from "../../UI/BaseInput/BaseInput";
-import BaseButton from "../../UI/BaseButton/BaseButton";
-import BaseLink from "../../UI/BaseLink/BaseLink";
+import BaseInput from "../../ui/BaseInput/BaseInput";
+import BaseButton from "../../ui/BaseButton/BaseButton";
+import BaseLink from "../../ui/BaseLink/BaseLink";
 import styles from "./AuthForm.module.scss";
 import { signIn } from "../../api/auth";
 import { useAppDispatch } from "../../store/hooks";

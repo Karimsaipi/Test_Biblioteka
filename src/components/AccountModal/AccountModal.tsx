@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./AccountModal.module.scss";
 import BaseInput from "../../ui/BaseInput/BaseInput";
-import BaseButton from "../../UI/BaseButton/BaseButton";
-import DateInput from "../../UI/DateInput/DateInput";
-import GenderSwitch from "../../UI/GenderSwitch/GenderSwitch";
-import MySelect from "../../UI/BaseSelect/BaseSelect";
+import BaseButton from "../../ui/BaseButton/BaseButton";
+import DateInput from "../../ui/DateInput/DateInput";
+import GenderSwitch from "../../ui/GenderSwitch/GenderSwitch";
+import MySelect from "../../ui/BaseSelect/BaseSelect";
 import { editAccount } from "../../api/account";
 import type { Gender, IUser } from "../../models/IUser";
 import type { IAccountEditReqBody } from "../../models/IAccountEdit";

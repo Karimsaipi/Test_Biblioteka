@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HeaderSearch.module.scss";
-import SearchInput from "../../UI/SearchInput/SearchInput";
+import SearchInput from "../../ui/SearchInput/SearchInput";
 import { searchPublications } from "../../api/publications";
 import { PublicationType, type IPublication } from "../../models/IPublication";
 import placeholderCover from "../../assets/images/bookImage.png";

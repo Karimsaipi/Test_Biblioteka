@@ -6,11 +6,11 @@ import {
     PublicationsSortOrder,
     PublicationType,
 } from "../../models/IPublication";
-import BaseSelect from "../../UI/BaseSelect/BaseSelect";
+import BaseSelect from "../../ui/BaseSelect/BaseSelect";
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./AllPublications.module.scss";
-import SortSelect from "../../UI/SelectSort/SelectSort";
-import Pagination from "../../UI/Pagination/Pagination";
+import SortSelect from "../../ui/SelectSort/SelectSort";
+import Pagination from "../../ui/Pagination/Pagination";
 import { useSearchParams } from "react-router-dom";
 import PublicationsSection from "../../components/PublicationSection/PublicationSection";
 

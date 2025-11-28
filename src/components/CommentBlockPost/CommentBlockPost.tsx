@@ -5,7 +5,7 @@ import { IComment, ICommentsResponse } from "../../models/IComment";
 import { createComment, getComment } from "../../api/comments";
 import { show } from "../../store/NotifySlice/notifySlice";
 import CommentItem from "../CommentItem/CommentItem";
-import AssetButton from "../../UI/AssetButton/AssetButton";
+import AssetButton from "../../ui/AssetButton/AssetButton";
 
 interface CommentBlockProps {
     publicationId: number;

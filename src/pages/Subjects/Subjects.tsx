@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Subjects.module.scss";
-import SearchInput from "../../UI/SearchInput/SearchInput";
+import SearchInput from "../../ui/SearchInput/SearchInput";
 import searchIcon from "../../assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";
 import { getSubjects } from "../../api/subjects";

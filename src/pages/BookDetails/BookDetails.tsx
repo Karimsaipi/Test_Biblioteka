@@ -12,7 +12,7 @@ import {
 } from "../../store/LastOpenedSlice/lastOpenedSlice";
 import PDFReader from "../../components/PDFReader/PDFReader";
 import styles from "./BookDetails.module.scss";
-import BaseButton from "../../UI/BaseButton/BaseButton";
+import BaseButton from "../../ui/BaseButton/BaseButton";
 
 function uploadUrl(path: string) {
     return `/uploads/${encodeURI(path)}`;

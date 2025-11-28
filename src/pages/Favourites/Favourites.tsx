@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PublicationsSection from "../../components/PublicationSection/PublicationSection";
 import { IFavouritesGetReqParams } from "../../models/IPublication";
 import { getFavourites } from "../../api/favourites";
-import Pagination from "../../UI/Pagination/Pagination";
+import Pagination from "../../ui/Pagination/Pagination";
 import styles from "./Favourites.module.scss";
 
 const PAGE_SIZE = 8;

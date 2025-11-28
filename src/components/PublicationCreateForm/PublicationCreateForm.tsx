@@ -4,10 +4,10 @@ import { createPublication } from "../../api/publications";
 import { show } from "../../store/NotifySlice/notifySlice";
 import styles from "./PublicationCreateForm.module.scss";
 
-import MyInput from "../../UI/BaseInput/BaseInput";
-import MySelect from "../../UI/BaseSelect/BaseSelect";
-import AssetButton from "../../UI/AssetButton/AssetButton";
-import MyButton from "../../UI/BaseButton/BaseButton";
+import MyInput from "../../ui/BaseInput/BaseInput";
+import MySelect from "../../ui/BaseSelect/BaseSelect";
+import AssetButton from "../../ui/AssetButton/AssetButton";
+import MyButton from "../../ui/BaseButton/BaseButton";
 
 import { ICreatePublicationReqBody, PublicationType } from "../../models/IPublication";
 import { ITag } from "../../models/ITag";
@@ -16,7 +16,7 @@ import { ISubject } from "../../models/ISubject";
 import { createAuthor, deleteAuthor, getAuthors } from "../../api/author";
 import { createTag, deleteTag, getTags } from "../../api/tags";
 import { createSubject, deleteSubject, getSubjects } from "../../api/subjects";
-import SelectSearchAdd from "../../UI/SelectSearchedAdd/SelectSearchedAdd";
+import SelectSearchAdd from "../../ui/SelectSearchedAdd/SelectSearchedAdd";
 
 type RefItem = { id: number | null; name: string };
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./BookHeaderDetails.module.scss";
 import { IPublication } from "../../models/IPublication";
-import BaseButton from "../../UI/BaseButton/BaseButton";
+import BaseButton from "../../ui/BaseButton/BaseButton";
 import coverPlaceholder from "../../assets/images/bookImage.png";
 import favIconZakl from "../../assets/icons/favICONZACLADKA.svg";
 import { updateFavourite } from "../../api/favourites";

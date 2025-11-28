@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./FeedbackForm.module.scss";
-import BaseInput from "../../UI/BaseInput/BaseInput";
-import BaseButton from "../../UI/BaseButton/BaseButton";
-import BaseSelect from "../../UI/BaseSelect/BaseSelect";
+import BaseInput from "../../ui/BaseInput/BaseInput";
+import BaseButton from "../../ui/BaseButton/BaseButton";
+import BaseSelect from "../../ui/BaseSelect/BaseSelect";
 import { feedbackCreate } from "../../api/feedback";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/NotifySlice/notifySlice";

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import BaseInput from "../../UI/BaseInput/BaseInput";
-import GenderSwitch from "../../UI/GenderSwitch/GenderSwitch";
-import BaseSelect from "../../UI/BaseSelect/BaseSelect";
-import BaseButton from "../../UI/BaseButton/BaseButton";
-import DateInput from "../../UI/DateInput/DateInput";
+import BaseInput from "../../ui/BaseInput/BaseInput";
+import GenderSwitch from "../../ui/GenderSwitch/GenderSwitch";
+import BaseSelect from "../../ui/BaseSelect/BaseSelect";
+import BaseButton from "../../ui/BaseButton/BaseButton";
+import DateInput from "../../ui/DateInput/DateInput";
 import { useNavigate } from "react-router-dom";
 import { buildPayload } from "../../utils/formMap";
 import { signUp } from "../../api/auth";
