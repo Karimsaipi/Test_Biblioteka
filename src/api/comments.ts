@@ -1,8 +1,8 @@
-import { IComment, ICommentsResponse, ICreateCommentRequest, IGetCommentParams } from "../models/IComment";
+import { ICommentsResponse, ICreateCommentReqBody, IGetCommentReqParams } from "../models/IComment";
 import { api } from "./axios";
 
 //создать коммент/ post
-export async function createComment(payload: ICreateCommentRequest): Promise<boolean> {
+export async function createComment(payload: ICreateCommentReqBody): Promise<boolean> {
     const data = new FormData();
 
     data.append("publicationId", String(payload.publicationId));
@@ -26,7 +26,7 @@ export async function createComment(payload: ICreateCommentRequest): Promise<boo
 //получить коммент/ get
 export async function getComment(
     publicationId: number,
-    params: IGetCommentParams,
+    params: IGetCommentReqParams,
 ): Promise<ICommentsResponse> {
     const response = await api.get<ICommentsResponse>(`/comments/${publicationId}`,  {
         params: {

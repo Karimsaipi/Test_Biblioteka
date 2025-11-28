@@ -7,7 +7,7 @@ import favoriteIcon from "../../assets/icons/favoriteIcon.png";
 import mainLogo from "../../assets/images/logo.png";
 import penIcon from "../../assets/icons/pen.png";
 import userIcon from "../../assets/icons/userIcon.png";
-import HeaderSearch from "../HeaderSearch/HeaderSearch";
+import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
 
 type HeaderProps = {
     onProfileClick?: () => void;

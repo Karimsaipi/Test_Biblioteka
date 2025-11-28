@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getErrorMessage } from "./error";
 import { store } from "../store/store";
-import { logout } from "../store/authSlice";
+import { logout } from "../store/AuthSlice/authSlice";
+import { error } from "../store/NotifySlice/notifySlice";
 
 export const api = axios.create({
     baseURL: "/api",
@@ -37,24 +38,19 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-let pushError: ((msg: string) => void) | null = null;
-export const bindAxiosNotifier = (fn: (msg: string) => void) => {
-    pushError = fn;
-};
-
 //любая ошибка → текст из getErrorMessage идет в тост
 api.interceptors.response.use(
     (r) => r,
-    (e) => {
-        const status = e?.response?.status;
+    (err) => {
+        const status = err?.response?.status;
 
         if (status === 401) {
             store.dispatch(logout());
             window.location.href = "/login";
         }
-        console.log("[AXIOS ERROR]", e?.response?.status, e?.response?.data);
-        const msg = getErrorMessage(e, "Ошибка");
-        pushError?.(msg);
-        return Promise.reject(e);
+        console.log("[AXIOS ERROR]", err?.response?.status, err?.response?.data);
+        const msg = getErrorMessage(err, "Ошибка");
+        store.dispatch(error(msg));
+        return Promise.reject(err);
     },
 );

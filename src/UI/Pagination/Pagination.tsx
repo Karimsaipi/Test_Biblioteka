@@ -36,10 +36,7 @@ export default function Pagination({ currentPage, totalPages, onChange }: Props)
 
     return (
         <div className={styles.wrapper}>
-            <button
-                className={styles.arrow}
-                onClick={() => go(currentPage - 1)}
-            >
+            <button className={styles.arrow} onClick={() => go(currentPage - 1)}>
                 &lt;
             </button>
 

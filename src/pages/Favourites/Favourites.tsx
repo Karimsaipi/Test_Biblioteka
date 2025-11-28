@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PublicationsSection from "../../components/PublicationSection/PublicationSection";
-import { IFavouritesGetParams } from "../../models/IPublication";
+import { IFavouritesGetReqParams } from "../../models/IPublication";
 import { getFavourites } from "../../api/favourites";
 import Pagination from "../../UI/Pagination/Pagination";
 import styles from "./Favourites.module.scss";
@@ -11,7 +11,7 @@ export default function Favourites() {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
 
-    const requestParams: IFavouritesGetParams = {
+    const requestParams: IFavouritesGetReqParams = {
         page,
         pageSize: PAGE_SIZE,
     };

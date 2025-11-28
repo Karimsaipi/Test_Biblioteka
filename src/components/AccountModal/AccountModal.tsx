@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./AccountModal.module.scss";
-import MyInput from "../../UI/Input/MyInput";
-import MyButton from "../../UI/BaseButton/BaseButton";
+import BaseInput from "../../UI/BaseInput/BaseInput";
+import BaseButton from "../../UI/BaseButton/BaseButton";
 import DateInput from "../../UI/DateInput/DateInput";
-import GenderSwitch from "../../UI/Checkbox/GenderSwitch";
-import MySelect from "../../UI/Select/MySelect";
+import GenderSwitch from "../../UI/GenderSwitch/GenderSwitch";
+import MySelect from "../../UI/BaseSelect/BaseSelect";
 import { editAccount } from "../../api/account";
 import type { Gender, IUser } from "../../models/IUser";
-import type { IAccountEditRequest } from "../../models/IAccountEdit";
+import type { IAccountEditReqBody } from "../../models/IAccountEdit";
 import pencilPng from "../../assets/icons/penModalClick.png";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { show } from "../../store/notifySlice";
-import { logout, setUser } from "../../store/authSlice";
+import { show } from "../../store/NotifySlice/notifySlice";
+import { logout, setUser } from "../../store/AuthSlice/authSlice";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
@@ -81,7 +81,7 @@ export default function AccountModal({ open, onClose }: Props) {
             <div className={styles.card} onClick={(e) => e.stopPropagation()}>
                 <form onSubmit={onSubmit} className={styles.form}>
                     <span className={styles.label}>Имя</span>
-                    <MyInput
+                    <BaseInput
                         label=""
                         value={form.name}
                         onChange={onChange("name")}
@@ -89,7 +89,7 @@ export default function AccountModal({ open, onClose }: Props) {
                     />
 
                     <span className={styles.label}>Логин</span>
-                    <MyInput
+                    <BaseInput
                         label=""
                         value={form.login}
                         onChange={onChange("login")}
@@ -101,7 +101,7 @@ export default function AccountModal({ open, onClose }: Props) {
                     <div className={styles.emailRow}>
                         <div className={styles.emailField}>
                             {isEmailEditing ? (
-                                <MyInput
+                                <BaseInput
                                     label=""
                                     value={form.email}
                                     onChange={onChange("email")}
@@ -157,7 +157,7 @@ export default function AccountModal({ open, onClose }: Props) {
                             ]}
                         />
 
-                        <MyInput
+                        <BaseInput
                             label="Должность"
                             value={form.position}
                             onChange={onChange("position")}
@@ -165,17 +165,17 @@ export default function AccountModal({ open, onClose }: Props) {
                     </div>
 
                     <div className={styles.actions}>
-                        <MyButton type="submit" className={styles.btn}>
+                        <BaseButton type="submit" className={styles.btn}>
                             Сохранить
-                        </MyButton>
-                        <MyButton
+                        </BaseButton>
+                        <BaseButton
                             type="button"
                             className={styles.btn}
                             variant="red"
                             onClick={onExit}
                         >
                             Выйти
-                        </MyButton>
+                        </BaseButton>
                     </div>
                 </form>
             </div>
@@ -204,7 +204,7 @@ function makeFormState(user: IUser | null) {
 }
 
 // готовим payload на сервер
-function buildPayload(form: ReturnType<typeof makeFormState>): IAccountEditRequest {
+function buildPayload(form: ReturnType<typeof makeFormState>): IAccountEditReqBody {
     return {
         name: form.name.trim(),
         login: form.login.trim(),

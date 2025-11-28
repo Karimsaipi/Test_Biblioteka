@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./MyInput.module.scss";
+import styles from "./BaseInput.module.scss";
 
-interface MyInputProps {
+interface BaseInputProps {
     label?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,14 +10,14 @@ interface MyInputProps {
     className?: string;
 }
 
-export default function MyInput({
+export default function BaseInput({
     label,
     value,
     onChange,
     type = "text",
     error = false,
     className,
-}: MyInputProps) {
+}: BaseInputProps) {
     return (
         <div className={styles.wrapper}>
             <input

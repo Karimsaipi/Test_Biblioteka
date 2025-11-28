@@ -18,13 +18,13 @@ export interface IComment {
     creationDate: string;
 }
 
-export interface ICreateCommentRequest {
+export interface ICreateCommentReqBody {
     publicationId: number;
     text: string;
     assets?: File[];
 }
 
-export interface IGetCommentParams {
+export interface IGetCommentReqParams {
     page: number;
     pageSize: number;
 }

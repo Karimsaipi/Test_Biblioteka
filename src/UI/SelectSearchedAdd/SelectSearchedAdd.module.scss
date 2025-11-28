@@ -1,4 +1,4 @@
-@use "../../styles/hElpers" as *;
+@use "../../styles/helpers" as *;
 @use "../../styles/variables" as *;
 
 .wrapper {
@@ -118,5 +118,4 @@
     &:hover {
         color: var(--color-pink-checkboxLine);
     }
-
 }

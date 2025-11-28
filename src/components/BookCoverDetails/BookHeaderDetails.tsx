@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styles from "./BookHeaderDetails.module.scss";
 import { IPublication } from "../../models/IPublication";
-import MyButton from "../../UI/BaseButton/BaseButton";
+import BaseButton from "../../UI/BaseButton/BaseButton";
 import coverPlaceholder from "../../assets/images/bookImage.png";
 import favIconZakl from "../../assets/icons/favICONZACLADKA.svg";
 import { updateFavourite } from "../../api/favourites";
 import { useAppDispatch } from "../../store/hooks";
-import { show } from "../../store/notifySlice";
+import { show } from "../../store/NotifySlice/notifySlice";
 
 type BookHeaderProps = {
     book: IPublication;
@@ -84,12 +84,12 @@ export default function BookHeaderDetails({
                 />
 
                 <div className={styles.coverButtons}>
-                    <MyButton className={styles.button} onClick={handleReadClick}>
+                    <BaseButton className={styles.button} onClick={handleReadClick}>
                         Читать
-                    </MyButton>
-                    <MyButton className={styles.button} onClick={() => onDownload?.(book)}>
+                    </BaseButton>
+                    <BaseButton className={styles.button} onClick={() => onDownload?.(book)}>
                         Скачать
-                    </MyButton>
+                    </BaseButton>
                 </div>
             </div>
 

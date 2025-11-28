@@ -1,58 +1,38 @@
-@use '../../styles/hElpers/' as *;
-@use '../../styles/variables' as *;
-
-.card {
-  width: 100%;
-  height: rem(370);
-  max-width: rem(438);
-  border-radius: rem(20);
-  background: var(--color-light);
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.title {
-  margin-top: rem(22);
-  text-align: center; 
-  margin-bottom: rem(22);
-}
+@use "../../styles/helpers/" as *;
+@use "../../styles/variables" as *;
 
 .form {
-  max-width: rem(338);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: rem(14);
+    max-width: rem(338);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: rem(14);
 }
 
 .controllers {
-  display: flex;
-  flex-direction: column;
-  max-height: rem(123);
-  width: 100%;
-  display: flex;
-  gap: rem(15);
-  align-items: center;
-  margin-bottom: rem(16);
-  height: rem(120);
+    display: flex;
+    flex-direction: column;
+    max-height: rem(123);
+    width: 100%;
+    gap: rem(15);
+    align-items: center;
+    margin-bottom: rem(16);
+    height: rem(120);
 }
 
 .topRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  
-  button {
-    height: 54px;
-    width: rem(172);
-  }
-}  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 
-.register {
-  width: 100%;
-  height: rem(54);
+    button {
+        height: 54px;
+        width: rem(172);
+    }
 }
 
+.register {
+    width: 100%;
+    height: rem(54);
+}

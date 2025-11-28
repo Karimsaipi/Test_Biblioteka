@@ -1,18 +1,17 @@
-import { ICreateCommentRequest } from "../models/IComment";
 import {
-    IPublicationsFilterRequest,
+    IPublicationsFilterReqBody,
     IPublicationsFilterResponse,
     IPublication,
     PublicationsSortBy,
     PublicationsSortOrder,
-    ICreatePublicationRequest,
+    ICreatePublicationReqBody,
     ISearchApiResponse,
 } from "../models/IPublication";
 import { api } from "./axios";
 
 //Получить get/publications/filter
 export async function getPublications(
-    params: IPublicationsFilterRequest,
+    params: IPublicationsFilterReqBody,
 ): Promise<IPublicationsFilterResponse> {
     const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
     const pageSize = Number.isFinite(Number(params.pageSize)) ? Number(params.pageSize) : 8;
@@ -61,7 +60,7 @@ export async function getPublicationsID(id: number | string): Promise<IPublicati
 }
 
 //Создать публикацию
-export async function createPublication(payload: ICreatePublicationRequest): Promise<boolean> {
+export async function createPublication(payload: ICreatePublicationReqBody): Promise<boolean> {
     const data = new FormData();
 
     data.append("type", String(payload.type));

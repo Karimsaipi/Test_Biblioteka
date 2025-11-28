@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import notify from "./notifySlice";
-import auth from "./authSlice";
-import lastOpened from "./lastOpenedSlice";
+import notify from "./NotifySlice/notifySlice";
+import auth from "./AuthSlice/authSlice";
+import lastOpened from "./LastOpenedSlice/lastOpenedSlice";
 
 export const store = configureStore({
     reducer: { notify, auth, lastOpened },

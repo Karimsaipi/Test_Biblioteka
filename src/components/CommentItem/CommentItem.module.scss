@@ -1,4 +1,4 @@
-@use "../../styles/hElpers/" as *;
+@use "../../styles/helpers/" as *;
 @use "../../styles/variables" as *;
 
 .comment {
@@ -21,7 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 26px;
     flex-shrink: 0;
     margin-right: 12px;
@@ -42,13 +42,13 @@
 }
 
 .authorPost {
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 14px;
-    color: rgba(37, 84, 128, 1) 
+    color: rgba(37, 84, 128, 1);
 }
 
 .date {
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 18px;
     color: rgba(59, 79, 178, 1);
     white-space: nowrap;
@@ -73,14 +73,14 @@
     color: #3b6fcf;
     text-decoration: underline;
     cursor: pointer;
-    
+
     &:hover {
         color: var(----color-pink-checkboxLine);
     }
 }
 
-@media(max-width: 1024px) {
-    .avatar{
+@media (max-width: 1024px) {
+    .avatar {
         width: 38px;
         height: 38px;
         font-size: 20px;

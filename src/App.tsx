@@ -3,8 +3,9 @@ import styles from "./App.module.scss";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { renderPrivateRoutes, renderRoutes } from "./routes/Routes";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import MainLayout from "./layout/MainLayout";
-import { restoreLastOpened } from "./store/lastOpenedSlice";
+import MainLayout from "./layout/MainLayout/MainLayout";
+import { restoreLastOpened } from "./store/LastOpenedSlice/lastOpenedSlice";
+import ToastHot from "./components/ToastHot/ToastHot";
 
 export default function App(): JSX.Element {
     const isAuth = useAppSelector((state) => state.auth.isAuth);
@@ -15,21 +16,28 @@ export default function App(): JSX.Element {
     }, [dispatch]);
 
     return (
-        <div className={styles.gradientBackground}>
-            <MainLayout>
-                <Routes>
-                    {renderRoutes()}
+        <>
+            <div className={styles.gradientBackground}>
+                <MainLayout>
+                    <Routes>
+                        {renderRoutes()}
 
-                    {renderPrivateRoutes(isAuth)}
+                        {renderPrivateRoutes(isAuth)}
 
-                    <Route
-                        path="*"
-                        element={
-                            isAuth ? <Navigate to="/" replace /> : <Navigate to="/login" replace />
-                        }
-                    />
-                </Routes>
-            </MainLayout>
-        </div>
+                        <Route
+                            path="*"
+                            element={
+                                isAuth ? (
+                                    <Navigate to="/" replace />
+                                ) : (
+                                    <Navigate to="/login" replace />
+                                )
+                            }
+                        />
+                    </Routes>
+                </MainLayout>
+            </div>
+            <ToastHot />
+        </>
     );
 }

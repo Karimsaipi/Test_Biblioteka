@@ -1,7 +1,7 @@
 import React from "react";
-import style from "../HoldersText/Holders.module.scss";
+import style from "./HoldersText.module.scss";
 
-export default function Holders() {
+export default function HoldersText() {
     return (
         <div className={style.container}>
             <h3>Для правообладателей</h3>

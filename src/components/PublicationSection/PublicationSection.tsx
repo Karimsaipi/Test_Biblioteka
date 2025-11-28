@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
     IPublication,
-    IPublicationsFilterRequest,
+    IPublicationsFilterReqBody,
     IPublicationsFilterResponse,
 } from "../../models/IPublication";
 import { getPublications } from "../../api/publications";
@@ -10,7 +10,7 @@ import BookCard from "../BookCard/BookCard";
 
 interface PublicationsSectionProps {
     title: string;
-    requestParams: IPublicationsFilterRequest;
+    requestParams: IPublicationsFilterReqBody;
     onChangeTotal?: (total: number) => void;
     fetcher?: (params: any) => Promise<IPublicationsFilterResponse>;
 }

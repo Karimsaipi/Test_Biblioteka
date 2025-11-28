@@ -42,7 +42,7 @@ export enum PublicationsSortOrder {
     DESC = 1,
 }
 
-export interface IPublicationsFilterRequest {
+export interface IPublicationsFilterReqBody {
     type?: PublicationType[];
     authors?: number[];
     subjects?: number[];
@@ -62,7 +62,7 @@ export interface IPublicationsFilterResponse {
     total: number;
 }
 
-export interface ICreatePublicationRequest {
+export interface ICreatePublicationReqBody {
     type: PublicationType;
     title: string;
     review: string;
@@ -75,12 +75,12 @@ export interface ICreatePublicationRequest {
 }
 
 //Модели для 'Избранных публикаций'
-export interface IFavouritesGetParams {
+export interface IFavouritesGetReqParams {
     page: number;
     pageSize: number;
 }
 
-export interface IFavouritesUpdateParams {
+export interface IFavouritesUpdateReqParams {
     id: BigInteger;
 }
 
