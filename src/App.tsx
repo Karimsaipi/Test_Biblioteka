@@ -16,8 +16,8 @@ export default function App(): JSX.Element {
 
     return (
         <div className={styles.gradientBackground}>
-            <Routes>
-                <Route element={<MainLayout />}>
+            <MainLayout>
+                <Routes>
                     {renderRoutes()}
 
                     {renderPrivateRoutes(isAuth)}
@@ -28,8 +28,8 @@ export default function App(): JSX.Element {
                             isAuth ? <Navigate to="/" replace /> : <Navigate to="/login" replace />
                         }
                     />
-                </Route>
-            </Routes>
+                </Routes>
+            </MainLayout>
         </div>
     );
 }

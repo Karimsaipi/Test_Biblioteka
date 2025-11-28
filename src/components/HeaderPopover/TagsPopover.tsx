@@ -38,8 +38,8 @@ export default function TagsPopover({ open, onClose, top = 5 }: Props) {
     const topItems = useMemo(() => items.slice(0, top), [items, top]);
 
     if (!open) return null;
-    if (!loaded) return null; // пока грузим — ничего
-    if (!topItems.length) return null; // пусто — тоже ничего
+    if (!loaded) return null; 
+    if (!topItems.length) return null;
 
     return (
         <div className={headerStyles.popover}>

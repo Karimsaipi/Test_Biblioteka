@@ -9,7 +9,7 @@ import TagsPopover from "../components/HeaderPopover/TagsPopover";
 
 type Pop = "subjects" | "tags" | null;
 
-export default function MainLayout() {
+export default function MainLayout(props: { children: React.ReactNode }) {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const hideHeader = pathname === "/login" || pathname === "/register";
@@ -71,7 +71,7 @@ export default function MainLayout() {
             )}
 
             <main className={styles.main}>
-                <Outlet />
+                {props.children}
             </main>
         </>
     );

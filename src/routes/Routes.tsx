@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import Main from "../pages/Main/Main";
@@ -12,17 +12,12 @@ import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
 import Favourites from "../pages/Favourites/Favourites";
 import Subjects from "../pages/Subjects/Subjects";
 
-export interface RouteType {
-    path: string;
-    element: React.ReactNode;
-}
-
 // публичные маршруты
-export const routes: RouteType[] = [
+export const routes: RouteProps[] = [
     { path: "/", element: <Main /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
-    { path: "/publications/:id", element: <BookDetails /> },
+    { path: "/publications/:id", element: <BookDetails />, },
     { path: "/allPublications", element: <AllPublications /> },
     { path: "/copyright", element: <Copyright /> },
     { path: "/tags", element: <Tags /> },
@@ -30,7 +25,7 @@ export const routes: RouteType[] = [
 ];
 
 // приватные маршруты (только страницы, без layout)
-export const privateRoutes: RouteType[] = [
+export const privateRoutes: RouteProps[] = [
     { path: "/feedback", element: <Feedback /> },
     { path: "/create-publication", element: <PublicationCreate /> },
     { path: "/favourites", element: <Favourites /> },

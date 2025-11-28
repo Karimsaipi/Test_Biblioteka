@@ -101,12 +101,12 @@ module.exports = (env) => {
             proxy: [
                 {
                     context: ["/api"],
-                    target: "http://192.168.68.105:3000",
+                    target: "http://192.168.1.119:3000",
                     changeOrigin: true,
                 },
                 {
                     context: ["/uploads"],
-                    target: "http://192.168.68.105:3000",
+                    target: "http://192.168.1.119:3000",
                     changeOrigin: true,
                 },
             ],
