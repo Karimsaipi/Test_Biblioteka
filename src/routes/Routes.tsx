@@ -10,7 +10,7 @@ import Tags from "../pages/Tags/Tags";
 import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
 import Favourites from "../pages/Favourites/Favourites";
 import Subjects from "../pages/Subjects/Subjects";
-import Feedback from "../pages/FeedBack/Feedback";
+import Feedback from "../pages/Feedback/Feedback";
 
 // публичные маршруты
 export const routes: RouteProps[] = [
