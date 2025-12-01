@@ -37,7 +37,6 @@ export default function AccountPopover({ open, onClose }: Props) {
         setIsEmailEditing(false);
     }, [open, user]);
 
-    // close on outside click + Esc
     useEffect(() => {
         if (!open) return;
 
@@ -82,10 +81,7 @@ export default function AccountPopover({ open, onClose }: Props) {
             dispatch(setUser(updatedUser));
             dispatch(show({ type: "success", message: "Данные обновлены" }));
             onClose();
-        } catch {
-            setErr("Не удалось сохранить");
-            dispatch(show({ type: "error", message: "Ошибка при сохранении" }));
-        }
+        } catch {}
     };
 
     const onExit = () => {
@@ -152,7 +148,7 @@ export default function AccountPopover({ open, onClose }: Props) {
                     <DateInput
                         label="Дата рождения"
                         value={form.birthDate}
-                        onChange={onChange("birthDate") as any}
+                        onChange={onChange("birthDate")}
                     />
                     <GenderSwitch
                         value={form.gender}
@@ -162,7 +158,7 @@ export default function AccountPopover({ open, onClose }: Props) {
                     <BaseSelect
                         label="Род деятельности"
                         value={form.occupation}
-                        onChange={onChange("occupation") as any}
+                        onChange={onChange("occupation")}
                         options={[
                             { value: "it", label: "IT" },
                             { value: "education", label: "Образование" },

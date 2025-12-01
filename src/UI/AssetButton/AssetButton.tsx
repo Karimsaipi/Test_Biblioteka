@@ -3,7 +3,7 @@ import styles from "./AssetButton.module.scss";
 import clipIcon from "../../assets/icons/clip-svgrepo-com 1.svg";
 
 interface AssetButtonProps {
-    style?: any;
+    style?: React.CSSProperties;
     size?: number;
     title?: string;
     multiple?: boolean;

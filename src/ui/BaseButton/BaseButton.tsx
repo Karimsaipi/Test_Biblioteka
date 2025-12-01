@@ -8,7 +8,7 @@ type BaseButtonProps = {
     type?: "button" | "submit" | "reset";
     onClick?: () => void;
     className?: string;
-    style?: any;
+    style?: React.CSSProperties;
 };
 
 export default function BaseButton({

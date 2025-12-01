@@ -3,6 +3,7 @@ import { IPublication } from "../../models/IPublication";
 import { Link } from "react-router-dom";
 import style from "./BookCard.module.scss";
 import coverPlaceholder from "../../assets/images/bookImage.png";
+import { toUploadsUrl } from "../../utils/media";
 
 type Props = {
     book: IPublication;
@@ -10,10 +11,8 @@ type Props = {
 
 // const API_URL = process.env.API_URL || "http://192.168.68.104:3000";
 
-function getCoverUrl(coverPath?: string): string {
-    if (!coverPath) return coverPlaceholder;
-
-    return `/uploads/${coverPath}`;
+function getCoverUrl(coverPath?: string | null): string {
+    return coverPath ? toUploadsUrl(coverPath) : coverPlaceholder;
 }
 
 export default function BookCard({ book }: Props) {

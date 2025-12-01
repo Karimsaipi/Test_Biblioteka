@@ -7,6 +7,7 @@ import favIconZakl from "../../assets/icons/favICONZACLADKA.svg";
 import { updateFavourite } from "../../api/favourites";
 import { useAppDispatch } from "../../store/hooks";
 import { show } from "../../store/NotifySlice/notifySlice";
+import { toUploadsUrl } from "../../utils/media";
 
 type BookHeaderProps = {
     book: IPublication;
@@ -17,15 +18,13 @@ type BookHeaderProps = {
     onTagClick?: (tagName: string) => void;
 };
 
-function getCoverUrl(coverPath?: string): string {
-    if (!coverPath) return coverPlaceholder;
-
-    return `/uploads/${coverPath}`;
+function getCoverUrl(coverPath?: string | null): string {
+    return coverPath ? toUploadsUrl(coverPath) : coverPlaceholder;
 }
 
 function getPdfUrl(book: IPublication) {
     const path = (book as any).filePath || (book as any).fileUrl;
-    return path ? `/uploads/${path}` : "";
+    return path ? toUploadsUrl(path) : "";
 }
 
 export default function BookHeaderDetails({

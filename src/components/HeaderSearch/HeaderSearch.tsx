@@ -6,10 +6,10 @@ import { searchPublications } from "../../api/publications";
 import { PublicationType, type IPublication } from "../../models/IPublication";
 import placeholderCover from "../../assets/images/bookImage.png";
 import searchIcon from "../../assets/icons/searchIcon.png";
+import { toUploadsUrl } from "../../utils/media";
 
 function getCoverUrl(coverPath?: string | null): string {
-    if (!coverPath) return placeholderCover;
-    return `/uploads/${coverPath}`; // как в BookCard
+    return coverPath ? toUploadsUrl(coverPath) : placeholderCover;
 }
 
 export default function HeaderSearch() {
@@ -52,7 +52,7 @@ export default function HeaderSearch() {
         e.preventDefault();
         const v = q.trim();
         if (!v) return;
-        navigate(`/search?q=${encodeURIComponent(v)}`);
+        // navigate(`/search?q=${encodeURIComponent(v)}`);
     };
 
     const handleResultClick = (pub: IPublication) => {

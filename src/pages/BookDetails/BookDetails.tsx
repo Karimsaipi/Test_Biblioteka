@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import BookHeaderDetails from "../../components/BookCoverDetails/BookHeaderDetails";
+import BookHeaderDetails from "../../components/BookHeaderDetails/BookHeaderDetails";
 import { IPublication } from "../../models/IPublication";
 import { getPublicationsID } from "../../api/publications";
 import CommentBlockPost from "../../components/CommentBlockPost/CommentBlockPost";
@@ -11,10 +11,11 @@ import {
     setReaderOpen,
 } from "../../store/LastOpenedSlice/lastOpenedSlice";
 import PDFReader from "../../components/PDFReader/PDFReader";
+import { toUploadsUrl } from "../../utils/media";
 
-function uploadUrl(p: string) {
-    return `/uploads/${p.split("/").map(encodeURIComponent).join("/")}`;
-}
+type LocationState = {
+    openReader?: boolean;
+};
 
 export default function BookDetails() {
     const dispatch = useAppDispatch();
@@ -25,7 +26,8 @@ export default function BookDetails() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const openFromHeader = !!(location.state as any)?.openReader;
+    const state = location.state as LocationState | null;
+    const openFromHeader = !!state?.openReader;
 
     const [readerOpen, setReaderOpenLocal] = useState(false);
     const [startPage, setStartPage] = useState(1);
@@ -54,7 +56,7 @@ export default function BookDetails() {
     }, [id, last.hydrated, last.publicationId, dispatch]);
 
     const filePath = book?.filePath ?? "";
-    const pdfUrl = useMemo(() => (filePath ? uploadUrl(filePath) : ""), [filePath]);
+    const pdfUrl = useMemo(() => (filePath ? toUploadsUrl(filePath) : ""), [filePath]);
 
     // авто-открываем если пришли из Header
     useEffect(() => {
@@ -114,7 +116,6 @@ export default function BookDetails() {
                 onTagClick={(tag) => navigate(`/allPublications?tag=${encodeURIComponent(tag)}`)}
             />
 
-            {}
             {readerOpen && pdfUrl && (
                 <PDFReader
                     fileUrl={pdfUrl}

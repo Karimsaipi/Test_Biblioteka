@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { hide } from "../../store/NotifySlice/notifySlice";
 import styles from "./ToastHot.module.scss";
 
-export default function ToastHost() {
+export default function ToastHot() {
     const dispatch = useAppDispatch();
     const { visible, type, message } = useAppSelector((s) => s.notify);
 

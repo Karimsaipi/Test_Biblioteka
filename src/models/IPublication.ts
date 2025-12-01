@@ -81,7 +81,7 @@ export interface IFavouritesGetReqParams {
 }
 
 export interface IFavouritesUpdateReqParams {
-    id: BigInteger;
+    id: number;
 }
 
 export interface IFavouritesApiResponse {
