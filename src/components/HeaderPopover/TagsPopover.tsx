@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ITag } from "../../models/ITag";
 import { getTags } from "../../api/tags";
+import type { ITag } from "../../models/ITag";
 import headerStyles from "./Popovers.module.scss";
 
 type Props = { open: boolean; onClose: () => void; top?: number };
@@ -9,42 +9,20 @@ type Props = { open: boolean; onClose: () => void; top?: number };
 export default function TagsPopover({ open, onClose, top = 5 }: Props) {
     const navigate = useNavigate();
     const [items, setItems] = useState<ITag[]>([]);
-    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        if (!open || loaded) return;
-        let cancelled = false;
-
-        (async () => {
-            try {
-                const data = await getTags();
-                if (!cancelled) {
-                    setItems(data || []);
-                    setLoaded(true);
-                }
-            } catch {
-                if (!cancelled) {
-                    setItems([]);
-                    setLoaded(true);
-                }
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [open, loaded]);
-
-    const topItems = useMemo(() => items.slice(0, top), [items, top]);
+        if (!open) return;
+        getTags()
+            .then((data) => setItems(data || []))
+            .catch(() => setItems([]));
+    }, [open]);
 
     if (!open) return null;
-    if (!loaded) return null; 
-    if (!topItems.length) return null;
 
     return (
         <div className={headerStyles.popover}>
             <div className={headerStyles.popoverList}>
-                {topItems.map((t) => (
+                {items.slice(0, top).map((t) => (
                     <div key={t.id} className={headerStyles.popoverRow}>
                         <span className={headerStyles.bullet}>•</span>
                         <a
@@ -53,9 +31,7 @@ export default function TagsPopover({ open, onClose, top = 5 }: Props) {
                             onClick={(e) => {
                                 e.preventDefault();
                                 onClose();
-                                navigate(
-                                    `/allPublications?tag=${encodeURIComponent(String(t.id))}`,
-                                );
+                                navigate(`/allPublications?tag=${t.id}`);
                             }}
                         >
                             {t.name}

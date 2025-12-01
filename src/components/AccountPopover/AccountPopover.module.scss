@@ -1,29 +1,23 @@
 @use "../../styles/helpers/" as *;
 @use "../../styles/variables" as *;
 
-.backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+.popover {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    z-index: 3000;
 
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    padding-right: rem(43);
-    padding-left: rem(43);
+    width: rem(512);
+    max-width: min(rem(512), 92vw);
 
-    z-index: 1000;
-}
+    max-height: none;
+    overflow: visible;
 
-.card {
-    width: 100%;
-    height: rem(747);
-    max-width: rem(512);
     border-radius: rem(20);
     border: 1px solid rgba(193, 202, 210, 1);
     background: var(--color-light);
     box-shadow: 0px 0px 6px 0px rgba(11, 22, 51, 0.49);
-    align-items: center;
+
     font-family: Roboto;
 }
 
@@ -39,7 +33,7 @@
     font-size: 22px;
 }
 
-//изменить почту
+/* изменить почту */
 .emailRow {
     display: flex;
     flex-direction: row;
@@ -65,7 +59,7 @@
     display: flex;
     align-items: center;
     text-overflow: ellipsis;
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -75,6 +69,7 @@
     height: 28px;
     border: none;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .buttonPswrd {
@@ -117,9 +112,15 @@
     border-radius: 12px;
 }
 
-@media (max-width: 769px) {
-    .card {
-        height: rem(650);
+.error {
+    color: #c02424;
+    font-size: rem(14);
+}
+
+@include mobile {
+    .popover {
+        width: 92vw;
+        max-height: 80vh;
     }
 
     .form {
@@ -127,7 +128,6 @@
     }
 
     .label {
-        font-weight: 500;
         font-size: 18px;
     }
 }

@@ -8,7 +8,7 @@
     padding-bottom: 20px;
 }
 
-@media (max-width: 769px) {
+@include mobile {
     .main {
         padding-left: rem(20);
         padding-right: rem(20);

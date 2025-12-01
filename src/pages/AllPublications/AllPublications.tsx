@@ -1,25 +1,24 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import styles from "./AllPublications.module.scss";
+
 import { getAuthors } from "../../api/author";
 import { getSubjects } from "../../api/subjects";
+
 import {
     IPublicationsFilterReqBody,
     PublicationsSortBy,
     PublicationsSortOrder,
     PublicationType,
 } from "../../models/IPublication";
-import BaseSelect from "../../ui/BaseSelect/BaseSelect";
-import React, { useEffect, useMemo, useState } from "react";
-import styles from "./AllPublications.module.scss";
+
 import SortSelect from "../../ui/SelectSort/SelectSort";
 import Pagination from "../../ui/Pagination/Pagination";
-import { useSearchParams } from "react-router-dom";
 import PublicationsSection from "../../components/PublicationSection/PublicationSection";
+import AllPublicationsFilters, { type SelectOption } from "./AllPublicationsFilter/AllPublicationsFilter";
+
 
 const PAGE_SIZE = 8;
-
-interface SelectOption {
-    value: string;
-    label: string;
-}
 
 const typeOptions: SelectOption[] = [
     { value: String(PublicationType.книга), label: "Книга" },
@@ -41,7 +40,6 @@ export default function AllPublications() {
     const [subjectValue, setSubjectValue] = useState(initialSubject);
     const [tagValue, setTagValue] = useState(initialTag);
 
-    // options из отдельных запросов
     const [authorOptions, setAuthorOptions] = useState<SelectOption[]>([]);
     const [subjectOptions, setSubjectOptions] = useState<SelectOption[]>([]);
 
@@ -57,7 +55,7 @@ export default function AllPublications() {
         getAuthors()
             .then((authors) => {
                 setAuthorOptions(
-                    authors.map((a) => ({
+                    (authors ?? []).map((a) => ({
                         value: String(a.id),
                         label: a.name || "",
                     })),
@@ -70,9 +68,9 @@ export default function AllPublications() {
         getSubjects()
             .then((subjects) => {
                 setSubjectOptions(
-                    subjects.map((s) => ({
+                    (subjects ?? []).map((s) => ({
                         value: String(s.id),
-                        label: s.name,
+                        label: s.name || "",
                     })),
                 );
             })
@@ -89,21 +87,6 @@ export default function AllPublications() {
         setSubjectValue(urlSubject);
         setPage(1);
     }, [searchParams]);
-
-    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setTypeValue(e.target.value);
-        resetPage();
-    };
-
-    const handleAuthorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setAuthorValue(e.target.value);
-        resetPage();
-    };
-
-    const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSubjectValue(e.target.value);
-        resetPage();
-    };
 
     const requestParams: IPublicationsFilterReqBody = useMemo(
         () => ({
@@ -123,29 +106,26 @@ export default function AllPublications() {
 
     return (
         <div className={styles.main}>
-            {/* Фильтры */}
-            <div className={styles.filters}>
-                <BaseSelect
-                    label="Тип"
-                    value={typeValue}
-                    onChange={handleTypeChange}
-                    options={typeOptions}
-                />
-
-                <BaseSelect
-                    label="Автор"
-                    value={authorValue}
-                    onChange={handleAuthorChange}
-                    options={authorOptions}
-                />
-
-                <BaseSelect
-                    label="Предмет"
-                    value={subjectValue}
-                    onChange={handleSubjectChange}
-                    options={subjectOptions}
-                />
-            </div>
+            <AllPublicationsFilters
+                typeValue={typeValue}
+                authorValue={authorValue}
+                subjectValue={subjectValue}
+                typeOptions={typeOptions}
+                authorOptions={authorOptions}
+                subjectOptions={subjectOptions}
+                onTypeChange={(value) => {
+                    setTypeValue(value);
+                    resetPage();
+                }}
+                onAuthorChange={(value) => {
+                    setAuthorValue(value);
+                    resetPage();
+                }}
+                onSubjectChange={(value) => {
+                    setSubjectValue(value);
+                    resetPage();
+                }}
+            />
 
             <div className={styles.sortRow}>
                 <SortSelect

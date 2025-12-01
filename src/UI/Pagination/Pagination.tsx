@@ -7,60 +7,94 @@ interface Props {
     onChange: (page: number) => void;
 }
 
+type PageItem = number | "...";
+
 export default function Pagination({ currentPage, totalPages, onChange }: Props) {
     if (totalPages <= 1) return null;
 
-    const go = (p: number) => {
-        if (p < 1 || p > totalPages || p === currentPage) return;
-        onChange(p);
+    const goToPage = (page: number) => {
+        if (page < 1 || page > totalPages || page === currentPage) return;
+        onChange(page);
     };
 
-    const items: (number | "...")[] = [];
-    const push = (x: number | "...") => items.push(x);
+    const rawItems: PageItem[] = [];
+    const addItem = (item: PageItem) => rawItems.push(item);
 
     if (totalPages <= 5) {
-        for (let i = 1; i <= totalPages; i++) push(i);
+        for (let page = 1; page <= totalPages; page++) addItem(page);
     } else {
-        // левая часть
-        push(1);
-        if (currentPage > 3) push("...");
+        const firstPages = [1, 2];
+        const lastPages = [totalPages - 1, totalPages];
 
-        const left = Math.max(2, currentPage - 1);
-        const right = Math.min(totalPages - 1, currentPage + 1);
+        const middleStart = Math.max(3, currentPage - 1);
+        const middleEnd = Math.min(totalPages - 2, currentPage + 1);
 
-        for (let p = left; p <= right; p++) push(p);
+        addItem(firstPages[0]);
+        addItem(firstPages[1]);
 
-        if (currentPage < totalPages - 2) push("...");
-        push(totalPages);
+        if (middleStart > 3) addItem("...");
+
+        for (let page = middleStart; page <= middleEnd; page++) addItem(page);
+
+        if (middleEnd < totalPages - 2) addItem("...");
+
+        addItem(lastPages[0]);
+        addItem(lastPages[1]);
+    }
+
+    const withoutDuplicates: PageItem[] = [];
+    for (const item of rawItems) {
+        const lastAdded = withoutDuplicates[withoutDuplicates.length - 1];
+        if (item === lastAdded) continue;
+        withoutDuplicates.push(item);
+    }
+
+    const finalItems: PageItem[] = [];
+    for (let index = 0; index < withoutDuplicates.length; index++) {
+        const item = withoutDuplicates[index];
+        const previous = finalItems[finalItems.length - 1];
+        const next = withoutDuplicates[index + 1];
+
+        const dotsAreRedundant =
+            item === "..." &&
+            typeof previous === "number" &&
+            typeof next === "number" &&
+            next === previous + 1;
+
+        if (!dotsAreRedundant) finalItems.push(item);
     }
 
     return (
         <div className={styles.wrapper}>
-            <button className={styles.arrow} onClick={() => go(currentPage - 1)}>
+            <button
+                className={styles.arrow}
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+            >
                 &lt;
             </button>
 
-            {items.map((it, i) =>
-                it === "..." ? (
-                    <span key={`e-${i}`} className={styles.ellipsis}>
+            {finalItems.map((item, index) =>
+                item === "..." ? (
+                    <span key={`dots-${index}`} className={styles.ellipsis}>
                         &hellip;
                     </span>
                 ) : (
                     <button
-                        key={it}
+                        key={item}
                         className={
-                            it === currentPage ? `${styles.page} ${styles.active}` : styles.page
+                            item === currentPage ? `${styles.page} ${styles.active}` : styles.page
                         }
-                        onClick={() => go(it)}
+                        onClick={() => goToPage(item)}
                     >
-                        {it}
+                        {item}
                     </button>
                 ),
             )}
 
             <button
                 className={styles.arrow}
-                onClick={() => go(currentPage + 1)}
+                onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >
                 &gt;

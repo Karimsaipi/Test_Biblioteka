@@ -10,6 +10,7 @@ import { show } from "../../store/NotifySlice/notifySlice";
 
 type BookHeaderProps = {
     book: IPublication;
+    isReading?: boolean;
     onRead?: (book: IPublication) => void;
     onDownload?: (book: IPublication) => void;
     onSubjectClick?: (subjectName: string) => void;
@@ -29,6 +30,7 @@ function getPdfUrl(book: IPublication) {
 
 export default function BookHeaderDetails({
     book,
+    isReading,
     onRead,
     onDownload,
     onSubjectClick,
@@ -85,7 +87,7 @@ export default function BookHeaderDetails({
 
                 <div className={styles.coverButtons}>
                     <BaseButton className={styles.button} onClick={handleReadClick}>
-                        Читать
+                        {isReading ? "Закрыть" : "Читать"}
                     </BaseButton>
                     <BaseButton className={styles.button} onClick={() => onDownload?.(book)}>
                         Скачать

@@ -19,13 +19,13 @@
     color:  var(--color-blue-text);
 }
 
-@media(max-width: 768px) {
+@include mobile {
     .toast {
         font-size: 20px;
     }
 }
 
-@media(max-width: 440px) {
+@include mobile-s {
     .container {
         top: 20px;
         right: 20px;

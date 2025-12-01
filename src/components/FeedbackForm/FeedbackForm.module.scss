@@ -47,7 +47,7 @@
     color: transparent;
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .form {
         grid-template-columns: 1fr;
         width: rem(300);

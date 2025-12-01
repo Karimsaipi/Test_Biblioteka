@@ -63,6 +63,19 @@ module.exports = (env) => {
                     use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
                 },
                 {
+                    test: /\.css$/i,
+                    use: [
+                        {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { publicPath: "/" },
+                        },
+                        {
+                        loader: "css-loader",
+                        options: { esModule: false },
+                        },
+                    ],
+                },
+                {
                     test: /\.tsx?$/,
                     exclude: /node_modules/,
                     use: [
@@ -101,12 +114,12 @@ module.exports = (env) => {
             proxy: [
                 {
                     context: ["/api"],
-                    target: "http://192.168.68.104:3000",
+                    target: "http://192.168.68.101:3000",
                     changeOrigin: true,
                 },
                 {
                     context: ["/uploads"],
-                    target: "http://192.168.68.104:3000",
+                    target: "http://192.168.68.101:3000",
                     changeOrigin: true,
                 },
             ],

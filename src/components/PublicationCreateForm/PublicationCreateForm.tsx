@@ -3,12 +3,10 @@ import { useAppDispatch } from "../../store/hooks";
 import { createPublication } from "../../api/publications";
 import { show } from "../../store/NotifySlice/notifySlice";
 import styles from "./PublicationCreateForm.module.scss";
-
-import MyInput from "../../ui/BaseInput/BaseInput";
-import MySelect from "../../ui/BaseSelect/BaseSelect";
+import BaseInput from "../../ui/BaseInput/BaseInput";
+import BaseSelect from "../../ui/BaseSelect/BaseSelect";
 import AssetButton from "../../ui/AssetButton/AssetButton";
-import MyButton from "../../ui/BaseButton/BaseButton";
-
+import BaseButton from "../../ui/BaseButton/BaseButton";
 import { ICreatePublicationReqBody, PublicationType } from "../../models/IPublication";
 import { ITag } from "../../models/ITag";
 import { IAuthor } from "../../models/IAuthor";
@@ -188,7 +186,7 @@ export default function PublicationCreateForm() {
             {/* Левая колонка */}
             <div className={styles.left}>
                 <span className={styles.label}>Тип</span>
-                <MySelect
+                <BaseSelect
                     label=""
                     value={String(formData.type)}
                     onChange={handleTypeChange}
@@ -204,7 +202,7 @@ export default function PublicationCreateForm() {
                 />
 
                 <span className={styles.label}>Название</span>
-                <MyInput
+                <BaseInput
                     label=""
                     value={formData.title}
                     onChange={handleTextChange("title")}
@@ -280,7 +278,7 @@ export default function PublicationCreateForm() {
                 </div>
 
                 <span className={styles.label}>Год</span>
-                <MyInput
+                <BaseInput
                     label=""
                     value={formData.releaseDate}
                     onChange={handleTextChange("releaseDate")}
@@ -295,9 +293,9 @@ export default function PublicationCreateForm() {
                         multiple={false}
                         onFilesSelected={handleFileSelected}
                     />
-                    <MyButton className={styles.button} type="button">
+                    <BaseButton className={styles.button} type="button">
                         Написать здесь
-                    </MyButton>
+                    </BaseButton>
                 </div>
 
                 <div className={styles.fieldRow}>
@@ -446,7 +444,7 @@ export default function PublicationCreateForm() {
                 </div>
 
                 <span className={styles.label}>О книге</span>
-                <MyInput
+                <BaseInput
                     label=""
                     value={formData.review}
                     onChange={handleTextChange("review")}
@@ -459,9 +457,9 @@ export default function PublicationCreateForm() {
                 </span>
             </div>
 
-            <MyButton variant="primary" type="submit" className={styles.submitButton}>
+            <BaseButton variant="primary" type="submit" className={styles.submitButton}>
                 Отправить на рассмотрение
-            </MyButton>
+            </BaseButton>
         </form>
     );
 }

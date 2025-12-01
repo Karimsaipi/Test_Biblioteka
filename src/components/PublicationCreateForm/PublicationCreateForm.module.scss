@@ -125,7 +125,7 @@
     margin-left: 100px;
 }
 
-@media (max-width: 1024px) {
+@include tablet {
     .form {
         gap: rem(50);
     }
@@ -140,7 +140,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .title {
         text-align: center;
     }

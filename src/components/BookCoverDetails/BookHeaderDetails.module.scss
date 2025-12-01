@@ -151,7 +151,7 @@
     }
 }
 
-@media (max-width: 1024px) {
+@include tablet {
     .coverBlock {
         padding-left: rem(0);
         gap: 15px;
@@ -186,7 +186,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@include mobile {
     .cover {
         width: rem(270);
     }
@@ -195,7 +195,7 @@
     }
 }
 
-@media (max-width: 440px) {
+@include mobile-s {
     .coverBlock {
         display: flex;
         flex-direction: column;

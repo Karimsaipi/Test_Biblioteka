@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ISubject } from "../../models/ISubject";
 import { getSubjects } from "../../api/subjects";
+import type { ISubject } from "../../models/ISubject";
 import headerStyles from "./Popovers.module.scss";
 
 type Props = { open: boolean; onClose: () => void; top?: number };
@@ -9,42 +9,20 @@ type Props = { open: boolean; onClose: () => void; top?: number };
 export default function SubjectsPopover({ open, onClose, top = 5 }: Props) {
     const navigate = useNavigate();
     const [items, setItems] = useState<ISubject[]>([]);
-    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        if (!open || loaded) return;
-        let cancelled = false;
-
-        (async () => {
-            try {
-                const data = await getSubjects();
-                if (!cancelled) {
-                    setItems(data || []);
-                    setLoaded(true);
-                }
-            } catch {
-                if (!cancelled) {
-                    setItems([]);
-                    setLoaded(true);
-                }
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [open, loaded]);
-
-    const topItems = useMemo(() => items.slice(0, top), [items, top]);
+        if (!open) return;
+        getSubjects()
+            .then((data) => setItems(data || []))
+            .catch(() => setItems([]));
+    }, [open]);
 
     if (!open) return null;
-    if (!loaded) return null;
-    if (!topItems.length) return null;
 
     return (
         <div className={headerStyles.popover}>
             <div className={headerStyles.popoverList}>
-                {topItems.map((s) => (
+                {items.slice(0, top).map((s) => (
                     <div key={s.id} className={headerStyles.popoverRow}>
                         <span className={headerStyles.bullet}>•</span>
                         <a
@@ -53,9 +31,7 @@ export default function SubjectsPopover({ open, onClose, top = 5 }: Props) {
                             onClick={(e) => {
                                 e.preventDefault();
                                 onClose();
-                                navigate(
-                                    `/allPublications?subject=${encodeURIComponent(String(s.id))}`,
-                                );
+                                navigate(`/allPublications?subject=${s.id}`);
                             }}
                         >
                             {s.name}

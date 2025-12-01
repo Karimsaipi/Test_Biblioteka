@@ -62,12 +62,6 @@
     align-items: center;
 }
 
-/* чтобы ссылки не дергались по высоте */
-.nav a {
-    display: inline-block;
-    line-height: 1.2;
-}
-
 /* "мостик" между ссылкой и поповером */
 .navPopoverWrap::after {
     content: "";
@@ -76,57 +70,6 @@
     top: 100%;
     width: 100%;
     height: 12px;
-}
-
-/* поповер */
-.popover {
-    position: absolute;
-    top: calc(100% + 12px);
-    left: 0;
-    z-index: 2000;
-
-    min-width: rem(260);
-    padding: rem(12) rem(14);
-
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: rem(12);
-    box-shadow: 0 rem(16) rem(40) rgba(0, 0, 0, 0.14);
-}
-
-/* список */
-.popoverList {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: rem(6);
-}
-
-/* строка: bullet + ссылка (как на странице) */
-.popoverRow {
-    display: flex;
-    align-items: baseline;
-    gap: rem(10);
-
-    font-family: Roboto, sans-serif;
-    font-weight: 500;
-    font-size: rem(18);
-
-    color: rgba(0, 62, 120, 1);
-
-    &:hover {
-        color: var(--color-pink-checkboxLine);
-    }
-}
-
-.bullet {
-    margin-right: rem(2);
-}
-
-.popoverLink {
-    color: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-style: solid;
 }
 
 //Иконки
@@ -141,13 +84,27 @@
     align-self: flex-start;
 }
 
-.right > :last-child {
+/* вместо .right > :last-child — потому что теперь последний это profileWrap */
+.profileWrap {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+
     top: -6px;
     margin-left: 10px;
 }
 
-@media (max-width: 768px) {
+/* мостик между иконкой профиля и поповером */
+.profileWrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 12px;
+}
+
+@include mobile {
     .header {
         padding-left: rem(20);
         padding-right: rem(20);
@@ -191,11 +148,6 @@
         font-size: 14px;
     }
 
-    .right > :last-child {
-        position: relative;
-        top: -6px;
-        margin-left: 0px;
-    }
     .right {
         justify-self: end;
         gap: rem(6);
@@ -204,5 +156,10 @@
     .right > * {
         transform: scale(0.85);
         transform-origin: center;
+    }
+
+    .profileWrap {
+        top: -6px;
+        margin-left: 0px;
     }
 }

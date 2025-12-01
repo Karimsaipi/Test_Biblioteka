@@ -1,45 +1,46 @@
-@use "../../styles/helpers/" as *;
+@use "../../styles/helpers" as *;
 @use "../../styles/variables" as *;
 
-.wrapper {
-    position: fixed;
-    inset: 0;
-    background: rgb(black, 0.45);
-    display: grid;
-    place-items: center;
-    z-index: 9999;
-    padding: 16;
+.readerSection {
+  margin-top: rem(24);
+  background: #fff;
+  border-radius: rem(12);
+  padding: rem(12);
 }
 
-.reader {
-    width: min(1000px, 96vw);
-    max-height: 92vh;
-    background-color: rgb(black, 0.7);
-    border-radius: 12px;
-    padding: 12px;
-    overflow: hidden;
+.readerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12);
+  margin-bottom: rem(12);
 }
 
-.info {
-    display: flex;
-    justify-content: space-between;
-    gap: 12;
-    align-items: center;
-    margin-bottom: 10px;
+.readerTitle {
+  font-family: "Roboto";
+  font-size: rem(18);
+  font-weight: 600;
+  color: #000;
+
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.title {
-    color: var(--color-light);
-    font-size: 20px;
-    font-family: "Roboto";
-    overflow: hidden;
-    text-overflow: ellipsis;
+.readerActions {
+  display: flex;
+  gap: rem(10);
+  flex-shrink: 0;
+}
+
+.readerBody {
+  border-radius: rem(12);
+  overflow: hidden;
+  background: #fff;
 }
 
 .button {
-    width: 100%;
-    padding: 8px 8px;
-    height: 18px;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.65);
+  padding: rem(8) rem(12);
+  border-radius: rem(8);
 }

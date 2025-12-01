@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BookHeaderDetails from "../../components/BookCoverDetails/BookHeaderDetails";
 import { IPublication } from "../../models/IPublication";
@@ -11,34 +11,38 @@ import {
     setReaderOpen,
 } from "../../store/LastOpenedSlice/lastOpenedSlice";
 import PDFReader from "../../components/PDFReader/PDFReader";
-import styles from "./BookDetails.module.scss";
-import BaseButton from "../../ui/BaseButton/BaseButton";
 
-function uploadUrl(path: string) {
-    return `/uploads/${encodeURI(path)}`;
+function uploadUrl(p: string) {
+    return `/uploads/${p.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 export default function BookDetails() {
     const dispatch = useAppDispatch();
-    const last = useAppSelector((s) => s.lastOpened); // твой ключ
+    const last = useAppSelector((s) => s.lastOpened);
+
     const { id } = useParams<{ id: string }>();
     const [book, setBook] = useState<IPublication | null>(null);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const location = useLocation();
     const openFromHeader = !!(location.state as any)?.openReader;
 
     const [readerOpen, setReaderOpenLocal] = useState(false);
+    const [startPage, setStartPage] = useState(1);
 
     useEffect(() => {
         if (!id) return;
+        let alive = true;
 
         getPublicationsID(id)
-            .then(setBook)
-            .catch(() => setBook(null));
+            .then((b) => alive && setBook(b))
+            .catch(() => alive && setBook(null));
+
+        return () => {
+            alive = false;
+        };
     }, [id]);
 
-    // не затираем состояние
     useEffect(() => {
         if (!id) return;
         if (!last.hydrated) return;
@@ -49,43 +53,42 @@ export default function BookDetails() {
         }
     }, [id, last.hydrated, last.publicationId, dispatch]);
 
-    // авто-открываем модалку после загрузки книги (если ранее была открыта)
-    useEffect(() => {
-        if (!book) return;
-        if (!last.hydrated) return;
+    const filePath = book?.filePath ?? "";
+    const pdfUrl = useMemo(() => (filePath ? uploadUrl(filePath) : ""), [filePath]);
 
-        if (last.publicationId === book.id && last.readerOpen) {
-            setReaderOpenLocal(true);
-        }
-    }, [book, last.hydrated, last.publicationId, last.readerOpen]);
-
-    // авто-открываем модалку если пришли из Header с openReader
+    // авто-открываем если пришли из Header
     useEffect(() => {
         if (!book) return;
         if (!openFromHeader) return;
+        if (!book.filePath) return;
 
-        if (book.filePath) {
-            setReaderOpenLocal(true);
-            dispatch(setReaderOpen(true));
-        }
-    }, [book, openFromHeader, dispatch]);
+        const p = last.publicationId === book.id ? last.pageNumber || 1 : 1;
+        setStartPage(p);
+
+        setReaderOpenLocal(true);
+        dispatch(setReaderOpen(true));
+    }, [book, openFromHeader, dispatch, last.publicationId, last.pageNumber]);
 
     if (!book) return <div style={{ marginTop: 25 }}>Загрузка книги…</div>;
-
-    const filePath = book.filePath ?? "";
-    const pdfUrl = filePath ? uploadUrl(filePath) : "";
 
     const title = book.title ?? "book";
     const ext = (filePath.split(".").pop() ?? "pdf").toLowerCase();
     const filename = `${title}.${ext}`;
 
-    const closeReader = () => {
-        setReaderOpenLocal(false);
-        dispatch(setReaderOpen(false));
-    };
-
-    const openReader = () => {
+    const toggleReader = () => {
         if (!filePath) return;
+
+        // закрываем
+        if (readerOpen) {
+            setReaderOpenLocal(false);
+            dispatch(setReaderOpen(false));
+            return;
+        }
+
+        // открываем
+        const p = last.publicationId === book.id ? last.pageNumber || 1 : 1;
+        setStartPage(p);
+
         setReaderOpenLocal(true);
         dispatch(setReaderOpen(true));
     };
@@ -94,7 +97,8 @@ export default function BookDetails() {
         <>
             <BookHeaderDetails
                 book={book}
-                onRead={openReader}
+                isReading={readerOpen}
+                onRead={toggleReader}
                 onDownload={() => {
                     if (!filePath) return;
                     const a = document.createElement("a");
@@ -110,46 +114,18 @@ export default function BookDetails() {
                 onTagClick={(tag) => navigate(`/allPublications?tag=${encodeURIComponent(tag)}`)}
             />
 
-            <CommentBlockPost publicationId={book.id} />
-
+            {}
             {readerOpen && pdfUrl && (
-                <div onClick={closeReader} className={styles.wrapper}>
-                    <div onClick={(e) => e.stopPropagation()} className={styles.reader}>
-                        <div className={styles.info}>
-                            <div className={styles.title} title={book.title}>
-                                {book.title}
-                            </div>
-
-                            <div style={{ display: "flex", gap: 10 }}>
-                                <BaseButton
-                                    className={styles.button}
-                                    onClick={() =>
-                                        window.open(pdfUrl, "_blank", "noopener,noreferrer")
-                                    }
-                                >
-                                    Вкладка
-                                </BaseButton>
-
-                                <BaseButton
-                                    className={styles.button}
-                                    onClick={closeReader}
-                                    aria-label="Закрыть"
-                                >
-                                    X
-                                </BaseButton>
-                            </div>
-                        </div>
-
-                        <div style={{ background: "#fff", borderRadius: 12, padding: 10 }}>
-                            <PDFReader
-                                fileUrl={pdfUrl}
-                                initialPage={last.publicationId === book.id ? last.pageNumber : 1}
-                                onPageChange={(p) => dispatch(setLastPage(p))}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <PDFReader
+                    fileUrl={pdfUrl}
+                    initialPage={startPage}
+                    onPageChange={(p) => {
+                        if (last.publicationId === book.id) dispatch(setLastPage(p));
+                    }}
+                />
             )}
+
+            <CommentBlockPost publicationId={book.id} />
         </>
     );
 }

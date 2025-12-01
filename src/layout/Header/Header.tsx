@@ -10,9 +10,11 @@ import userIcon from "../../assets/icons/userIcon.png";
 import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
 
 type HeaderProps = {
-    onProfileClick?: () => void;
     onBookClick?: () => void;
+    onProfileClick: () => void;
 
+    onProfileEnter?: () => void;
+    onProfileLeave?: () => void;
     onSubjectsEnter?: () => void;
     onSubjectsLeave?: () => void;
     onTagsEnter?: () => void;
@@ -20,17 +22,21 @@ type HeaderProps = {
 
     subjectsPopover?: React.ReactNode;
     tagsPopover?: React.ReactNode;
+    profilePopover?: React.ReactNode;
 };
 
 export default function Header({
-    onProfileClick,
     onBookClick,
+    onProfileClick,
+    onProfileEnter,
+    onProfileLeave,
     onSubjectsEnter,
     onSubjectsLeave,
     onTagsEnter,
     onTagsLeave,
     subjectsPopover,
     tagsPopover,
+    profilePopover,
 }: HeaderProps) {
     const navigate = useNavigate();
 
@@ -113,14 +119,21 @@ export default function Header({
                         title="Создание книги"
                         onClick={() => navigate("/create-publication")}
                     />
-                    <IconButton
-                        style={{ width: 64, height: 64 }}
-                        icon={userIcon}
-                        alt="Профиль"
-                        title="Профиль"
-                        size={64}
-                        onClick={onProfileClick}
-                    />
+                    <div
+                        className={styles.profileWrap}
+                        onMouseEnter={onProfileEnter}
+                        onMouseLeave={onProfileLeave}
+                    >
+                        <IconButton
+                            style={{ width: 64, height: 64 }}
+                            icon={userIcon}
+                            alt="Профиль"
+                            title="Профиль"
+                            size={64}
+                            onClick={onProfileClick}
+                        />
+                        {profilePopover}
+                    </div>
                 </div>
             </div>
         </header>

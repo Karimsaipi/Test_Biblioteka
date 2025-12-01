@@ -10,7 +10,7 @@ import Tags from "../pages/Tags/Tags";
 import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
 import Favourites from "../pages/Favourites/Favourites";
 import Subjects from "../pages/Subjects/Subjects";
-import Feedback from "../pages/Feedback/Feedback";
+import FeedBack from "../pages/Feedback/Feedback";
 
 // публичные маршруты
 export const routes: RouteProps[] = [
@@ -26,7 +26,7 @@ export const routes: RouteProps[] = [
 
 // приватные маршруты (только страницы, без layout)
 export const privateRoutes: RouteProps[] = [
-    { path: "/feedback", element: <Feedback /> },
+    { path: "/feedback", element: <FeedBack /> },
     { path: "/create-publication", element: <PublicationCreate /> },
     { path: "/favourites", element: <Favourites /> },
 ];

@@ -51,7 +51,7 @@
     align-self: flex-end;
 }
 
-@media (max-width: 430px) {
+@include mobile-s {
     .card {
         padding: 0px 16px;
     }
