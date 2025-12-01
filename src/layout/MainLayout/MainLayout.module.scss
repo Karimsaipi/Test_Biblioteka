@@ -1,5 +1,4 @@
-@use "../../styles/helpers/" as *;
-
+﻿@use "styles/helpers" as *;
 .main {
     width: 100%;
     height: 100%;
@@ -14,3 +13,4 @@
         padding-right: rem(20);
     }
 }
+

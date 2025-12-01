@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch } from "../../store/hooks";
-import { createPublication } from "../../api/publications";
-import { show } from "../../store/NotifySlice/notifySlice";
+
+import { useAppDispatch } from "@/store/hooks";
+import { show } from "@/store/NotifySlice/notifySlice";
+
+import { createPublication } from "@/api/publications";
+import { createAuthor, deleteAuthor, getAuthors } from "@/api/author";
+import { createTag, deleteTag, getTags } from "@/api/tags";
+import { createSubject, deleteSubject, getSubjects } from "@/api/subjects";
+
 import styles from "./PublicationCreateForm.module.scss";
-import BaseInput from "../../ui/BaseInput/BaseInput";
-import BaseSelect from "../../ui/BaseSelect/BaseSelect";
-import AssetButton from "../../ui/AssetButton/AssetButton";
-import BaseButton from "../../ui/BaseButton/BaseButton";
-import { ICreatePublicationReqBody, PublicationType } from "../../models/IPublication";
-import { ITag } from "../../models/ITag";
-import { IAuthor } from "../../models/IAuthor";
-import { ISubject } from "../../models/ISubject";
-import { createAuthor, deleteAuthor, getAuthors } from "../../api/author";
-import { createTag, deleteTag, getTags } from "../../api/tags";
-import { createSubject, deleteSubject, getSubjects } from "../../api/subjects";
-import SelectSearchAdd from "../../ui/SelectSearchedAdd/SelectSearchedAdd";
+
+import BaseInput from "@/ui/BaseInput/BaseInput";
+import BaseSelect from "@/ui/BaseSelect/BaseSelect";
+import AssetButton from "@/ui/AssetButton/AssetButton";
+import BaseButton from "@/ui/BaseButton/BaseButton";
+import SelectSearchAdd from "@/ui/SelectSearchedAdd/SelectSearchedAdd";
+
+import { ICreatePublicationReqBody, PublicationType } from "@/models/IPublication";
+import type { ITag } from "@/models/ITag";
+import type { IAuthor } from "@/models/IAuthor";
+import type { ISubject } from "@/models/ISubject";
 
 type RefItem = { id: number | null; name: string };
 

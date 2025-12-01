@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PublicationsSortBy, PublicationsSortOrder } from "../../models/IPublication";
+import { PublicationsSortBy, PublicationsSortOrder } from "@/models/IPublication";
 import styles from "./SelectSort.module.scss";
 import sortIcon from "../../assets/icons/SortIcon.png";
 

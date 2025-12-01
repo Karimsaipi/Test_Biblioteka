@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styles from "./FeedbackForm.module.scss";
-import BaseInput from "../../ui/BaseInput/BaseInput";
-import BaseButton from "../../ui/BaseButton/BaseButton";
-import BaseSelect from "../../ui/BaseSelect/BaseSelect";
-import { feedbackCreate } from "../../api/feedback";
-import { useAppDispatch } from "../../store/hooks";
-import { show } from "../../store/NotifySlice/notifySlice";
-import { Theme } from "../../models/IFeedback";
+import BaseInput from "@/ui/BaseInput/BaseInput";
+import BaseButton from "@/ui/BaseButton/BaseButton";
+import BaseSelect from "@/ui/BaseSelect/BaseSelect";
+import { feedbackCreate } from "@/api/feedback";
+import { useAppDispatch } from "@/store/hooks";
+import { show } from "@/store/NotifySlice/notifySlice";
+import { Theme } from "@/models/IFeedback";
 
 export default function FeedbackForm() {
     const dispatch = useAppDispatch();

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
+import type {
     IPublication,
     IPublicationsFilterReqBody,
     IPublicationsFilterResponse,
-} from "../../models/IPublication";
-import { getPublications } from "../../api/publications";
-import styles from "./Publication.module.scss";
+} from "@/models/IPublication";
+import { getPublications } from "@/api/publications";
+import styles from "./PublicationSection.module.scss";
 import BookCard from "../BookCard/BookCard";
 
 interface PublicationsSectionProps {

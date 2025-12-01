@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BaseInput from "../../ui/BaseInput/BaseInput";
-import BaseButton from "../../ui/BaseButton/BaseButton";
-import BaseLink from "../../ui/BaseLink/BaseLink";
+import BaseInput from "@/ui/BaseInput/BaseInput";
+import BaseButton from "@/ui/BaseButton/BaseButton";
+import BaseLink from "@/ui/BaseLink/BaseLink";
 import styles from "./AuthForm.module.scss";
-import { signIn } from "../../api/auth";
-import { useAppDispatch } from "../../store/hooks";
-import { show } from "../../store/NotifySlice/notifySlice";
-import { setCredentials } from "../../store/AuthSlice/authSlice";
+import { signIn } from "@/api/auth";
+import { useAppDispatch } from "@/store/hooks";
+import { show } from "@/store/NotifySlice/notifySlice";
+import { setCredentials } from "@/store/AuthSlice/authSlice";
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_-]).{6,}$/;
 

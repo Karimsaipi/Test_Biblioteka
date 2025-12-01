@@ -1,9 +1,9 @@
 import React from "react";
-import { IPublication } from "../../models/IPublication";
 import { Link } from "react-router-dom";
+import type { IPublication } from "@/models/IPublication";
+import { toUploadsUrl } from "@/utils/media";
+import coverPlaceholder from "@/assets/images/bookImage.png";
 import style from "./BookCard.module.scss";
-import coverPlaceholder from "../../assets/images/bookImage.png";
-import { toUploadsUrl } from "../../utils/media";
 
 type Props = {
     book: IPublication;

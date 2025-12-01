@@ -1,7 +1,6 @@
-@use "../../styles/helpers/" as *;
-@use "../../styles/variables" as *;
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
 
-//Поиск.
 .search {
     position: relative;
     margin-inline: auto;
@@ -107,3 +106,4 @@
         margin-top: 12px;
     }
 }
+

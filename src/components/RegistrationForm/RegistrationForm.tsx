@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import BaseInput from "../../ui/BaseInput/BaseInput";
-import GenderSwitch from "../../ui/GenderSwitch/GenderSwitch";
-import BaseSelect from "../../ui/BaseSelect/BaseSelect";
-import BaseButton from "../../ui/BaseButton/BaseButton";
-import DateInput from "../../ui/DateInput/DateInput";
 import { useNavigate } from "react-router-dom";
-import { buildPayload } from "../../utils/formMap";
-import { signUp } from "../../api/auth";
-import { useAppDispatch } from "../../store/hooks";
-import { show } from "../../store/NotifySlice/notifySlice";
+
+import BaseInput from "@/ui/BaseInput/BaseInput";
+import GenderSwitch from "@/ui/GenderSwitch/GenderSwitch";
+import BaseSelect from "@/ui/BaseSelect/BaseSelect";
+import BaseButton from "@/ui/BaseButton/BaseButton";
+import DateInput from "@/ui/DateInput/DateInput";
+
+import { buildPayload } from "@/utils/formMap";
+import { signUp } from "@/api/auth";
+
+import { useAppDispatch } from "@/store/hooks";
+import { show } from "@/store/NotifySlice/notifySlice";
+
 import styles from "./RegistrationForm.module.scss";
+
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
@@ -156,4 +161,3 @@ export default function RegistrationForm() {
         </form>
     );
 }
-

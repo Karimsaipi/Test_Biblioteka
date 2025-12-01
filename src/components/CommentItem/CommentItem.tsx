@@ -1,5 +1,5 @@
 import React from "react";
-import { IComment } from "../../models/IComment";
+import { IComment } from "@/models/IComment";
 import styles from "./CommentItem.module.scss";
 
 interface CommentItemProps {

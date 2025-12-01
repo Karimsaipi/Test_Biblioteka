@@ -1,0 +1,56 @@
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
+
+.page {
+    display: flex;
+    justify-content: center;
+    padding: 70px 0;
+}
+
+.content {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.hero {
+    background: var(--color-light);
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0px 0px 6px 5px rgba(40, 106, 205, 0.25);
+}
+
+.title {
+    font-family: "Roboto";
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+.subtitle {
+    font-family: "Roboto";
+    font-size: 20px;
+    color: var(--color-black-text);
+    margin-bottom: 16px;
+}
+
+.text {
+    font-family: "Roboto";
+    font-size: 20px;
+    color: var(--color-black-text);
+}
+
+@include mobile {
+    .page {
+        padding: 50px 0;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .subtitle,
+    .text {
+        font-size: 16px;
+    }
+}

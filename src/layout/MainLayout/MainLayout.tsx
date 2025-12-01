@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
+import Header from "../HeaderLayout/HeaderLayout";
 import styles from "./MainLayout.module.scss";
 
 import { useAppSelector } from "../../store/hooks";
-import SubjectsPopover from "../../components/HeaderPopover/SubjectsPopover";
-import TagsPopover from "../../components/HeaderPopover/TagsPopover";
+import SubjectsPopover from "../../components/Popover/SubjectsPopover";
+import TagsPopover from "../../components/Popover/TagsPopover";
 import AccountPopover from "../../components/AccountPopover/AccountPopover";
 
 type Pop = "subjects" | "tags" | null;
@@ -31,7 +31,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     const handleProfileClick = () => {
         // Десктоп: кликом не открываем (только hover)
         if (canHover()) {
-            if (!user) navigate("/login", { replace: true }); 
+            if (!user) navigate("/login", { replace: true });
             return;
         }
 

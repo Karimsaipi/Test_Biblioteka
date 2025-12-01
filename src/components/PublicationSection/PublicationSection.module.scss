@@ -1,0 +1,29 @@
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
+
+.section {
+    padding-top: 47px;
+}
+
+.heading {
+    font-family: "Roboto";
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    color: black;
+}
+
+.placeholder {
+    font-family: "Roboto";
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
+}
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+

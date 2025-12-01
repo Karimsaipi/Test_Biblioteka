@@ -1,7 +1,7 @@
-@use "./styles/helpers/functions" as *;
-@use "./styles/variables" as *;
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
 
-/* Глобальный reset */
+/* Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ reset */
 *,
 ::before,
 ::after {
@@ -13,7 +13,7 @@
     padding: 0;
 }
 
-/* Корень и страница */
+/* РљРѕСЂРµРЅСЊ Рё СЃС‚СЂР°РЅРёС†Р° */
 html,
 body,
 #root {
@@ -44,7 +44,7 @@ h3 {
     --fw-bold: 700;
 }
 
-//ТИПОВЫЕ СТИЛИ
+//РўРРџРћР’Р«Р• РЎРўРР›Р
 h1 {
     font-family: var(--font-sans);
     font-weight: var(--fw-medium);

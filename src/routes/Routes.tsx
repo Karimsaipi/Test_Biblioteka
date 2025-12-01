@@ -1,34 +1,34 @@
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
-import Register from "../pages/Register/Register";
-import Login from "../pages/Login/Login";
-import Main from "../pages/Main/Main";
-import Copyright from "../pages/Copyright/Copyright";
-import BookDetails from "../pages/BookDetails/BookDetails";
-import AllPublications from "../pages/AllPublications/AllPublications";
-import Tags from "../pages/Tags/Tags";
-import PublicationCreate from "../pages/PublicationCreate/PublicationCreate";
-import Favourites from "../pages/Favourites/Favourites";
-import Subjects from "../pages/Subjects/Subjects";
-import FeedBack from "../pages/Feedback/Feedback";
+import MainPage from "@/pages/MainPage/MainPage";
+import LoginPage from "@/pages/LoginPage/LoginPage";
+import RegisterPage from "@/pages/RegisterPage/RegisterPage";
+import CopyrightPage from "@/pages/CopyrightPage/CopyrightPage";
+import TagsPage from "@/pages/TagsPage/TagsPage";
+import SubjectsPage from "@/pages/SubjectsPage/SubjectsPage";
+import FeedbackPage from "@/pages/FeedbackPage/FeedbackPage";
+import PublicationCreatePage from "@/pages/PublicationCreatePage/PublicationCreatePage";
+import FavouritesPage from "@/pages/FavouritesPage/FavouritesPage";
+import BookDetailsPage from "@/pages/BookDetailsPage/BookDetailsPage";
+import AllPublicationsPage from "@/pages/AllPublicationsPage/AllPublicationsPage";
 
 // публичные маршруты
 export const routes: RouteProps[] = [
-    { path: "/", element: <Main /> },
-    { path: "/login", element: <Login /> },
-    { path: "/register", element: <Register /> },
-    { path: "/publications/:id", element: <BookDetails /> },
-    { path: "/allPublications", element: <AllPublications /> },
-    { path: "/copyright", element: <Copyright /> },
-    { path: "/tags", element: <Tags /> },
-    { path: "/subjects", element: <Subjects /> },
+    { path: "/", element: <MainPage /> },
+    { path: "/login", element: <LoginPage /> },
+    { path: "/register", element: <RegisterPage /> },
+    { path: "/publications/:id", element: <BookDetailsPage /> },
+    { path: "/allPublications", element: <AllPublicationsPage /> },
+    { path: "/copyright", element: <CopyrightPage /> },
+    { path: "/tags", element: <TagsPage /> },
+    { path: "/subjects", element: <SubjectsPage /> },
 ];
 
 // приватные маршруты (только страницы, без layout)
 export const privateRoutes: RouteProps[] = [
-    { path: "/feedback", element: <FeedBack /> },
-    { path: "/create-publication", element: <PublicationCreate /> },
-    { path: "/favourites", element: <Favourites /> },
+    { path: "/feedback", element: <FeedbackPage /> },
+    { path: "/create-publication", element: <PublicationCreatePage /> },
+    { path: "/favourites", element: <FavouritesPage /> },
 ];
 
 export const renderRoutes = () =>

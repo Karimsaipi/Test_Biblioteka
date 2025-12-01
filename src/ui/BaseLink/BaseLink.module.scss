@@ -1,5 +1,5 @@
-@use "../../styles/helpers" as *;
-@use "../../styles/variables" as *;
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
 
 .link {
     font-family: Roboto, sans-serif;
@@ -25,7 +25,6 @@
         text-decoration-color: var(--color-blue-button);
     }
 
-    // Меняется на розовый при хавер
     &:hover {
         color: var(--color-pink-checkboxLine);
         text-decoration-color: var(--color-pink-checkboxLine);

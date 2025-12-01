@@ -1,5 +1,5 @@
-@use '../../styles/helpers/' as *;
-@use '../../styles/variables' as *;
+﻿@use "styles/helpers" as *;
+@use "styles/variables" as *;
 
 .container {
     position: fixed;
@@ -14,9 +14,9 @@
     box-shadow: 0px 0px 6px 5px rgba(40, 106, 205, 0.25);
     cursor: pointer;
     max-width: rem(300);
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-size: 22px;
-    color:  var(--color-blue-text);
+    color: var(--color-blue-text);
 }
 
 @include mobile {

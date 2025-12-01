@@ -1,5 +1,5 @@
-import { IAccountEditReqBody } from "../models/IAccountEdit";
-import type { Gender } from "../models/IUser";
+import { IAccountEditReqBody } from "@/models/IAccountEdit";
+import type { Gender } from "@/models/IUser";
 
 export function makeFormState(user: any) {
     return {
