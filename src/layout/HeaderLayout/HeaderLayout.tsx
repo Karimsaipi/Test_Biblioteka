@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./HeaderLayout.module.scss";
-import IconButton from "../../ui/IconButton/IconButton";
-import bookIcon from "../../assets/icons/bookIcon.png";
-import favoriteIcon from "../../assets/icons/favoriteIcon.png";
-import mainLogo from "../../assets/images/logo.png";
-import penIcon from "../../assets/icons/pen.png";
-import userIcon from "../../assets/icons/userIcon.png";
-import HeaderSearch from "../../components/HeaderSearch/HeaderSearch";
+import bookIcon from "@/assets/icons/bookIcon.png";
+import favoriteIcon from "@/assets/icons/favoriteIcon.png";
+import mainLogo from "@/assets/images/logo.png";
+import penIcon from "@/assets/icons/pen.png";
+import userIcon from "@/assets/icons/userIcon.png";
+import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
+import { IconButton } from "@/ui";
 
 type HeaderProps = {
     onBookClick?: () => void;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isServerError } from "../models/IServerError";
+import { isServerError } from "@/models/IServerError";
 
 export function getErrorMessage(err: unknown, fallback = "Ошибка"): string {
     if (axios.isAxiosError(err)) {

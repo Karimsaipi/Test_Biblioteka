@@ -1,4 +1,4 @@
-import { IAuthResponse, IRegisterReqBody, ISignInReqBody } from "../models/IAuth";
+import { IAuthResponse, IRegisterReqBody, ISignInReqBody } from "@/models/IAuth";
 import { api } from "./axios";
 
 //Post/Авторизоваться

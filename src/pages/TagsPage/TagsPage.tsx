@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./TagsPage.module.scss";
 import { ITag } from "@/models/ITag";
 import { getTags } from "@/api/tags";
-import SearchInput from "@/ui/SearchInput/SearchInput";
 import searchIcon from "@/assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";
+import { SearchInput } from "@/ui";
 
 interface TagsProps {
     onChangeTotal?: (total: number) => void;

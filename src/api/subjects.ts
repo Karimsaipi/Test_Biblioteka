@@ -1,5 +1,5 @@
 import { api } from "./axios";
-import { ISubject } from "../models/ISubject";
+import { ISubject } from "@/models/ISubject";
 
 //получить Предметы
 export async function getSubjects(): Promise<ISubject[]> {

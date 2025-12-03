@@ -9,10 +9,9 @@ import {
     PublicationsSortOrder,
     PublicationType,
 } from "@/models/IPublication";
-import SortSelect from "@/ui/SelectSort/SelectSort";
-import Pagination from "@/ui/Pagination/Pagination";
 import PublicationsSection from "@/components/PublicationSection/PublicationSection";
 import Filters, { type SelectOption } from "./Filters/Filters";
+import { Pagination, SelectSort } from "@/ui";
 
 const PAGE_SIZE = 8;
 
@@ -112,7 +111,7 @@ export default function AllPublicationsPage() {
             />
 
             <div className={styles.sortRow}>
-                <SortSelect
+                <SelectSort
                     sortBy={sortBy}
                     sortOrder={sortOrder}
                     onChange={(newSortBy, newSortOrder) => {

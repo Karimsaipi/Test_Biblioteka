@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import { useAppDispatch } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";
-
 import { createPublication } from "@/api/publications";
 import { createAuthor, deleteAuthor, getAuthors } from "@/api/author";
 import { createTag, deleteTag, getTags } from "@/api/tags";
 import { createSubject, deleteSubject, getSubjects } from "@/api/subjects";
-
 import styles from "./PublicationCreateForm.module.scss";
-
-import BaseInput from "@/ui/BaseInput/BaseInput";
-import BaseSelect from "@/ui/BaseSelect/BaseSelect";
-import AssetButton from "@/ui/AssetButton/AssetButton";
-import BaseButton from "@/ui/BaseButton/BaseButton";
-import SelectSearchAdd from "@/ui/SelectSearchedAdd/SelectSearchedAdd";
-
 import { ICreatePublicationReqBody, PublicationType } from "@/models/IPublication";
 import type { ITag } from "@/models/ITag";
 import type { IAuthor } from "@/models/IAuthor";
 import type { ISubject } from "@/models/ISubject";
+import { AssetButton, BaseButton, BaseInput, BaseSelect, SelectSearchedAdd } from "@/ui";
 
 type RefItem = { id: number | null; name: string };
 
@@ -231,7 +222,7 @@ export default function PublicationCreateForm() {
                         ))}
                     </div>
 
-                    <SelectSearchAdd
+                    <SelectSearchedAdd
                         value=""
                         options={makeOptions(allAuthors)}
                         onChange={pickFromList(allAuthors, "authors")}
@@ -333,7 +324,7 @@ export default function PublicationCreateForm() {
                         ))}
                     </div>
 
-                    <SelectSearchAdd
+                    <SelectSearchedAdd
                         value=""
                         options={makeOptions(allTags)}
                         onChange={pickFromList(allTags, "tags")}
@@ -394,7 +385,7 @@ export default function PublicationCreateForm() {
                         ))}
                     </div>
 
-                    <SelectSearchAdd
+                    <SelectSearchedAdd
                         value=""
                         options={makeOptions(allSubjects)}
                         onChange={pickFromList(allSubjects, "subjects")}

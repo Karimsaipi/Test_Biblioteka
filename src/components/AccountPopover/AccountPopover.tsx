@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AccountPopover.module.scss";
-import BaseInput from "@/ui/BaseInput/BaseInput";
-import BaseButton from "@/ui/BaseButton/BaseButton";
-import DateInput from "@/ui/DateInput/DateInput";
-import GenderSwitch from "@/ui/GenderSwitch/GenderSwitch";
-import BaseSelect from "@/ui/BaseSelect/BaseSelect";
 import { editAccount } from "@/api/account";
 import type { Gender, IUser } from "@/models/IUser";
 import type { IAccountEditReqBody } from "@/models/IAccountEdit";
@@ -13,6 +8,7 @@ import pencilPng from "@/assets/icons/penModalClick.png";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";
 import { logout, setUser } from "@/store/AuthSlice/authSlice";
+import { BaseButton, BaseInput, BaseSelect, DateInput, GenderSwitch } from "@/ui";
 
 type Props = {
     open: boolean;

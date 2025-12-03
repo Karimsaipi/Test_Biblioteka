@@ -1,0 +1,11 @@
+export { default as AllPublicationsPage } from "./AllPublicationsPage/AllPublicationsPage";
+export { default as BookDetailsPage } from "./BookDetailsPage/BookDetailsPage";
+export { default as CopyrightPage } from "./CopyrightPage/CopyrightPage";
+export { default as FavouritesPage } from "./FavouritesPage/FavouritesPage";
+export { default as FeedbackPage } from "./FeedbackPage/FeedbackPage";
+export { default as LoginPage } from "./LoginPage/LoginPage";
+export { default as MainPage } from "./MainPage/MainPage";
+export { default as PublicationCreatePage } from "./PublicationCreatePage/PublicationCreatePage";
+export { default as RegisterPage } from "./RegisterPage/RegisterPage";
+export { default as SubjectsPage } from "./SubjectsPage/SubjectsPage";
+export { default as TagsPage } from "./TagsPage/TagsPage";

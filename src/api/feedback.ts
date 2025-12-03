@@ -1,4 +1,4 @@
-import { IFeedbackReqBody } from "../models/IFeedback";
+import { IFeedbackReqBody } from "@/models/IFeedback";
 import { api } from "./axios";
 
 export async function feedbackCreate(body: IFeedbackReqBody): Promise<boolean> {

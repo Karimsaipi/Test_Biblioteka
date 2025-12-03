@@ -1,4 +1,4 @@
-import { ICommentsResponse, ICreateCommentReqBody, IGetCommentReqParams } from "../models/IComment";
+import { ICommentsResponse, ICreateCommentReqBody, IGetCommentReqParams } from "@/models/IComment";
 import { api } from "./axios";
 
 //создать коммент/ post

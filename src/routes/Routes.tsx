@@ -1,16 +1,18 @@
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
-import MainPage from "@/pages/MainPage/MainPage";
-import LoginPage from "@/pages/LoginPage/LoginPage";
-import RegisterPage from "@/pages/RegisterPage/RegisterPage";
-import CopyrightPage from "@/pages/CopyrightPage/CopyrightPage";
-import TagsPage from "@/pages/TagsPage/TagsPage";
-import SubjectsPage from "@/pages/SubjectsPage/SubjectsPage";
-import FeedbackPage from "@/pages/FeedbackPage/FeedbackPage";
-import PublicationCreatePage from "@/pages/PublicationCreatePage/PublicationCreatePage";
-import FavouritesPage from "@/pages/FavouritesPage/FavouritesPage";
-import BookDetailsPage from "@/pages/BookDetailsPage/BookDetailsPage";
-import AllPublicationsPage from "@/pages/AllPublicationsPage/AllPublicationsPage";
+import {
+    AllPublicationsPage,
+    BookDetailsPage,
+    CopyrightPage,
+    FavouritesPage,
+    FeedbackPage,
+    LoginPage,
+    MainPage,
+    PublicationCreatePage,
+    RegisterPage,
+    SubjectsPage,
+    TagsPage,
+} from "@/pages";
 
 // публичные маршруты
 export const routes: RouteProps[] = [

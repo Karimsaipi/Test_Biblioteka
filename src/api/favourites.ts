@@ -2,7 +2,7 @@ import {
     IFavouritesApiResponse,
     IFavouritesGetReqParams,
     IPublicationsFilterResponse,
-} from "../models/IPublication";
+} from "@/models/IPublication";
 import { api } from "./axios";
 
 //получение избранных публикаций, get

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styles from "./BookHeaderDetails.module.scss";
 import type { IPublication } from "@/models/IPublication";
-import BaseButton from "@/ui/BaseButton/BaseButton";
 import coverPlaceholder from "@/assets/images/bookImage.png";
 import favIconZakl from "@/assets/icons/favICONZACLADKA.svg";
 import { updateFavourite } from "@/api/favourites";
 import { useAppDispatch } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";
 import { toUploadsUrl } from "@/utils/media";
+import { BaseButton } from "@/ui";
 
 type BookHeaderProps = {
     book: IPublication;

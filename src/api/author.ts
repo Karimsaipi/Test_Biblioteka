@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IAuthor } from "../models/IAuthor";
+import { IAuthor } from "@/models/IAuthor";
 import { api } from "./axios";
 
 //получить авторов, get

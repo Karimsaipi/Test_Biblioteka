@@ -6,7 +6,7 @@ import {
     PublicationsSortOrder,
     ICreatePublicationReqBody,
     ISearchApiResponse,
-} from "../models/IPublication";
+} from "@/models/IPublication";
 import { api } from "./axios";
 
 //Получить get/publications/filter

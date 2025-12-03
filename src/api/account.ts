@@ -1,4 +1,4 @@
-import { IAccountEditReqBody, IAccountEditResponse } from "../models/IAccountEdit";
+import { IAccountEditReqBody, IAccountEditResponse } from "@/models/IAccountEdit";
 import { api } from "./axios";
 
 export async function editAccount(payload: IAccountEditReqBody): Promise<IAccountEditResponse> {

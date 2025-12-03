@@ -1,4 +1,4 @@
-import { ITag } from "../models/ITag";
+import { ITag } from "@/models/ITag";
 import { api } from "./axios";
 
 //получить тэги, get

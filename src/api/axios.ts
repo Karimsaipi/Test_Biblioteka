@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getErrorMessage } from "./error";
-import { store } from "../store/store";
-import { logout } from "../store/AuthSlice/authSlice";
-import { error } from "../store/NotifySlice/notifySlice";
+import { store } from "@/store/store";
+import { logout } from "@/store/AuthSlice/authSlice";
+import { error } from "@/store/NotifySlice/notifySlice";
 
 export const api = axios.create({
     baseURL: "/api",

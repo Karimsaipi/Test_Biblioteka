@@ -2,11 +2,11 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../HeaderLayout/HeaderLayout";
 import styles from "./MainLayout.module.scss";
-
-import { useAppSelector } from "../../store/hooks";
-import SubjectsPopover from "../../components/Popover/SubjectsPopover";
-import TagsPopover from "../../components/Popover/TagsPopover";
-import AccountPopover from "../../components/AccountPopover/AccountPopover";
+import { useAppSelector } from "@/store/hooks";
+import SubjectsPopover from "@/components/Popover/SubjectsPopover";
+import TagsPopover from "@/components/Popover/TagsPopover";
+import AccountPopover from "@/components/AccountPopover/AccountPopover";
+import GuestPopover from "@/components/GuestPopover/GuestPopover";
 
 type Pop = "subjects" | "tags" | null;
 
@@ -46,7 +46,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     };
 
     const handleProfileEnter = () => {
-        if (!user) return;
+        // важно: открываем поповер и для гостя тоже
         setOpenProfile(true);
         setOpenPop(null);
     };
@@ -90,7 +90,17 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                         <TagsPopover open={openPop === "tags"} onClose={closePop} top={5} />
                     }
                     profilePopover={
-                        <AccountPopover open={openProfile} onClose={() => setOpenProfile(false)} />
+                        user ? (
+                            <AccountPopover
+                                open={openProfile}
+                                onClose={() => setOpenProfile(false)}
+                            />
+                        ) : (
+                            <GuestPopover
+                                open={openProfile}
+                                onClose={() => setOpenProfile(false)}
+                            />
+                        )
                     }
                 />
             )}

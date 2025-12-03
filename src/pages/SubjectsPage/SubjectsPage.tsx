@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SubjectsPage.module.scss";
-import SearchInput from "@/ui/SearchInput/SearchInput";
 import searchIcon from "@/assets/icons/searchIcon.png";
 import { useNavigate } from "react-router-dom";
 import { getSubjects } from "@/api/subjects";
 import { ISubject } from "@/models/ISubject";
+import { SearchInput } from "@/ui";
 
 interface SubjectsProps {
     onChangeTotal?: (total: number) => void;

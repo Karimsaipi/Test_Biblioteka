@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PublicationsSortBy, PublicationsSortOrder } from "@/models/IPublication";
 import styles from "./SelectSort.module.scss";
-import sortIcon from "../../assets/icons/SortIcon.png";
+import sortIcon from "@/assets/icons/SortIcon.png";
 
 interface SortSelectProps {
     sortBy: PublicationsSortBy;

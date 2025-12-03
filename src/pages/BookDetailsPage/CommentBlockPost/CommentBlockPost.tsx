@@ -4,8 +4,8 @@ import { useAppDispatch } from "@/store/hooks";
 import { IComment, ICommentsResponse } from "@/models/IComment";
 import { createComment, getComment } from "@/api/comments";
 import { show } from "@/store/NotifySlice/notifySlice";
-import AssetButton from "@/ui/AssetButton/AssetButton";
 import CommentItem from "@/components/CommentItem/CommentItem";
+import { AssetButton } from "@/ui";
 
 interface CommentBlockProps {
     publicationId: number;
