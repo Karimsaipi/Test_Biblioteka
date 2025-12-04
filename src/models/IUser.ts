@@ -1,3 +1,5 @@
+// ================ ENTITIES (доменные типы) ============
+
 export type Gender = "male" | "female";
 
 export interface IUser {
@@ -13,3 +15,5 @@ export interface IUser {
     creationDate: string;
     token?: string;
 }
+
+// ===================== DTO (API) ======================

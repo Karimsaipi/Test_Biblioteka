@@ -5,7 +5,7 @@ import { renderPrivateRoutes, renderRoutes } from "./routes/Routes";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import MainLayout from "./layout/MainLayout/MainLayout";
 import { restoreLastOpened } from "./store/LastOpenedSlice/lastOpenedSlice";
-import ToastHot from "./components/ToastHot/ToastHot";
+import ToastHot from "./widgets/ToastHot/ToastHot";
 
 export default function App(): JSX.Element {
     const isAuth = useAppSelector((state) => state.auth.isAuth);

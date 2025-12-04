@@ -1,5 +1,9 @@
 import { Gender, IUser } from "./IUser";
 
+// ================ ENTITIES (доменные типы) ============
+
+// ===================== DTO (API) ======================
+
 // POST /account/sign-up
 export interface IRegisterReqBody {
     login: string;
@@ -7,7 +11,7 @@ export interface IRegisterReqBody {
     name: string;
     gender: Gender;
     email: string;
-    birthDate: string; 
+    birthDate: string;
     career: string;
     post: string;
 }

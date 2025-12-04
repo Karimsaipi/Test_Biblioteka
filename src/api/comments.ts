@@ -28,7 +28,7 @@ export async function getComment(
     publicationId: number,
     params: IGetCommentReqParams,
 ): Promise<ICommentsResponse> {
-    const response = await api.get<ICommentsResponse>(`/comments/${publicationId}`,  {
+    const response = await api.get<ICommentsResponse>(`/comments/${publicationId}`, {
         params: {
             page: params.page,
             pageSize: params.pageSize,
@@ -36,4 +36,3 @@ export async function getComment(
     });
     return response.data;
 }
-

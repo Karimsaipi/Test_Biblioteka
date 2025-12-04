@@ -5,7 +5,7 @@ import { getPublicationsID } from "@/api/publications";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setLastOpened, setLastPage, setReaderOpen } from "@/store/LastOpenedSlice/lastOpenedSlice";
 import PDFReader from "./PDFReader/PDFReader";
-import { toUploadsUrl } from "@/utils/media";
+import { toUploadsUrl } from "@/shared/utils/media";
 import BookHeaderDetails from "./BookHeaderDetails/BookHeaderDetails";
 import CommentBlockPost from "./CommentBlockPost/CommentBlockPost";
 

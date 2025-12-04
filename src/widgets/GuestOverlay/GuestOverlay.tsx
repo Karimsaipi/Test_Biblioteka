@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./GuestPopover.module.scss";
+import styles from "./GuestOverlay.module.scss";
 import { BaseButton } from "@/ui";
 
 type Props = { open: boolean; onClose: () => void };
@@ -13,7 +13,7 @@ export default function GuestPopover({ open, onClose }: Props) {
             <div className={styles.title}>Вы не вошли в аккаунт</div>
             <div className={styles.actions}>
                 <BaseButton
-                    type="button" 
+                    type="button"
                     className={styles.btn}
                     onClick={() => {
                         onClose();
@@ -23,7 +23,7 @@ export default function GuestPopover({ open, onClose }: Props) {
                     Войти
                 </BaseButton>
                 <BaseButton
-                    type="button" 
+                    type="button"
                     className={styles.btn}
                     onClick={() => {
                         onClose();

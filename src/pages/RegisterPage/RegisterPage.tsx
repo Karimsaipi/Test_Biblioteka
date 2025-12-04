@@ -1,6 +1,6 @@
 import React from "react";
-import RegistrationForm from "@/components/RegistrationForm/RegistrationForm";
 import styles from "./RegisterPage.module.scss";
+import RegistrationForm from "./RegistrationForm/RegistrationForm";
 
 export default function RegisterPage() {
     return (

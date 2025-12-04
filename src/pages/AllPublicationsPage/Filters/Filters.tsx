@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Filters.module.scss";
-import BaseSelect from "@/ui/BaseSelect/BaseSelect";
+import { BaseSelect } from "@/ui";
 
 export type SelectOption = {
     value: string;

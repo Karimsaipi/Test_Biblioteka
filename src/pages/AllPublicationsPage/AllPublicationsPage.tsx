@@ -9,7 +9,7 @@ import {
     PublicationsSortOrder,
     PublicationType,
 } from "@/models/IPublication";
-import PublicationsSection from "@/components/PublicationSection/PublicationSection";
+import PublicationsSection from "@/widgets/PublicationSection/PublicationSection";
 import Filters, { type SelectOption } from "./Filters/Filters";
 import { Pagination, SelectSort } from "@/ui";
 

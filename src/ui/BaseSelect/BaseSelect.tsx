@@ -1,5 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styles from "./BaseSelect.module.scss";
+import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
+import { useOnEscape } from "@/shared/hooks/useOnEscape";
 
 interface BaseSelectProps {
     label: string;
@@ -19,17 +21,22 @@ export default function BaseSelect({ label, value, onChange, options, error }: B
         [options, value],
     );
 
-    useEffect(() => {
-        const onDocClick = (e: MouseEvent) => {
-            if (!rootRef.current) return;
-            if (!rootRef.current.contains(e.target as Node)) {
-                setOpen(false);
-                setFocused(false);
-            }
-        };
-        document.addEventListener("mousedown", onDocClick);
-        return () => document.removeEventListener("mousedown", onDocClick);
-    }, []);
+    useOnClickOutside(
+        rootRef,
+        () => {
+            setOpen(false);
+            setFocused(false);
+        },
+        { enabled: open },
+    );
+
+    useOnEscape(
+        () => {
+            setOpen(false);
+            setFocused(false);
+        },
+        { enabled: open },
+    );
 
     const pick = (nextValue: string) => {
         const fake = {
@@ -41,7 +48,6 @@ export default function BaseSelect({ label, value, onChange, options, error }: B
 
     return (
         <div ref={rootRef} className={styles.wrapper}>
-            {/* ВНЕШНИЙ ВИД ПОЛЯ НЕ ТРОГАЕМ: используем твой .select */}
             <button
                 type="button"
                 className={`${styles.select} ${error ? styles.selectError : ""} ${open ? styles.selectOpen : ""}`}

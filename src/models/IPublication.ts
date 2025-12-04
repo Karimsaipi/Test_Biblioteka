@@ -2,6 +2,8 @@ import { IAuthor } from "./IAuthor";
 import { ISubject } from "./ISubject";
 import { ITag } from "./ITag";
 
+// ================ ENTITIES (доменные типы) ============
+
 export enum PublicationType {
     книга = 0,
     статья = 1,
@@ -31,6 +33,8 @@ export interface IPublication {
     coverPath: string;
     filePath: string;
 }
+
+// ===================== DTO (API) ======================
 
 export enum PublicationsSortBy {
     ALPHABET = 0,

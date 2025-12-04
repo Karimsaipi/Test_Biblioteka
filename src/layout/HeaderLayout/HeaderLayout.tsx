@@ -6,7 +6,7 @@ import favoriteIcon from "@/assets/icons/favoriteIcon.png";
 import mainLogo from "@/assets/images/logo.png";
 import penIcon from "@/assets/icons/pen.png";
 import userIcon from "@/assets/icons/userIcon.png";
-import HeaderSearch from "@/components/HeaderSearch/HeaderSearch";
+import HeaderSearch from "@/layout/HeaderLayout/HeaderSearch/HeaderSearch";
 import { IconButton } from "@/ui";
 
 type HeaderProps = {

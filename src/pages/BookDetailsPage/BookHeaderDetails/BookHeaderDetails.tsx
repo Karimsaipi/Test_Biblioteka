@@ -6,7 +6,7 @@ import favIconZakl from "@/assets/icons/favICONZACLADKA.svg";
 import { updateFavourite } from "@/api/favourites";
 import { useAppDispatch } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";
-import { toUploadsUrl } from "@/utils/media";
+import { toUploadsUrl } from "@/shared/utils/media";
 import { BaseButton } from "@/ui";
 
 type BookHeaderProps = {

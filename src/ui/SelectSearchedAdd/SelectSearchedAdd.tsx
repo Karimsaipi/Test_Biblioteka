@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./SelectSearchedAdd.module.scss";
+import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
+import { useOnEscape } from "@/shared/hooks/useOnEscape";
 
 type Opt = { value: string; label: string };
 
@@ -7,10 +9,8 @@ interface SelectSearchAddProps {
     value: string;
     onChange: (value: string) => void;
     options: Opt[];
-
     placeholder?: string;
     searchPlaceholder?: string;
-
     onCreate?: (name: string) => Promise<Opt>;
     onDelete?: (opt: Opt) => Promise<void> | void;
 }
@@ -28,18 +28,22 @@ export default function SelectSearchAdd({
 
     const rootRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        const onDocClick = (e: MouseEvent) => {
-            const el = rootRef.current;
-            if (!el) return;
-            if (!el.contains(e.target as Node)) {
-                setOpen(false);
-                setQ("");
-            }
-        };
-        document.addEventListener("mousedown", onDocClick);
-        return () => document.removeEventListener("mousedown", onDocClick);
-    }, []);
+    useOnClickOutside(
+        rootRef,
+        () => {
+            setOpen(false);
+            setQ("");
+        },
+        { enabled: open },
+    );
+
+    useOnEscape(
+        () => {
+            setOpen(false);
+            setQ("");
+        },
+        { enabled: open },
+    );
 
     const norm = (s: unknown) =>
         String(s ?? "")
@@ -71,7 +75,6 @@ export default function SelectSearchAdd({
     const del = async (opt: Opt) => {
         if (!onDelete) return;
         await onDelete(opt);
-        // если удалили выбранное — сбросим значение
         if (opt.value === value) onChange("");
     };
 
@@ -100,7 +103,9 @@ export default function SelectSearchAdd({
                         <div key={opt.value} className={styles.optionRow}>
                             <button
                                 type="button"
-                                className={`${styles.option} ${opt.value === value ? styles.optionSelected : ""}`}
+                                className={`${styles.option} ${
+                                    opt.value === value ? styles.optionSelected : ""
+                                }`}
                                 onClick={() => pick(opt.value)}
                             >
                                 {opt.label}

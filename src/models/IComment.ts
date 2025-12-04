@@ -1,3 +1,5 @@
+// ================ ENTITIES (доменные типы) ============
+
 export interface ICommentAuthor {
     id: number;
     name: string;
@@ -18,6 +20,8 @@ export interface IComment {
     creationDate: string;
 }
 
+// ===================== DTO (API) ======================
+
 export interface ICreateCommentReqBody {
     publicationId: number;
     text: string;
@@ -30,6 +34,6 @@ export interface IGetCommentReqParams {
 }
 
 export interface ICommentsResponse {
-  totalCount: number;
-  data: IComment[];
+    totalCount: number;
+    data: IComment[];
 }

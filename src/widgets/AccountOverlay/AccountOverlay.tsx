@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AccountPopover.module.scss";
+import styles from "./AccountOverlay.module.scss";
 import { editAccount } from "@/api/account";
 import type { Gender, IUser } from "@/models/IUser";
 import type { IAccountEditReqBody } from "@/models/IAccountEdit";
@@ -9,13 +9,15 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";
 import { logout, setUser } from "@/store/AuthSlice/authSlice";
 import { BaseButton, BaseInput, BaseSelect, DateInput, GenderSwitch } from "@/ui";
+import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
+import { useOnEscape } from "@/shared/hooks/useOnEscape";
 
 type Props = {
     open: boolean;
     onClose: () => void;
 };
 
-export default function AccountPopover({ open, onClose }: Props) {
+export default function AccountOverlay({ open, onClose }: Props) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const user = useAppSelector((s) => s.auth.user);
@@ -33,27 +35,9 @@ export default function AccountPopover({ open, onClose }: Props) {
         setIsEmailEditing(false);
     }, [open, user]);
 
-    useEffect(() => {
-        if (!open) return;
+    useOnClickOutside(popoverRef, () => onClose(), { enabled: open });
 
-        const onMouseDown = (e: MouseEvent) => {
-            const el = popoverRef.current;
-            if (!el) return;
-            if (el.contains(e.target as Node)) return;
-            onClose();
-        };
-
-        const onKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
-        };
-
-        document.addEventListener("mousedown", onMouseDown);
-        document.addEventListener("keydown", onKeyDown);
-        return () => {
-            document.removeEventListener("mousedown", onMouseDown);
-            document.removeEventListener("keydown", onKeyDown);
-        };
-    }, [open, onClose]);
+    useOnEscape(() => onClose(), { enabled: open });
 
     const onChange =
         (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -146,6 +130,7 @@ export default function AccountPopover({ open, onClose }: Props) {
                         value={form.birthDate}
                         onChange={onChange("birthDate")}
                     />
+
                     <GenderSwitch
                         value={form.gender}
                         onChange={(v) => setForm((s) => ({ ...s, gender: v }))}
@@ -177,6 +162,7 @@ export default function AccountPopover({ open, onClose }: Props) {
                     <BaseButton type="submit" className={styles.btn}>
                         Сохранить
                     </BaseButton>
+
                     <BaseButton type="button" className={styles.btn} variant="red" onClick={onExit}>
                         Выйти
                     </BaseButton>

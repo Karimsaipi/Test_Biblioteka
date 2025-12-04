@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { buildPayload } from "@/utils/formMap";
+import { buildPayload } from "@/shared/utils/formMap";
 import { signUp } from "@/api/auth";
 import { useAppDispatch } from "@/store/hooks";
 import { show } from "@/store/NotifySlice/notifySlice";

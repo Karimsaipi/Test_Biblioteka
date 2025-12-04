@@ -26,3 +26,9 @@
     margin-bottom: rem(13);
     align-self: flex-start;
 }
+
+@include mobile-s {
+    .card {
+        padding: 0px 15px;
+    }
+}

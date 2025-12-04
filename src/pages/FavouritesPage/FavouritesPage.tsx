@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PublicationsSection from "@/components/PublicationSection/PublicationSection";
+import PublicationsSection from "@/widgets/PublicationSection/PublicationSection";
 import { IFavouritesGetReqParams } from "@/models/IPublication";
 import { getFavourites } from "@/api/favourites";
 import styles from "./FavouritesPage.module.scss";

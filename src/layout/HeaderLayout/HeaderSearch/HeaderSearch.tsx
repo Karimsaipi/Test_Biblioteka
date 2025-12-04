@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HeaderSearch.module.scss";
 import { searchPublications } from "@/api/publications";
 import { PublicationType, type IPublication } from "@/models/IPublication";
 import placeholderCover from "@/assets/images/bookImage.png";
 import searchIcon from "@/assets/icons/searchIcon.png";
-import { toUploadsUrl } from "@/utils/media";
+import { toUploadsUrl } from "@/shared/utils/media";
 import { SearchInput } from "@/ui";
+import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
+import { useOnEscape } from "@/shared/hooks/useOnEscape";
 
 function getCoverUrl(coverPath?: string | null): string {
     return coverPath ? toUploadsUrl(coverPath) : placeholderCover;
@@ -14,33 +16,54 @@ function getCoverUrl(coverPath?: string | null): string {
 
 export default function HeaderSearch() {
     const navigate = useNavigate();
+
     const [q, setQ] = useState("");
     const [results, setResults] = useState<IPublication[]>([]);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // дебаунс-поиск
+    const rootRef = useRef<HTMLDivElement | null>(null);
+
+    useOnEscape(
+        () => {
+            setOpen(false);
+            setQ("");
+            setResults([]);
+        },
+        { enabled: open },
+    );
+
+    const reqIdRef = useRef(0);
+
     useEffect(() => {
         const query = q.trim();
 
         if (query.length < 2) {
             setResults([]);
             setOpen(false);
+            setLoading(false);
             return;
         }
 
         setLoading(true);
         setOpen(true);
 
+        const myReqId = ++reqIdRef.current;
+
         const id = setTimeout(async () => {
             try {
                 const items = await searchPublications(query);
-                console.log("SEARCH RESULTS:", items);
+
+                // если пока ждали — запрос устарел, ничего не делаем
+                if (myReqId !== reqIdRef.current) return;
+
                 setResults(items);
             } catch (e) {
+                if (myReqId !== reqIdRef.current) return;
                 console.error("search error", e);
                 setResults([]);
             } finally {
+                if (myReqId !== reqIdRef.current) return;
                 setLoading(false);
             }
         }, 400);
@@ -52,12 +75,12 @@ export default function HeaderSearch() {
         e.preventDefault();
         const v = q.trim();
         if (!v) return;
-        // navigate(`/search?q=${encodeURIComponent(v)}`);
     };
 
     const handleResultClick = (pub: IPublication) => {
         setOpen(false);
         setQ("");
+        setResults([]);
         navigate(`/publications/${pub.id}`);
     };
 
@@ -68,7 +91,7 @@ export default function HeaderSearch() {
             role="search"
             aria-label="Поиск по книгам"
         >
-            <div className={styles.searchInner}>
+            <div ref={rootRef} className={styles.searchInner}>
                 <SearchInput
                     value={q}
                     onChange={(e) => setQ(e.target.value)}

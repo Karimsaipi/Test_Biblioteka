@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import type { IPublication } from "@/models/IPublication";
-import { toUploadsUrl } from "@/utils/media";
+import { toUploadsUrl } from "@/shared/utils/media";
 import coverPlaceholder from "@/assets/images/bookImage.png";
 import style from "./BookCard.module.scss";
 

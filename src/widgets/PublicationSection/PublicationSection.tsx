@@ -6,7 +6,7 @@ import type {
 } from "@/models/IPublication";
 import { getPublications } from "@/api/publications";
 import styles from "./PublicationSection.module.scss";
-import BookCard from "../BookCard/BookCard";
+import BookCard from "./BookCard";
 
 interface PublicationsSectionProps {
     title: string;

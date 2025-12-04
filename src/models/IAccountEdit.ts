@@ -1,5 +1,9 @@
 import { Gender, IUser } from "./IUser";
 
+// ================ ENTITIES (доменные типы) ============
+
+// ===================== DTO (API) ======================
+
 export interface IAccountEditReqBody {
     name: string;
     login: string;
@@ -9,6 +13,7 @@ export interface IAccountEditReqBody {
     career: string;
     post: string;
 }
+
 export interface IAccountEditResponse {
     user: IUser;
 }

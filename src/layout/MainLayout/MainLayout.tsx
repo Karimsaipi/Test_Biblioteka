@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../HeaderLayout/HeaderLayout";
 import styles from "./MainLayout.module.scss";
 import { useAppSelector } from "@/store/hooks";
-import SubjectsPopover from "@/components/Popover/SubjectsPopover";
-import TagsPopover from "@/components/Popover/TagsPopover";
-import AccountPopover from "@/components/AccountPopover/AccountPopover";
-import GuestPopover from "@/components/GuestPopover/GuestPopover";
+import SubjectsPopover from "@/widgets/Popover/SubjectsPopover";
+import TagsPopover from "@/widgets/Popover/TagsPopover";
+import AccountPopover from "@/widgets/AccountOverlay/AccountOverlay";
+import GuestPopover from "@/widgets/GuestOverlay/GuestOverlay";
 
 type Pop = "subjects" | "tags" | null;
 

@@ -1,4 +1,5 @@
 ﻿@use "styles/helpers" as *;
+
 .header {
     width: 100%;
     padding: rem(32) rem(43) rem(12) rem(54);
@@ -15,7 +16,7 @@
     display: flex;
 }
 
-// Р»РµРІР°СЏ РєРѕР»РѕРЅРєР°
+// левая колонка
 .left {
     position: relative;
     max-width: rem(200);
@@ -61,7 +62,7 @@
     align-items: center;
 }
 
-/* "РјРѕСЃС‚РёРє" РјРµР¶РґСѓ СЃСЃС‹Р»РєРѕР№ Рё РїРѕРїРѕРІРµСЂРѕРј */
+/* "мостик" между ссылкой и поповером */
 .navPopoverWrap::after {
     content: "";
     position: absolute;
@@ -71,7 +72,7 @@
     height: 12px;
 }
 
-//РРєРѕРЅРєРё
+// Иконки
 .right {
     padding-left: 20px;
     display: flex;
@@ -83,7 +84,7 @@
     align-self: flex-start;
 }
 
-/* РІРјРµСЃС‚Рѕ .right > :last-child вЂ” РїРѕС‚РѕРјСѓ С‡С‚Рѕ С‚РµРїРµСЂСЊ РїРѕСЃР»РµРґРЅРёР№ СЌС‚Рѕ profileWrap */
+/* вместо .right > :last-child — потому что теперь последний это profileWrap */
 .profileWrap {
     position: relative;
     display: inline-flex;
@@ -93,7 +94,7 @@
     margin-left: 10px;
 }
 
-/* РјРѕСЃС‚РёРє РјРµР¶РґСѓ РёРєРѕРЅРєРѕР№ РїСЂРѕС„РёР»СЏ Рё РїРѕРїРѕРІРµСЂРѕРј */
+/* мостик между иконкой профиля и поповером */
 .profileWrap::after {
     content: "";
     position: absolute;
@@ -162,4 +163,3 @@
         margin-left: 0px;
     }
 }
-
