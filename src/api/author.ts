@@ -10,12 +10,12 @@ export async function getAuthors(): Promise<IAuthor[]> {
 
 //создать авторов
 export async function createAuthor(name: string): Promise<IAuthor> {
-    const res = await api.post("/authors/create", { name });
-    return res.data;
+    const response = await api.post("/authors/create", { name });
+    return response.data;
 }
 
 // удалить автора,
 export async function deleteAuthor(id: number): Promise<boolean> {
-    const res = await api.delete(`/authors/delete/${id}`);
-    return res.data;
+    const response = await api.delete(`/authors/delete/${id}`);
+    return response.data;
 }

@@ -29,8 +29,10 @@ export function useOnClickOutside<T extends HTMLElement>(
             if (!el) return;
 
             const target = event.target as Node | null;
-            const insideByContains = !!target && el.contains(target);
+            const isInside = !!target && el.contains(target);
+            if (isInside) return;
 
+            latestHandler.current(event as OutsideEvent);
         };
 
         document.addEventListener(eventName, handler, { capture });

@@ -24,16 +24,7 @@ export default function App(): JSX.Element {
 
                         {renderPrivateRoutes(isAuth)}
 
-                        <Route
-                            path="*"
-                            element={
-                                isAuth ? (
-                                    <Navigate to="/" replace />
-                                ) : (
-                                    <Navigate to="/login" replace />
-                                )
-                            }
-                        />
+                        <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </MainLayout>
             </div>

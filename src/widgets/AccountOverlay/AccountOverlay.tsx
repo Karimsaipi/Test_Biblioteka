@@ -67,7 +67,6 @@ export default function AccountOverlay({ open, onClose }: Props) {
     const onExit = () => {
         dispatch(logout());
         onClose();
-        navigate("/login", { replace: true });
     };
 
     if (!open) return null;

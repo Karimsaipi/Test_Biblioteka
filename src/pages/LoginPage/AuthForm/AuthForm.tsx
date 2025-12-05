@@ -11,17 +11,9 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_-]).{6,}$/;
 
 type Props = {
     onSuccess?: () => void;
-    submitText?: string;
-    showResetLink?: boolean;
-    showRegisterButton?: boolean;
 };
 
-export default function AuthForm({
-    onSuccess,
-    submitText = "Войти",
-    showResetLink = true,
-    showRegisterButton = true,
-}: Props) {
+export default function AuthForm({ onSuccess }: Props) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -77,27 +69,23 @@ export default function AuthForm({
             <div className={styles.controllers}>
                 <div className={styles.topRow}>
                     <BaseButton variant="primary" type="submit" disabled={loading}>
-                        {submitText}
+                        Войти
                     </BaseButton>
 
-                    {showResetLink && (
-                        <BaseLink to="/reset" style={{ marginRight: "30px" }}>
-                            Сброс пароля
-                        </BaseLink>
-                    )}
+                    <BaseLink to="/reset" style={{ marginRight: "30px" }}>
+                        Сброс пароля
+                    </BaseLink>
                 </div>
 
-                {showRegisterButton && (
-                    <BaseButton
-                        variant="tertiary"
-                        type="button"
-                        className={styles.register}
-                        onClick={() => navigate("/register")}
-                        disabled={loading}
-                    >
-                        Зарегистрироваться
-                    </BaseButton>
-                )}
+                <BaseButton
+                    variant="tertiary"
+                    type="button"
+                    className={styles.register}
+                    onClick={() => navigate("/register")}
+                    disabled={loading}
+                >
+                    Зарегистрироваться
+                </BaseButton>
             </div>
         </form>
     );

@@ -9,6 +9,27 @@ interface Props {
 
 type PageItem = number | "...";
 
+function buildItems(currentPage: number, totalPages: number): PageItem[] {
+    if (totalPages <= 5) {
+        return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const last = totalPages;
+
+    // start
+    if (currentPage <= 3) {
+        return [1, 2, 3, 4, "...", last]; // при total=6 скрывается 5
+    }
+
+    // end
+    if (currentPage >= last - 2) {
+        return [1, "...", last - 3, last - 2, last - 1, last];
+    }
+
+    // middle
+    return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", last];
+}
+
 export default function Pagination({ currentPage, totalPages, onChange }: Props) {
     if (totalPages <= 1) return null;
 
@@ -17,52 +38,7 @@ export default function Pagination({ currentPage, totalPages, onChange }: Props)
         onChange(page);
     };
 
-    const rawItems: PageItem[] = [];
-    const addItem = (item: PageItem) => rawItems.push(item);
-
-    if (totalPages <= 5) {
-        for (let page = 1; page <= totalPages; page++) addItem(page);
-    } else {
-        const firstPages = [1, 2];
-        const lastPages = [totalPages - 1, totalPages];
-
-        const middleStart = Math.max(3, currentPage - 1);
-        const middleEnd = Math.min(totalPages - 2, currentPage + 1);
-
-        addItem(firstPages[0]);
-        addItem(firstPages[1]);
-
-        if (middleStart > 3) addItem("...");
-
-        for (let page = middleStart; page <= middleEnd; page++) addItem(page);
-
-        if (middleEnd < totalPages - 2) addItem("...");
-
-        addItem(lastPages[0]);
-        addItem(lastPages[1]);
-    }
-
-    const withoutDuplicates: PageItem[] = [];
-    for (const item of rawItems) {
-        const lastAdded = withoutDuplicates[withoutDuplicates.length - 1];
-        if (item === lastAdded) continue;
-        withoutDuplicates.push(item);
-    }
-
-    const finalItems: PageItem[] = [];
-    for (let index = 0; index < withoutDuplicates.length; index++) {
-        const item = withoutDuplicates[index];
-        const previous = finalItems[finalItems.length - 1];
-        const next = withoutDuplicates[index + 1];
-
-        const dotsAreRedundant =
-            item === "..." &&
-            typeof previous === "number" &&
-            typeof next === "number" &&
-            next === previous + 1;
-
-        if (!dotsAreRedundant) finalItems.push(item);
-    }
+    const items = buildItems(currentPage, totalPages);
 
     return (
         <div className={styles.wrapper}>
@@ -74,7 +50,7 @@ export default function Pagination({ currentPage, totalPages, onChange }: Props)
                 &lt;
             </button>
 
-            {finalItems.map((item, index) =>
+            {items.map((item, index) =>
                 item === "..." ? (
                     <span key={`dots-${index}`} className={styles.ellipsis}>
                         &hellip;

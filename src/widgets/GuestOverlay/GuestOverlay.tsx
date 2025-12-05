@@ -10,7 +10,7 @@ export default function GuestPopover({ open, onClose }: Props) {
 
     return (
         <div className={styles.popover} role="dialog" aria-label="Аккаунт">
-            <div className={styles.title}>Вы не вошли в аккаунт</div>
+            <div className={styles.title}>Вы не авторизованы</div>
             <div className={styles.actions}>
                 <BaseButton
                     type="button"

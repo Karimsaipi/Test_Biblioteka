@@ -1,58 +1,37 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../HeaderLayout/HeaderLayout";
+import Header from "../Header/Header";
 import styles from "./MainLayout.module.scss";
-import { useAppSelector } from "@/store/hooks";
-import SubjectsPopover from "@/widgets/Popover/SubjectsPopover";
-import TagsPopover from "@/widgets/Popover/TagsPopover";
-import AccountPopover from "@/widgets/AccountOverlay/AccountOverlay";
-import GuestPopover from "@/widgets/GuestOverlay/GuestOverlay";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { closeProfileOverlay, toggleProfileOverlay } from "@/store/OverlaySlice/overlaySlice";
+import AccountOverlay from "@/widgets/AccountOverlay/AccountOverlay";
+import GuestOverlay from "@/widgets/GuestOverlay/GuestOverlay";
+import Popover from "@/widgets/Popover/Popover";
+import { getSubjects } from "@/api/subjects";
+import { getTags } from "@/api/tags";
 
 type Pop = "subjects" | "tags" | null;
 
-const canHover = () => window.matchMedia?.("(any-hover: hover)")?.matches ?? false;
-
 export default function MainLayout(props: { children: React.ReactNode }) {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { pathname } = useLocation();
     const hideHeader = pathname === "/login" || pathname === "/register";
 
     const user = useAppSelector((s) => s.auth.user);
     const lastOpenedId = useAppSelector((s) => s.lastOpened.publicationId);
 
-    const [openProfile, setOpenProfile] = React.useState(false);
+    const profileOpen = useAppSelector((s) => s.overlay.profileOpen);
+
     const [openPop, setOpenPop] = React.useState<Pop>(null);
 
     React.useEffect(() => {
-        setOpenProfile(false);
         setOpenPop(null);
     }, [pathname]);
 
     const handleProfileClick = () => {
-        // Десктоп: кликом не открываем (только hover)
-        if (canHover()) {
-            if (!user) navigate("/login", { replace: true });
-            return;
-        }
-
-        // Мобилка: toggle по клику
-        if (!user) {
-            navigate("/login", { replace: true });
-            return;
-        }
-
-        setOpenProfile((v) => !v);
+        dispatch(toggleProfileOverlay());
         setOpenPop(null);
-    };
-
-    const handleProfileEnter = () => {
-        // важно: открываем поповер и для гостя тоже
-        setOpenProfile(true);
-        setOpenPop(null);
-    };
-
-    const handleProfileLeave = () => {
-        setOpenProfile(false);
     };
 
     const handleBookClick = () => {
@@ -71,34 +50,42 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 <Header
                     onBookClick={handleBookClick}
                     onProfileClick={handleProfileClick}
-                    onProfileEnter={handleProfileEnter}
-                    onProfileLeave={handleProfileLeave}
                     onSubjectsEnter={() => {
                         setOpenPop("subjects");
-                        setOpenProfile(false);
+                        dispatch(closeProfileOverlay());
                     }}
                     onSubjectsLeave={closePop}
                     onTagsEnter={() => {
                         setOpenPop("tags");
-                        setOpenProfile(false);
+                        dispatch(closeProfileOverlay());
                     }}
                     onTagsLeave={closePop}
                     subjectsPopover={
-                        <SubjectsPopover open={openPop === "subjects"} onClose={closePop} top={5} />
+                        <Popover
+                            open={openPop === "subjects"}
+                            onClose={closePop}
+                            fetchItems={getSubjects}
+                            queryParamName="subject"
+                        />
                     }
                     tagsPopover={
-                        <TagsPopover open={openPop === "tags"} onClose={closePop} top={5} />
+                        <Popover
+                            open={openPop === "tags"}
+                            onClose={closePop}
+                            fetchItems={getTags}
+                            queryParamName="tag"
+                        />
                     }
-                    profilePopover={
+                    profileOverlay={
                         user ? (
-                            <AccountPopover
-                                open={openProfile}
-                                onClose={() => setOpenProfile(false)}
+                            <AccountOverlay
+                                open={profileOpen}
+                                onClose={() => dispatch(closeProfileOverlay())}
                             />
                         ) : (
-                            <GuestPopover
-                                open={openProfile}
-                                onClose={() => setOpenProfile(false)}
+                            <GuestOverlay
+                                open={profileOpen}
+                                onClose={() => dispatch(closeProfileOverlay())}
                             />
                         )
                     }

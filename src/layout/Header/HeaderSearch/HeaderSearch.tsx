@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./HeaderSearch.module.scss";
 import { searchPublications } from "@/api/publications";
@@ -7,8 +7,8 @@ import placeholderCover from "@/assets/images/bookImage.png";
 import searchIcon from "@/assets/icons/searchIcon.png";
 import { toUploadsUrl } from "@/shared/utils/media";
 import { SearchInput } from "@/ui";
-import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
 import { useOnEscape } from "@/shared/hooks/useOnEscape";
+import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
 
 function getCoverUrl(coverPath?: string | null): string {
     return coverPath ? toUploadsUrl(coverPath) : placeholderCover;
@@ -23,17 +23,18 @@ export default function HeaderSearch() {
     const [loading, setLoading] = useState(false);
 
     const rootRef = useRef<HTMLDivElement | null>(null);
-
-    useOnEscape(
-        () => {
-            setOpen(false);
-            setQ("");
-            setResults([]);
-        },
-        { enabled: open },
-    );
-
     const reqIdRef = useRef(0);
+
+    const reset = useCallback(() => {
+        setOpen(false);
+        setQ("");
+        setResults([]);
+        setLoading(false);
+        reqIdRef.current += 1; 
+    }, []);
+
+    useOnEscape(reset, { enabled: open });
+    useOnClickOutside(rootRef, reset, { enabled: open });
 
     useEffect(() => {
         const query = q.trim();
@@ -53,10 +54,7 @@ export default function HeaderSearch() {
         const id = setTimeout(async () => {
             try {
                 const items = await searchPublications(query);
-
-                // если пока ждали — запрос устарел, ничего не делаем
                 if (myReqId !== reqIdRef.current) return;
-
                 setResults(items);
             } catch (e) {
                 if (myReqId !== reqIdRef.current) return;
@@ -71,23 +69,15 @@ export default function HeaderSearch() {
         return () => clearTimeout(id);
     }, [q]);
 
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const v = q.trim();
-        if (!v) return;
-    };
-
     const handleResultClick = (pub: IPublication) => {
-        setOpen(false);
-        setQ("");
-        setResults([]);
+        reset();
         navigate(`/publications/${pub.id}`);
     };
 
     return (
         <form
             className={styles.search}
-            onSubmit={onSubmit}
+            onSubmit={(e) => e.preventDefault()}
             role="search"
             aria-label="Поиск по книгам"
         >
@@ -122,11 +112,11 @@ export default function HeaderSearch() {
 
                                     <div className={styles.searchItemInfo}>
                                         <div className={styles.searchItemTitle}>{pub.title}</div>
-                                        {pub.authors && pub.authors.length > 0 && (
+                                        {pub.authors?.length ? (
                                             <div className={styles.searchItemAuthors}>
                                                 {pub.authors.map((a) => a.name).join(", ")}
                                             </div>
-                                        )}
+                                        ) : null}
                                     </div>
 
                                     <div className={styles.searchItemType}>

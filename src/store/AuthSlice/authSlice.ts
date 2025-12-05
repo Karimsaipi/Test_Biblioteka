@@ -4,7 +4,6 @@ import { IUser } from "@/models/IUser";
 type AuthState = {
     isAuth: boolean;
     user: IUser | null;
-    token: string | null;
 };
 
 const initialToken = localStorage.getItem("token");
@@ -19,26 +18,22 @@ const initialUser = (() => {
 
 const initialState: AuthState = {
     isAuth: Boolean(initialToken),
-    token: initialToken,
-    user: initialUser,
+    user: initialToken ? initialUser : null,
 };
-
-type CredentialsPayload = { token: string; user: IUser };
 
 const AuthSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
         setCredentials: {
-            reducer(state, action: PayloadAction<CredentialsPayload>) {
+            reducer(state, action: PayloadAction<{ user: IUser }>) {
                 state.isAuth = true;
-                state.token = action.payload.token;
                 state.user = action.payload.user;
             },
             prepare(token: string, user: IUser) {
                 localStorage.setItem("token", token);
                 localStorage.setItem("user", JSON.stringify(user));
-                return { payload: { token, user } };
+                return { payload: { user } };
             },
         },
 
@@ -57,7 +52,6 @@ const AuthSlice = createSlice({
         logout: {
             reducer(state) {
                 state.isAuth = false;
-                state.token = null;
                 state.user = null;
             },
             prepare() {

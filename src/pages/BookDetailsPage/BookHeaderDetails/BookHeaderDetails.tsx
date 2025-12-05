@@ -43,6 +43,9 @@ export default function BookHeaderDetails({
     const [isFavourite, setIsFavourite] = useState<boolean>((book as any).isFavourite ?? false);
     const [favLoading, setFavLoading] = useState(false);
 
+    const pdfUrl = getPdfUrl(book);
+    const isFileAvailable = Boolean(pdfUrl);
+
     const handleFavoriteClick = async () => {
         if (favLoading) return;
         try {
@@ -85,12 +88,21 @@ export default function BookHeaderDetails({
                 />
 
                 <div className={styles.coverButtons}>
-                    <BaseButton className={styles.button} onClick={handleReadClick}>
-                        {isReading ? "Закрыть" : "Читать"}
-                    </BaseButton>
-                    <BaseButton className={styles.button} onClick={() => onDownload?.(book)}>
-                        Скачать
-                    </BaseButton>
+                    {isFileAvailable ? (
+                        <>
+                            <BaseButton className={styles.button} onClick={handleReadClick}>
+                                {isReading ? "Закрыть" : "Читать"}
+                            </BaseButton>
+                            <BaseButton
+                                className={styles.button}
+                                onClick={() => onDownload?.(book)}
+                            >
+                                Скачать
+                            </BaseButton>
+                        </>
+                    ) : (
+                        <div className={styles.noFileMessage}>Файла книги нет</div>
+                    )}
                 </div>
             </div>
 

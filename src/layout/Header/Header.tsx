@@ -1,20 +1,18 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import styles from "./HeaderLayout.module.scss";
+import styles from "./Header.module.scss";
 import bookIcon from "@/assets/icons/bookIcon.png";
 import favoriteIcon from "@/assets/icons/favoriteIcon.png";
 import mainLogo from "@/assets/images/logo.png";
 import penIcon from "@/assets/icons/pen.png";
 import userIcon from "@/assets/icons/userIcon.png";
-import HeaderSearch from "@/layout/HeaderLayout/HeaderSearch/HeaderSearch";
+import HeaderSearch from "@/layout/Header/HeaderSearch/HeaderSearch";
 import { IconButton } from "@/ui";
 
 type HeaderProps = {
     onBookClick?: () => void;
     onProfileClick: () => void;
 
-    onProfileEnter?: () => void;
-    onProfileLeave?: () => void;
     onSubjectsEnter?: () => void;
     onSubjectsLeave?: () => void;
     onTagsEnter?: () => void;
@@ -22,21 +20,19 @@ type HeaderProps = {
 
     subjectsPopover?: React.ReactNode;
     tagsPopover?: React.ReactNode;
-    profilePopover?: React.ReactNode;
+    profileOverlay?: React.ReactNode;
 };
 
-export default function HeaderLayout({
+export default function Header({
     onBookClick,
     onProfileClick,
-    onProfileEnter,
-    onProfileLeave,
     onSubjectsEnter,
     onSubjectsLeave,
     onTagsEnter,
     onTagsLeave,
     subjectsPopover,
     tagsPopover,
-    profilePopover,
+    profileOverlay,
 }: HeaderProps) {
     const navigate = useNavigate();
 
@@ -119,11 +115,7 @@ export default function HeaderLayout({
                         title="Создание книги"
                         onClick={() => navigate("/create-publication")}
                     />
-                    <div
-                        className={styles.profileWrap}
-                        onMouseEnter={onProfileEnter}
-                        onMouseLeave={onProfileLeave}
-                    >
+                    <div className={styles.profileWrap}>
                         <IconButton
                             style={{ width: 64, height: 64 }}
                             icon={userIcon}
@@ -132,7 +124,7 @@ export default function HeaderLayout({
                             size={64}
                             onClick={onProfileClick}
                         />
-                        {profilePopover}
+                        {profileOverlay}
                     </div>
                 </div>
             </div>

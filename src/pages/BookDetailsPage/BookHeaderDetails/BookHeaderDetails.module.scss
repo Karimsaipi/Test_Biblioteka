@@ -55,6 +55,21 @@
     background-color: rgba(255, 255, 255, 0.65);
 }
 
+.noFileMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 200px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.65);
+    color: var(--color-light);
+    font-family: "Roboto";
+    font-size: 16px;
+    font-weight: 700;
+}
+
 .info {
     flex: 1;
     min-width: 0;
@@ -216,4 +231,3 @@
         align-self: center;
     }
 }
-

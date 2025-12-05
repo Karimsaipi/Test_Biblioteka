@@ -56,7 +56,7 @@ export async function getPublicationsID(id: number | string): Promise<IPublicati
     const res = await api.get(`/publications/${id}`, {
         validateStatus: (s) => s >= 200 && s < 400,
     });
-    return res.data as IPublication;
+    return res.data;
 }
 
 //Создать публикацию

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, RouteProps } from "react-router-dom";
+import { Navigate, Route, RouteProps } from "react-router-dom";
 import {
     AllPublicationsPage,
     BookDetailsPage,
@@ -13,6 +13,8 @@ import {
     SubjectsPage,
     TagsPage,
 } from "@/pages";
+import { store } from "@/store/store";
+import { openProfileOverlay } from "@/store/OverlaySlice/overlaySlice";
 
 // публичные маршруты
 export const routes: RouteProps[] = [
@@ -37,9 +39,21 @@ export const renderRoutes = () =>
     routes.map((route, index) => <Route key={index} path={route.path} element={route.element} />);
 
 //  Layout применяется ко всем приватным страницам через Outlet
+function GuestPopoverRedirectHome() {
+    React.useEffect(() => {
+        setTimeout(() => {
+            store.dispatch(openProfileOverlay());
+        }, 0);
+    }, []);
+
+    return <Navigate to="/" replace />;
+}
+
 export const renderPrivateRoutes = (isAuth: boolean) =>
-    isAuth
-        ? privateRoutes.map((route, index) => (
-              <Route key={index} path={route.path} element={route.element} />
-          ))
-        : null;
+    privateRoutes.map((route, index) => (
+        <Route
+            key={index}
+            path={route.path}
+            element={isAuth ? route.element : <GuestPopoverRedirectHome />}
+        />
+    ));
