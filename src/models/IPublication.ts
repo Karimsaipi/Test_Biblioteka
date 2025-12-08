@@ -88,13 +88,7 @@ export interface IFavouritesUpdateReqParams {
     id: number;
 }
 
-export interface IFavouritesApiResponse {
-    totalCount: number;
-    data: IPublication[];
-}
-
 //Модели для поиска публикаций
-
 export interface ISearchApiResponse {
     totalCount: number;
     data: IPublication[];

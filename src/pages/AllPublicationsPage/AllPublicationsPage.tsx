@@ -27,13 +27,14 @@ const typeOptions: SelectOption[] = [
 
 export default function AllPublicationsPage() {
     const [searchParams] = useSearchParams();
-    const initialTag = searchParams.get("tag") || "";
-    const initialSubject = searchParams.get("subject") || "";
+    const initialTag = searchParams.get("tag") ? [searchParams.get("tag")!] : [];
+    const initialSubject = searchParams.get("subject") ? [searchParams.get("subject")!] : [];
 
-    const [typeValue, setTypeValue] = useState("");
-    const [authorValue, setAuthorValue] = useState("");
-    const [subjectValue, setSubjectValue] = useState(initialSubject);
-    const [tagValue, setTagValue] = useState(initialTag);
+    // Множественный выбор теперь массивы строк
+    const [typeValue, setTypeValue] = useState<string[]>([]);
+    const [authorValue, setAuthorValue] = useState<string[]>([]);
+    const [subjectValue, setSubjectValue] = useState<string[]>(initialSubject);
+    const [tagValue, setTagValue] = useState<string[]>(initialTag);
 
     const [authorOptions, setAuthorOptions] = useState<SelectOption[]>([]);
     const [subjectOptions, setSubjectOptions] = useState<SelectOption[]>([]);
@@ -46,6 +47,7 @@ export default function AllPublicationsPage() {
 
     const resetPage = () => setPage(1);
 
+    // Получение авторов и предметов
     useEffect(() => {
         Promise.all([getAuthors(), getSubjects()])
             .then(([authors, subjects]) => {
@@ -62,25 +64,26 @@ export default function AllPublicationsPage() {
             });
     }, []);
 
+    // Синхронизация с параметрами URL
     useEffect(() => {
-        const urlTag = searchParams.get("tag") || "";
-        const urlSubject = searchParams.get("subject") || "";
-
+        const urlTag = searchParams.get("tag") ? [searchParams.get("tag")!] : [];
+        const urlSubject = searchParams.get("subject") ? [searchParams.get("subject")!] : [];
         setTagValue(urlTag);
         setSubjectValue(urlSubject);
         setPage(1);
     }, [searchParams]);
 
+    // Параметры запроса к API
     const requestParams: IPublicationsFilterReqBody = useMemo(
         () => ({
             page,
             pageSize: PAGE_SIZE,
             sortBy,
             sortOrder,
-            type: typeValue ? [Number(typeValue) as PublicationType] : [],
-            authors: authorValue ? [Number(authorValue)] : [],
-            subjects: subjectValue ? [Number(subjectValue)] : [],
-            tags: tagValue ? [Number(tagValue)] : [],
+            type: typeValue.map((v) => Number(v) as PublicationType),
+            authors: authorValue.map(Number),
+            subjects: subjectValue.map(Number),
+            tags: tagValue.map(Number),
         }),
         [page, sortBy, sortOrder, typeValue, authorValue, subjectValue, tagValue],
     );
@@ -96,16 +99,16 @@ export default function AllPublicationsPage() {
                 typeOptions={typeOptions}
                 authorOptions={authorOptions}
                 subjectOptions={subjectOptions}
-                onTypeChange={(value) => {
-                    setTypeValue(value);
+                onTypeChange={(values) => {
+                    setTypeValue(values);
                     resetPage();
                 }}
-                onAuthorChange={(value) => {
-                    setAuthorValue(value);
+                onAuthorChange={(values) => {
+                    setAuthorValue(values);
                     resetPage();
                 }}
-                onSubjectChange={(value) => {
-                    setSubjectValue(value);
+                onSubjectChange={(values) => {
+                    setSubjectValue(values);
                     resetPage();
                 }}
             />

@@ -9,6 +9,10 @@
     margin-top: rem(80);
 }
 
+.sortRow {
+    margin-top: 20px;
+}
+
 @include mobile {
     .pagination {
         margin-top: rem(50);

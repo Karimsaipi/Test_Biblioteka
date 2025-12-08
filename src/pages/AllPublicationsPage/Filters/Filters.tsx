@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Filters.module.scss";
-import { BaseSelect } from "@/ui";
+import { SelectSearchedAdd } from "@/ui";
 
 export type SelectOption = {
     value: string;
@@ -8,17 +8,17 @@ export type SelectOption = {
 };
 
 type Props = {
-    typeValue: string;
-    authorValue: string;
-    subjectValue: string;
+    typeValue: string[];
+    authorValue: string[];
+    subjectValue: string[];
 
     typeOptions: SelectOption[];
     authorOptions: SelectOption[];
     subjectOptions: SelectOption[];
 
-    onTypeChange: (value: string) => void;
-    onAuthorChange: (value: string) => void;
-    onSubjectChange: (value: string) => void;
+    onTypeChange: (values: string[]) => void;
+    onAuthorChange: (values: string[]) => void;
+    onSubjectChange: (values: string[]) => void;
 };
 
 export default function Filters({
@@ -32,28 +32,58 @@ export default function Filters({
     onAuthorChange,
     onSubjectChange,
 }: Props) {
+    // Добавление чипса
+    const handlePick = (value: string, selected: string[], onChange: (v: string[]) => void) => {
+        if (!value || selected.includes(value)) return;
+        onChange([...selected, value]);
+    };
+
+    // Удаление чипса
+    const handleRemove = (value: string, selected: string[], onChange: (v: string[]) => void) => {
+        onChange(selected.filter((v) => v !== value));
+    };
+
+    // Универсальный рендер для select + чипсы
+    const renderMultiSelect = (
+        label: string,
+        selected: string[],
+        options: SelectOption[],
+        onChange: (v: string[]) => void,
+    ) => (
+        <div className={styles.multiField}>
+            <span className={styles.label}>{label}</span>
+
+            <div className={styles.chipsRow}>
+                {selected.map((val) => {
+                    const optLabel = options.find((o) => o.value === val)?.label ?? val;
+                    return (
+                        <button
+                            key={`${label}-${val}`}
+                            type="button"
+                            className={styles.chip}
+                            onClick={() => handleRemove(val, selected, onChange)}
+                        >
+                            <span>{optLabel}</span>
+                            <span aria-hidden>×</span>
+                        </button>
+                    );
+                })}
+            </div>
+
+            <SelectSearchedAdd
+                value=""
+                options={options}
+                onChange={(val) => handlePick(val, selected, onChange)}
+                searchPlaceholder='Поиск...'
+            />
+        </div>
+    );
+
     return (
         <div className={styles.filters}>
-            <BaseSelect
-                label="Тип"
-                value={typeValue}
-                onChange={(e) => onTypeChange(e.target.value)}
-                options={typeOptions}
-            />
-
-            <BaseSelect
-                label="Автор"
-                value={authorValue}
-                onChange={(e) => onAuthorChange(e.target.value)}
-                options={authorOptions}
-            />
-
-            <BaseSelect
-                label="Предмет"
-                value={subjectValue}
-                onChange={(e) => onSubjectChange(e.target.value)}
-                options={subjectOptions}
-            />
+            {renderMultiSelect("Тип", typeValue, typeOptions, onTypeChange)}
+            {renderMultiSelect("Автор", authorValue, authorOptions, onAuthorChange)}
+            {renderMultiSelect("Предмет", subjectValue, subjectOptions, onSubjectChange)}
         </div>
     );
 }

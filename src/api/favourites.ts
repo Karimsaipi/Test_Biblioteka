@@ -1,25 +1,32 @@
 import {
-    IFavouritesApiResponse,
     IFavouritesGetReqParams,
+    IPublication,
     IPublicationsFilterResponse,
 } from "@/models/IPublication";
 import { api } from "./axios";
+import { IPaginatedResponse } from "@/models/IPaginatedResponse";
 
 //получение избранных публикаций, get
 export async function getFavourites(
     params: IFavouritesGetReqParams,
 ): Promise<IPublicationsFilterResponse> {
-    const response = await api.get<IFavouritesApiResponse>(`favourites`, {
+    const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
+    const pageSize = Number.isFinite(Number(params.pageSize)) ? Number(params.pageSize) : 8;
+
+    const res = await api.get<IPaginatedResponse<IPublication>>("/favourites", {
         params: {
-            page: params.page,
-            pageSize: params.pageSize,
+            page,
+            pageSize,
         },
     });
+
+    const { data, totalCount } = res.data;
+
     return {
-        items: response.data.data,
-        total: response.data.totalCount,
-        page: params.page,
-        pageSize: params.pageSize,
+        items: data ?? [],
+        page,
+        pageSize,
+        total: totalCount ?? (data ? data.length : 0),
     };
 }
 

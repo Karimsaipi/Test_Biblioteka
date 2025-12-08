@@ -37,8 +37,8 @@ export default function CommentBlockPost({ publicationId }: CommentBlockProps) {
 
             setComments((prev) => (append ? [...prev, ...newComments] : newComments));
 
-            if ((res as any).totalCount != null) {
-                const totalCount = Number((res as any).totalCount) || 0;
+            if (res.totalCount != null) {
+                const totalCount = Number(res.totalCount) || 0;
                 setHasMore(pageToLoad * PAGE_SIZE < totalCount);
             } else {
                 setHasMore(newComments.length === PAGE_SIZE);

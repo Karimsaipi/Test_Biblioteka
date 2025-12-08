@@ -4,7 +4,7 @@ import { api } from "./axios";
 //получить тэги, get
 export async function getTags(): Promise<ITag[]> {
     const res = await api.get(`/tags/filter`);
-    return res.data as ITag[];
+    return res.data;
 }
 
 // создать тег, create

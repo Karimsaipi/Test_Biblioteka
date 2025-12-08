@@ -8,11 +8,13 @@ import {
     ISearchApiResponse,
 } from "@/models/IPublication";
 import { api } from "./axios";
+import { IPaginatedResponse } from "@/models/IPaginatedResponse";
 
 //Получить get/publications/filter
 export async function getPublications(
     params: IPublicationsFilterReqBody,
 ): Promise<IPublicationsFilterResponse> {
+    
     const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
     const pageSize = Number.isFinite(Number(params.pageSize)) ? Number(params.pageSize) : 8;
 
@@ -28,7 +30,7 @@ export async function getPublications(
     if (params.subjects?.length) query.subjects = params.subjects;
     if (params.tags?.length) query.tags = params.tags;
 
-    const res = await api.get("/publications/filter", {
+    const res = await api.get<IPaginatedResponse<IPublication>>("/publications/filter", {
         params: query,
         headers: {
             "Cache-Control": "no-cache",
@@ -36,18 +38,13 @@ export async function getPublications(
         validateStatus: (s) => s >= 200 && s < 400,
     });
 
-    const data = res.data as {
-        data?: IPublication[];
-        totalCount?: number;
-        page?: number;
-        pageSize?: number;
-    };
+    const { data, totalCount } = res.data;
 
     return {
-        items: data.data ?? [],
-        page: data.page ?? params.page,
-        pageSize: data.pageSize ?? params.pageSize,
-        total: data.totalCount ?? (data.data ? data.data.length : 0),
+        items: data ?? [],
+        page,
+        pageSize,
+        total: totalCount ?? (data ? data.length : 0),
     };
 }
 
