@@ -4,6 +4,7 @@ export { default as BaseInput } from "./BaseInput/BaseInput";
 export { default as BaseLink } from "./BaseLink/BaseLink";
 export { default as BaseSelect } from "./BaseSelect/BaseSelect";
 export { default as DateInput } from "./DateInput/DateInput";
+export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 export { default as GenderSwitch } from "./GenderSwitch/GenderSwitch";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as Pagination } from "./Pagination/Pagination";

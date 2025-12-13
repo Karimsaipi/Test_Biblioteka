@@ -9,6 +9,7 @@ import { toUploadsUrl } from "@/shared/utils/media";
 import { SearchInput } from "@/ui";
 import { useOnEscape } from "@/shared/hooks/useOnEscape";
 import { useOnClickOutside } from "@/shared/hooks/useOnClickOutside";
+import { useDebouncedValue } from "@/shared/hooks/useDebounceValue";
 
 function getCoverUrl(coverPath?: string | null): string {
     return coverPath ? toUploadsUrl(coverPath) : placeholderCover;
@@ -23,21 +24,20 @@ export default function HeaderSearch() {
     const [loading, setLoading] = useState(false);
 
     const rootRef = useRef<HTMLDivElement | null>(null);
-    const reqIdRef = useRef(0);
+    const debouncedQ = useDebouncedValue(q, 400);
 
     const reset = useCallback(() => {
         setOpen(false);
         setQ("");
         setResults([]);
         setLoading(false);
-        reqIdRef.current += 1; 
     }, []);
 
     useOnEscape(reset, { enabled: open });
     useOnClickOutside(rootRef, reset, { enabled: open });
 
     useEffect(() => {
-        const query = q.trim();
+        const query = debouncedQ.trim();
 
         if (query.length < 2) {
             setResults([]);
@@ -46,28 +46,30 @@ export default function HeaderSearch() {
             return;
         }
 
+        let cancelled = false;
+
         setLoading(true);
         setOpen(true);
 
-        const myReqId = ++reqIdRef.current;
-
-        const id = setTimeout(async () => {
+        (async () => {
             try {
                 const items = await searchPublications(query);
-                if (myReqId !== reqIdRef.current) return;
+                if (cancelled) return;
                 setResults(items);
             } catch (e) {
-                if (myReqId !== reqIdRef.current) return;
+                if (cancelled) return;
                 console.error("search error", e);
                 setResults([]);
             } finally {
-                if (myReqId !== reqIdRef.current) return;
+                if (cancelled) return;
                 setLoading(false);
             }
-        }, 400);
+        })();
 
-        return () => clearTimeout(id);
-    }, [q]);
+        return () => {
+            cancelled = true;
+        };
+    }, [debouncedQ]);
 
     const handleResultClick = (pub: IPublication) => {
         reset();

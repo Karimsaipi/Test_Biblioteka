@@ -24,7 +24,12 @@ export default function PDFReader({ fileUrl, initialPage = 1, onPageChange }: Pr
 
     return (
         <div className={styles.wrapper}>
-            <Worker workerUrl="/pdf.worker.min.js">
+            <Worker
+                workerUrl={new URL(
+                    "pdfjs-dist/build/pdf.worker.min.js",
+                    import.meta.url,
+                ).toString()}
+            >
                 <Viewer
                     fileUrl={fileUrl}
                     initialPage={initial0}
