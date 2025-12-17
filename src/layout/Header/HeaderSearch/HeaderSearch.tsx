@@ -46,29 +46,17 @@ export default function HeaderSearch() {
             return;
         }
 
-        let cancelled = false;
-
         setLoading(true);
         setOpen(true);
 
-        (async () => {
-            try {
-                const items = await searchPublications(query);
-                if (cancelled) return;
-                setResults(items);
-            } catch (e) {
-                if (cancelled) return;
-                console.error("search error", e);
+        searchPublications(query)
+            .then(setResults)
+            .catch((e) => {
                 setResults([]);
-            } finally {
-                if (cancelled) return;
+            })
+            .finally(() => {
                 setLoading(false);
-            }
-        })();
-
-        return () => {
-            cancelled = true;
-        };
+            });
     }, [debouncedQ]);
 
     const handleResultClick = (pub: IPublication) => {
@@ -83,7 +71,7 @@ export default function HeaderSearch() {
             role="search"
             aria-label="Поиск по книгам"
         >
-            <div ref={rootRef} className={styles.searchInner}>
+            <div ref={rootRef}>
                 <SearchInput
                     value={q}
                     onChange={(e) => setQ(e.target.value)}

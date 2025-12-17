@@ -1,25 +1,12 @@
 import { ICommentsResponse, ICreateCommentReqBody, IGetCommentReqParams } from "@/models/IComment";
 import { api } from "./axios";
+import { createCommentFormData } from "@/shared/utils/createCommentFormData";
 
 //создать коммент/ post
 export async function createComment(payload: ICreateCommentReqBody): Promise<boolean> {
-    const data = new FormData();
+    const data = createCommentFormData(payload);
 
-    data.append("publicationId", String(payload.publicationId));
-    data.append("text", payload.text);
-
-    if (payload.assets) {
-        payload.assets.forEach((file) => {
-            data.append("assets", file);
-        });
-    }
-
-    const response = await api.post(`/comments/create`, data, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-    });
-
+    const response = await api.post(`/comments/create`, data);
     return response.data;
 }
 

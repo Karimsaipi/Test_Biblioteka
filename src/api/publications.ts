@@ -9,26 +9,26 @@ import {
 } from "@/models/IPublication";
 import { api } from "./axios";
 import { IPaginatedResponse } from "@/models/IPaginatedResponse";
+import { createPublicationFormData } from "@/shared/utils/createPublicationFormData";
 
 //Получить get/publications/filter
 export async function getPublications(
     params: IPublicationsFilterReqBody,
 ): Promise<IPublicationsFilterResponse> {
-    
     const page = Number.isFinite(Number(params.page)) ? Number(params.page) : 1;
     const pageSize = Number.isFinite(Number(params.pageSize)) ? Number(params.pageSize) : 8;
 
-    const query: Record<string, any> = {
-        page: page,
-        pageSize: pageSize,
+    const query = {
+        page,
+        pageSize,
         sortBy: params.sortBy ?? PublicationsSortBy.CREATION_DATE,
         sortOrder: params.sortOrder ?? PublicationsSortOrder.ASC,
-    };
 
-    if (params.type?.length) query.type = params.type;
-    if (params.authors?.length) query.authors = params.authors;
-    if (params.subjects?.length) query.subjects = params.subjects;
-    if (params.tags?.length) query.tags = params.tags;
+        ...(params.type?.length && { type: params.type }),
+        ...(params.authors?.length && { authors: params.authors }),
+        ...(params.subjects?.length && { subjects: params.subjects }),
+        ...(params.tags?.length && { tags: params.tags }),
+    };
 
     const res = await api.get<IPaginatedResponse<IPublication>>("/publications/filter", {
         params: query,
@@ -50,34 +50,17 @@ export async function getPublications(
 
 //Получаем одну публикацию по айди
 export async function getPublicationsID(id: number | string): Promise<IPublication> {
-    const res = await api.get(`/publications/${id}`, {
-        validateStatus: (s) => s >= 200 && s < 400,
-    });
+    const res = await api.get(`/publications/${id}`);
     return res.data;
 }
 
 //Создать публикацию
 export async function createPublication(payload: ICreatePublicationReqBody): Promise<boolean> {
-    const data = new FormData();
+    const data = createPublicationFormData(payload);
 
-    data.append("type", String(payload.type));
-    data.append("title", payload.title);
-    data.append("review", payload.review);
-    data.append("releaseDate", payload.releaseDate);
+    const { data: result } = await api.post<boolean>("/publications/create", data);
 
-    if (payload.file) data.append("file", payload.file);
-    if (payload.cover) data.append("cover", payload.cover);
-
-    // Шлём в виде JSON
-    data.append("authors", JSON.stringify(payload.authors));
-    data.append("subjects", JSON.stringify(payload.subjects));
-    data.append("tags", JSON.stringify(payload.tags));
-
-    const response = await api.post(`/publications/create`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    return response.data;
+    return result;
 }
 
 //Поиск публикации

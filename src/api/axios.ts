@@ -13,16 +13,13 @@ export const api = axios.create({
         const search = new URLSearchParams();
 
         Object.entries(params).forEach(([key, value]) => {
-            if (value === undefined || value === null) return;
+            if (value == null) return;
 
-            if (Array.isArray(value)) {
-                value.forEach((v) => {
-                    search.append(`${key}[]`, String(v));
-                });
-            } else {
-                // если НЕ массив -> всё равно шлём как массив
-                search.append(`${key}[]`, String(value));
-            }
+            const values = Array.isArray(value) ? value : [value];
+
+            values.forEach((v) => {
+                search.append(`${key}[]`, String(v));
+            });
         });
 
         return search.toString();
@@ -33,7 +30,6 @@ export const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
-        config.headers = config.headers ?? ({} as AxiosRequestHeaders);
         config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
@@ -48,11 +44,11 @@ api.interceptors.response.use(
         if (status === 401) {
             store.dispatch(logout());
             store.dispatch(openProfileOverlay());
-            return Promise.reject(err);
+        } else {
+            const msg = getErrorMessage(err, "Ошибка");
+            store.dispatch(error(msg));
         }
         console.log("[AXIOS ERROR]", err?.response?.status, err?.response?.data);
-        const msg = getErrorMessage(err, "Ошибка");
-        store.dispatch(error(msg));
         return Promise.reject(err);
     },
 );

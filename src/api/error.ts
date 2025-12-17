@@ -1,33 +1,42 @@
 import axios from "axios";
-import { isServerError } from "@/models/IServerError";
+import { isServerError } from "@/shared/utils/isServerError";
 
 export function getErrorMessage(err: unknown, fallback = "Ошибка"): string {
     if (axios.isAxiosError(err)) {
         const res = err.response;
 
         if (!res) {
-            if (err.code === "ECONNABORTED") return "Превышено время ожидания запроса";
-            return "Сетевая ошибка";
+            switch (err.code) {
+                case "ECONNABORTED":
+                    return "Превышено время ожидания запроса";
+                default:
+                    return "Сетевая ошибка";
+            }
         }
 
         const { status, data } = res;
 
         if (isServerError(data)) return data.message;
 
-        // Строковый ответ бэка
+        // строковый ответ бэка
         if (typeof data === "string" && data.trim()) return data;
 
         if (data && typeof data === "object") {
-            const d: any = data;
+            const d = data as { message?: unknown; error?: unknown };
             if (typeof d.message === "string") return d.message;
             if (typeof d.error === "string") return d.error;
         }
 
-        // статусу если херня
-        if (status === 401) return "Не авторизован";
-        if (status === 403) return "Доступ запрещён";
-        if (status === 404) return "Ресурс не найден";
-        if (status >= 500) return "Ошибка сервера";
+        switch (status) {
+            case 401:
+                return "Не авторизован";
+            case 403:
+                return "Доступ запрещён";
+            case 404:
+                return "Ресурс не найден";
+            default:
+                if (status >= 500) return "Ошибка сервера";
+        }
 
         return err.message || fallback;
     }
